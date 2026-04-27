@@ -176,7 +176,7 @@ textarea#memo{min-height:70px;resize:none}
 <div class="toast" id="toastBox"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f47b5d9ea7fcd72b8feae718fcd51af7&libraries=services"></script>
 <script>
 var kakaoLoaded = (typeof kakao!=='undefined' && kakao.maps);
@@ -189,9 +189,11 @@ const SUPABASE_KEY="sb_publishable_C-OVfBVJcI5nFrRO0ps6EA_y0OMGWjQ";
 var sb = (typeof supabase!=='undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 var currentUser = null;
 // 카카오 SDK 초기화 (JavaScript 키 사용)
-if(typeof Kakao!=='undefined' && !Kakao.isInitialized()){
-  try{Kakao.init('f47b5d9ea7fcd72b8feae718fcd51af7')}catch(e){console.warn('Kakao init failed',e)}
-}
+try{
+  if(typeof Kakao!=='undefined' && Kakao && typeof Kakao.init==='function' && !Kakao.isInitialized()){
+    Kakao.init('f47b5d9ea7fcd72b8feae718fcd51af7');
+  }
+}catch(e){console.warn('Kakao init failed',e)}
 // 카카오맵 미로드시 더미 객체로 안전 처리
 if(!kakaoLoaded){
   window.kakao = window.kakao || {};
