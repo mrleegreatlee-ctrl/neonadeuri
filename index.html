@@ -92,10 +92,10 @@ textarea#memo{min-height:70px;resize:none}
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body><div id="app">
 <header><h1 style="font-family:Georgia,serif;font-size:18px">너나들이</h1><div class="sub">내 사람과 나누는, 지도 위 기억 일기</div></header>
 <main>
-<section class="view active" id="view-map"><div id="map"></div><div class="search-wrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div></section>
+<section class="view active" id="view-map"><div id="map"></div><div class="search-wrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><button id="locBtn" onclick="updateCurrentLocation()" title="현재 위치" style="position:absolute;bottom:20px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 8px rgba(61,57,41,.18);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:400"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="이수영"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="toast('v1.1에서 제공 예정')">알림 설정<span class="arrow">›</span></div></div><div class="menu-card" style="margin-bottom:24px"><div class="item" onclick="toast('v1.1에서 제공 예정')">로그아웃<span class="arrow">›</span></div></div><div class="version" style="margin-top:16px">너나들이 v2.1</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value=""/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람 목록<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="toast('v1.1에서 제공 예정')">알림 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div class="menu-card" id="logoutBtnCard" style="margin-bottom:8px"><div class="item" onclick="doLogout()">로그아웃<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -109,20 +109,173 @@ textarea#memo{min-height:70px;resize:none}
 <div class="btn-row"><button class="btn btn-ghost" onclick="cancelForm()">취소</button><button class="btn btn-primary" onclick="saveRecord()">저장</button></div>
 </div>
 <div class="modal" id="dayModal"><div class="modal-inner"><h3 id="modalTitle"></h3><div id="modalBody"></div><button class="btn btn-primary" style="margin-top:10px;width:100%" onclick="document.getElementById('dayModal').classList.remove('on')">닫기</button></div></div>
-<div class="modal" id="avatarModal"><div class="modal-inner" style="max-width:360px;text-align:center"><div id="avatarPreview" style="width:200px;height:200px;border-radius:50%;background:var(--vermillion);margin:0 auto 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center"><svg id="avatarPreviewSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:50%;height:50%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="btn-row" style="margin-bottom:8px"><button class="btn btn-ghost" onclick="_pendingAvatar=null;document.getElementById('avatarModal').classList.remove('on')">닫기</button><button id="btnChangeAvatar" class="btn btn-primary" onclick="document.getElementById('avatarInp').click()">사진 변경</button><button id="btnSaveAvatar" class="btn btn-primary" onclick="saveAvatar()" style="display:none">저장</button></div></div></div><div class="modal" id="inviteModal"><div class="modal-inner" style="max-width:420px"><h3 style="font-family:Georgia,serif;margin-bottom:16px">내 사람 초대</h3><div style="margin-bottom:12px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">받는 사람</label><input id="invTo" type="email" placeholder="이메일 주소" style="width:100%;padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown)"/></div><div style="margin-bottom:12px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">보내는 사람</label><div id="invFrom" style="padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;background:var(--cream);color:var(--brown);opacity:.7"></div></div><div style="margin-bottom:12px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">제목</label><input id="invSubject" value="너나들이에 초대합니다" style="width:100%;padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown)"/></div><div style="margin-bottom:14px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">메시지</label><textarea id="invBody" rows="4" style="width:100%;padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);resize:none"></textarea></div><div class="btn-row"><button class="btn btn-ghost" onclick="document.getElementById('inviteModal').classList.remove('on')">취소</button><button class="btn btn-primary" onclick="sendInvite()">이메일로 초대</button></div><button onclick="toast('호스팅 URL 준비 후 활성화됩니다')" style="width:100%;margin-top:8px;padding:10px;background:#FEE500;color:#3D1D1D;border:none;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">카카오톡으로 초대</button></div></div>
+<div class="modal" id="avatarModal"><div class="modal-inner" style="max-width:360px;text-align:center"><div id="avatarPreview" style="width:200px;height:200px;border-radius:50%;background:var(--vermillion);margin:0 auto 20px;overflow:hidden;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center"><svg id="avatarPreviewSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:50%;height:50%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="btn-row" style="margin-bottom:8px"><button class="btn btn-ghost" onclick="_pendingAvatar=null;document.getElementById('avatarModal').classList.remove('on')">닫기</button><button id="btnChangeAvatar" class="btn btn-primary" onclick="document.getElementById('avatarInp').click()">사진 변경</button><button id="btnSaveAvatar" class="btn btn-primary" onclick="saveAvatar()" style="display:none">저장</button></div></div></div><!-- 초대 모달 -->
+<div class="modal" id="inviteModal"><div class="modal-inner" style="max-width:420px">
+  <h3 style="font-family:Georgia,serif;margin-bottom:16px">내 사람 초대</h3>
+  <div style="margin-bottom:12px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">받는 사람</label><input id="invTo" type="email" placeholder="이메일 주소" style="width:100%;padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown)"/></div>
+  <div style="margin-bottom:12px"><label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">보내는 사람</label><div id="invFrom" style="padding:10px;border:1px solid var(--beige);border-radius:8px;font-size:13px;background:var(--cream);color:var(--brown);opacity:.7"></div></div>
+  <div style="margin-bottom:14px;padding:12px;background:var(--cream);border:1px solid var(--beige);border-radius:8px;font-size:12px;color:var(--brown);line-height:1.6">
+    <div id="invMsgPreview" style="white-space:pre-line"></div>
+  </div>
+  <div class="btn-row"><button class="btn btn-ghost" onclick="document.getElementById('inviteModal').classList.remove('on')">취소</button><button class="btn btn-primary" onclick="sendInvite()">이메일로 초대</button></div>
+  <button onclick="sendKakaoInvite()" style="width:100%;margin-top:8px;padding:11px;background:#FEE500;color:#3D1D1D;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer;font-weight:bold">카카오톡으로 초대</button>
+</div></div>
+
+<!-- 내 사람 목록 모달 -->
+<div class="modal" id="friendsModal"><div class="modal-inner" style="max-width:420px;max-height:80vh;overflow-y:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h3 style="font-family:Georgia,serif;margin:0">내 사람 목록</h3>
+    <button onclick="document.getElementById('friendsModal').classList.remove('on')" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
+  </div>
+  <div id="friendsCount" style="font-size:11px;color:var(--terra);margin-bottom:12px"></div>
+  <div id="friendsList" style="margin-bottom:14px"></div>
+  <button onclick="document.getElementById('friendsModal').classList.remove('on');openInvite()" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer">새 사람 초대하기</button>
+</div></div>
+<!-- 로그인/회원가입 모달 -->
+<div class="modal" id="authModal">
+  <div class="modal-inner" style="max-width:380px">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:4px">
+      <button onclick="closeAuthModal()" style="border:none;background:transparent;font-size:24px;color:var(--muted,#8B7D6B);cursor:pointer;padding:0 2px;line-height:1">×</button>
+    </div>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-family:Georgia,serif;font-size:24px;color:var(--brown);margin-bottom:4px">너나들이</div>
+      <div style="font-size:11px;color:var(--terra)">내 사람과 나누는, 지도 위 기억 일기</div>
+    </div>
+    <div id="authError" style="display:none;background:#FFF0EB;border:1px solid var(--terra);border-radius:8px;padding:10px;font-size:12px;color:var(--terra);margin-bottom:12px"></div>
+    <div style="display:flex;margin-bottom:18px;border:1px solid var(--beige);border-radius:8px;overflow:hidden">
+      <button id="tabLoginBtn" onclick="switchAuthTab('login')" style="flex:1;padding:11px;border:none;background:var(--vermillion);color:#fff;font-family:Georgia,serif;font-size:14px;cursor:pointer">로그인</button>
+      <button id="tabSignupBtn" onclick="switchAuthTab('signup')" style="flex:1;padding:11px;border:none;background:#fff;color:var(--brown);font-family:Georgia,serif;font-size:14px;cursor:pointer">회원가입</button>
+    </div>
+    <label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">이메일</label>
+    <input id="authEmail" type="email" placeholder="이메일 주소 입력" autocomplete="email" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:6px"/><div id="rememberedEmails" style="display:none;margin-bottom:12px;padding:0 4px"></div>
+    <label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">비밀번호</label>
+    <input id="authPassword" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:16px"/>
+    <button id="authSubmitBtn" onclick="doLogin()" style="width:100%;padding:13px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:15px;cursor:pointer;margin-bottom:14px">로그인</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <div style="flex:1;height:1px;background:var(--beige)"></div>
+      <div style="font-size:11px;color:#8B7D6B">또는</div>
+      <div style="flex:1;height:1px;background:var(--beige)"></div>
+    </div>
+    <button onclick="doKakaoLogin()" style="width:100%;padding:13px;background:#FEE500;color:#3D1D1D;border:none;border-radius:8px;font-family:Georgia,serif;font-size:15px;cursor:pointer;margin-bottom:14px">카카오로 시작하기</button>
+    <div style="text-align:center">
+      <button onclick="closeAuthModal()" style="border:none;background:transparent;font-size:12px;color:#8B7D6B;cursor:pointer;text-decoration:underline">로그인 없이 둘러보기</button>
+    </div>
+  </div>
+</div>
+<!-- 커스텀 확인 모달 -->
+<div class="modal" id="confirmModal">
+  <div class="modal-inner" style="max-width:320px;text-align:center">
+    <div id="confirmTitle" style="font-family:Georgia,serif;font-size:17px;color:var(--brown);margin-bottom:8px;font-weight:bold"></div>
+    <div id="confirmMsg" style="font-size:13px;color:#8B7D6B;margin-bottom:20px;line-height:1.5"></div>
+    <div style="display:flex;gap:8px">
+      <button id="confirmCancel" style="flex:1;padding:12px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer">취소</button>
+      <button id="confirmOk" style="flex:1;padding:12px;border:none;background:var(--vermillion);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer">확인</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toastBox"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Hs90nka" crossorigin="anonymous"></script>
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f47b5d9ea7fcd72b8feae718fcd51af7&libraries=services"></script>
 <script>
-if(typeof kakao==='undefined'||!kakao.maps){document.getElementById('map').innerHTML='<div style="padding:40px;text-align:center;color:#3D3929;line-height:1.6">카카오맵을 불러오지 못했습니다.</div>';throw new Error('no kakao');}
+var kakaoLoaded = (typeof kakao!=='undefined' && kakao.maps);
+if(!kakaoLoaded){
+  document.getElementById('map').innerHTML='<div style="padding:40px;text-align:center;color:#3D3929;line-height:1.6;font-size:13px">카카오맵을 불러오지 못했습니다.<br/>이 환경에서는 도메인이 등록되지 않았습니다.<br/><br/>GitHub Pages 또는 Safari에서 열어주세요.</div>';
+}
 const KAKAO_REST="c359b1675700a9d8091802e5395a0142";
-let records=[],profile={name:'이수영',bio:'',avatar:'L'};
+const SUPABASE_URL="https://hivjguqfcobvwljstjzt.supabase.co";
+const SUPABASE_KEY="sb_publishable_C-OVfBVJcI5nFrRO0ps6EA_y0OMGWjQ";
+var sb = (typeof supabase!=='undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+var currentUser = null;
+// 카카오 SDK 초기화 (JavaScript 키 사용)
+if(typeof Kakao!=='undefined' && !Kakao.isInitialized()){
+  try{Kakao.init('f47b5d9ea7fcd72b8feae718fcd51af7')}catch(e){console.warn('Kakao init failed',e)}
+}
+// 카카오맵 미로드시 더미 객체로 안전 처리
+if(!kakaoLoaded){
+  window.kakao = window.kakao || {};
+  window.kakao.maps = window.kakao.maps || {
+    LatLng: function(){return{}},
+    Map: function(){return{setCenter:function(){},setLevel:function(){},addControl:function(){}}},
+    Marker: function(){return{setMap:function(){},setImage:function(){}}},
+    MarkerImage: function(){return{}},
+    Size: function(){return{}},
+    Point: function(){return{}},
+    InfoWindow: function(){return{open:function(){},close:function(){}}},
+    ZoomControl: function(){return{}},
+    ControlPosition: {RIGHT:0},
+    event: {addListener: function(){}}
+  };
+}
+let records=[],profile={name:'',bio:'',email:'',avatarImg:''};
 try{records=JSON.parse(localStorage.getItem('nnd_records')||'[]')}catch(e){}
 try{profile=Object.assign(profile,JSON.parse(localStorage.getItem('nnd_profile')||'{}'))}catch(e){}
 document.getElementById('pname').value=profile.name;document.getElementById('pbio').value=profile.bio;document.getElementById('pemail').value=profile.email||'';
-function saveProfile(){profile.name=document.getElementById('pname').value;profile.bio=document.getElementById('pbio').value;profile.email=document.getElementById('pemail').value;localStorage.setItem('nnd_profile',JSON.stringify(profile))}
+function saveProfile(){profile.name=document.getElementById('pname').value;profile.bio=document.getElementById('pbio').value;profile.email=document.getElementById('pemail').value;localStorage.setItem('nnd_profile',JSON.stringify(profile));if(currentUser&&sb){sb.from('profiles').upsert({id:currentUser.id,name:profile.name,bio:profile.bio,email:profile.email,avatar_img:profile.avatarImg||''}).then(function(){})}}
 document.getElementById('pname').readOnly=true;document.getElementById('pbio').readOnly=true;document.getElementById('pemail').readOnly=true;
-function toggleEdit(editing){const els=['pname','pbio','pemail'];els.forEach(id=>{document.getElementById(id).readOnly=!editing;document.getElementById(id).style.opacity=editing?'1':'.8'});document.getElementById('btnEdit').style.display=editing?'none':'inline-block';document.getElementById('btnSave').style.display=editing?'inline-block':'none';if(!editing){saveProfile();toast('프로필이 저장되었습니다')}}
+var _profileSnapshot=null;
+function toggleEdit(editing){
+  // 이메일은 항상 readonly (회원가입 시 디폴트값, 수정 불가)
+  document.getElementById('pemail').readOnly=true;
+  document.getElementById('pemail').style.opacity='.8';
+  // 이름·소개만 편집 가능
+  ['pname','pbio'].forEach(function(id){
+    document.getElementById(id).readOnly=!editing;
+    document.getElementById(id).style.opacity=editing?'1':'.8';
+  });
+  document.getElementById('btnEdit').style.display=editing?'none':'inline-block';
+  document.getElementById('btnSave').style.display=editing?'inline-block':'none';
+  if(editing){
+    // 편집 진입 시점 스냅샷 저장 (취소/이동 시 비교용)
+    _profileSnapshot={name:document.getElementById('pname').value,bio:document.getElementById('pbio').value};
+  }else{
+    saveProfile();toast('프로필이 저장되었습니다');
+    _profileSnapshot=null;
+  }
+}
+function isEditingProfile(){
+  // 편집 모드인지 확인: btnSave 표시 여부로 판정
+  return document.getElementById('btnSave')&&document.getElementById('btnSave').style.display==='inline-block';
+}
+function hasProfileChanged(){
+  if(!_profileSnapshot)return false;
+  return _profileSnapshot.name!==document.getElementById('pname').value
+      || _profileSnapshot.bio!==document.getElementById('pbio').value;
+}
+async function checkProfileBeforeLeave(){
+  // 편집 중이고 변경사항이 있으면 저장 여부 확인
+  if(!isEditingProfile())return true;
+  if(!hasProfileChanged()){
+    // 편집 모드지만 변경 없음 → 그냥 편집 모드 종료
+    toggleEdit(false);
+    document.getElementById('pname').readOnly=true;
+    document.getElementById('pbio').readOnly=true;
+    document.getElementById('pname').style.opacity='.8';
+    document.getElementById('pbio').style.opacity='.8';
+    document.getElementById('btnEdit').style.display='inline-block';
+    document.getElementById('btnSave').style.display='none';
+    _profileSnapshot=null;
+    return true;
+  }
+  var ok=await customConfirm('변경 사항 저장','프로필이 변경되었습니다.\n저장하시겠습니까?');
+  if(ok){
+    saveProfile();toast('프로필이 저장되었습니다');
+  }else{
+    // 취소 시 원래 값으로 복원
+    document.getElementById('pname').value=_profileSnapshot.name;
+    document.getElementById('pbio').value=_profileSnapshot.bio;
+  }
+  // 편집 모드 종료
+  document.getElementById('pname').readOnly=true;
+  document.getElementById('pbio').readOnly=true;
+  document.getElementById('pname').style.opacity='.8';
+  document.getElementById('pbio').style.opacity='.8';
+  document.getElementById('btnEdit').style.display='inline-block';
+  document.getElementById('btnSave').style.display='none';
+  _profileSnapshot=null;
+  return true;
+}
 function openAvatarModal(){const m=document.getElementById('avatarModal');const prev=document.getElementById('avatarPreview');const svg=document.getElementById('avatarPreviewSvg');if(profile.avatarImg){prev.style.backgroundImage='url('+profile.avatarImg+')';svg.style.display='none'}else{prev.style.backgroundImage='none';svg.style.display='block'}m.classList.add('on')}
 var _pendingAvatar=null;
 function uploadAvatar(e){const f=e.target.files[0];if(!f)return;compressImage(f).then(data=>{_pendingAvatar=data;document.getElementById('avatarPreview').style.backgroundImage='url('+data+')';document.getElementById('avatarPreviewSvg').style.display='none';document.getElementById('btnChangeAvatar').style.display='none';document.getElementById('btnSaveAvatar').style.display='inline-block'})}
@@ -130,28 +283,51 @@ function saveAvatar(){if(_pendingAvatar){profile.avatarImg=_pendingAvatar;docume
 function loadAvatar(){if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';document.getElementById('avatarSvg').style.display='none'}}
 loadAvatar();
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000)}
-function saveRecs(){localStorage.setItem('nnd_records',JSON.stringify(records.map(x=>{const c={...x};delete c._mk;return c})))}
+function saveRecs(){var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});localStorage.setItem('nnd_records',JSON.stringify(clean));if(currentUser&&sb)syncToSupabase()}
+var syncTimer=null;
+function syncToSupabase(){clearTimeout(syncTimer);syncTimer=setTimeout(function(){var clean=records.map(function(x){return{user_id:currentUser.id,cat:x.cat,name:x.name,title:x.title||'',addr:x.addr||'',region:x.region||'',memo:x.memo||'',lat:x.ll[0],lng:x.ll[1],photos:x.photos?x.photos.filter(function(p){return p}):[],record_date:x.date||'',record_ts:x.ts||0}});sb.from('records').delete().eq('user_id',currentUser.id).then(function(){if(!clean.length)return;sb.from('records').insert(clean).then(function(){})})},1500)}
 let cat='간 곳',selLL=null,selName='',selAddr='',photos=[null,null,null,null,null,null],tempMarker=null,curTab='go',calDate=new Date(),editingIdx=-1;
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function resetPhotoSlots(){photos=[null,null,null,null,null,null];for(let i=0;i<6;i++)document.getElementById('ps'+i).innerHTML='<span>+</span>'}
 function renderPhotoSlot(i){document.getElementById('ps'+i).innerHTML=photos[i]?`<img src="${photos[i]}"/>`:'<span>+</span>'}
 function compressImage(file){return new Promise(res=>{const rd=new FileReader();rd.onload=ev=>{const img=new Image();img.onload=()=>{const max=1024;let w=img.width,h=img.height;if(w>max||h>max){if(w>h){h=h*max/w;w=max}else{w=w*max/h;h=max}}const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);res(cv.toDataURL('image/jpeg',0.7))};img.src=ev.target.result};rd.readAsDataURL(file)})}
 async function pickPhotos(e){const files=Array.from(e.target.files||[]);if(!files.length)return;let slot=photos.findIndex(p=>!p);if(slot<0)return;for(const f of files){if(slot>=6)break;photos[slot]=await compressImage(f);renderPhotoSlot(slot);slot=photos.findIndex(p=>!p);if(slot<0)break}e.target.value=''}
-const map=new kakao.maps.Map(document.getElementById('map'),{center:new kakao.maps.LatLng(36.5,127.8),level:13});
-map.addControl(new kakao.maps.ZoomControl(),kakao.maps.ControlPosition.RIGHT);
-if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{const ll=new kakao.maps.LatLng(p.coords.latitude,p.coords.longitude);map.setCenter(ll);map.setLevel(5);const svg='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"><path d="M16 0C7.2 0 0 7.2 0 16c0 12 16 24 16 24s16-12 16-24C32 7.2 24.8 0 16 0z" fill="%23D97757"/><circle cx="16" cy="16" r="6" fill="%23fff"/></svg>';new kakao.maps.Marker({map,position:ll,image:new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+svg,new kakao.maps.Size(32,40),{offset:new kakao.maps.Point(16,40)})})})}
+let map;
+try{
+  if(kakaoLoaded){
+    map=new kakao.maps.Map(document.getElementById('map'),{center:new kakao.maps.LatLng(36.5,127.8),level:13});
+    map.addControl(new kakao.maps.ZoomControl(),kakao.maps.ControlPosition.RIGHT);
+  } else {
+    map = {setCenter:function(){},setLevel:function(){},addControl:function(){}};
+  }
+}catch(e){
+  console.warn('Map init failed:',e);
+  map = {setCenter:function(){},setLevel:function(){},addControl:function(){}};
+}
+var _curMarker=null;
+function updateCurrentLocation(){
+  if(!kakaoLoaded||!navigator.geolocation)return;
+  navigator.geolocation.getCurrentPosition(function(p){
+    var ll=new kakao.maps.LatLng(p.coords.latitude,p.coords.longitude);
+    map.setCenter(ll);map.setLevel(4);
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"><path d="M16 0C7.2 0 0 7.2 0 16c0 12 16 24 16 24s16-12 16-24C32 7.2 24.8 0 16 0z" fill="%23D97757"/><circle cx="16" cy="16" r="6" fill="%23fff"/></svg>';
+    if(_curMarker)_curMarker.setMap(null);
+    _curMarker=new kakao.maps.Marker({map:map,position:ll,image:new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+svg,new kakao.maps.Size(32,40),{offset:new kakao.maps.Point(16,40)})});
+  },function(err){console.warn('위치 확인 실패:',err.message)},{enableHighAccuracy:true,timeout:10000,maximumAge:0});
+}
+updateCurrentLocation();
 function mkImg(c){const s=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="${encodeURIComponent(c)}" stroke="white" stroke-width="2"/></svg>`;return new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+s,new kakao.maps.Size(20,20),{offset:new kakao.maps.Point(10,10)})}
 const goImg=mkImg('#1D4ED8'),willImg=mkImg('#E63946');
 let _curIW=null;function closeIW(){if(_curIW){_curIW.close();_curIW=null}}
-function plotRecord(r){const pos=new kakao.maps.LatLng(r.ll[0],r.ll[1]);const mk=new kakao.maps.Marker({map,position:pos,image:r.cat==='간 곳'?goImg:willImg});r._mk=mk;const isGo=r.cat==='간 곳';const thumb=isGo&&r.photos&&r.photos.find(p=>p);const photos3=isGo&&r.photos?r.photos.filter(p=>p).slice(0,3):[];const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;margin-bottom:2px">${r.name}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:''}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3.length?8:8}px">${r.region||''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;const iw=new kakao.maps.InfoWindow({content,removable:true});kakao.maps.event.addListener(mk,'click',()=>{closeIW();iw.open(map,mk);_curIW=iw})}
+function plotRecord(r){if(!kakaoLoaded)return;const pos=new kakao.maps.LatLng(r.ll[0],r.ll[1]);const mk=new kakao.maps.Marker({map,position:pos,image:r.cat==='간 곳'?goImg:willImg});r._mk=mk;const isGo=r.cat==='간 곳';const thumb=isGo&&r.photos&&r.photos.find(p=>p);const photos3=isGo&&r.photos?r.photos.filter(p=>p).slice(0,3):[];const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;margin-bottom:2px">${r.name}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:''}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3.length?8:8}px">${r.region||''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;const iw=new kakao.maps.InfoWindow({content,removable:true});kakao.maps.event.addListener(mk,'click',()=>{closeIW();iw.open(map,mk);_curIW=iw})}
 records.forEach(plotRecord);
 const search=document.getElementById('search'),sresults=document.getElementById('sresults');
 let tm;search.addEventListener('input',()=>{clearTimeout(tm);const q=search.value.trim();if(!q){sresults.style.display='none';return}tm=setTimeout(()=>{fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=10`,{headers:{Authorization:'KakaoAK '+KAKAO_REST}}).then(r=>r.json()).then(d=>{sresults.innerHTML='';(d.documents||[]).forEach(x=>{const el=document.createElement('div');el.innerHTML=`<div class="nm">${x.place_name}</div><div class="ad">${x.road_address_name||x.address_name||''}</div>`;el.onclick=()=>selectPlace(+x.y,+x.x,x.place_name,x.road_address_name||x.address_name||'',x.address_name||'');sresults.appendChild(el)});sresults.style.display=(d.documents&&d.documents.length)?'block':'none'}).catch(()=>{sresults.innerHTML='<div class="ad" style="padding:11px 14px">검색 실패</div>';sresults.style.display='block'})},350)});
-function selectPlace(lat,lon,name,addr,region){selLL=[lat,lon];selName=name;selAddr=addr;window._region=region||'';const pos=new kakao.maps.LatLng(lat,lon);map.setCenter(pos);map.setLevel(3);if(tempMarker)tempMarker.setMap(null);tempMarker=new kakao.maps.Marker({map,position:pos,image:goImg});sresults.style.display='none';search.value=name;openForm()}
+function selectPlace(lat,lon,name,addr,region){selLL=[lat,lon];selName=name;selAddr=addr;window._region=region||'';if(kakaoLoaded){const pos=new kakao.maps.LatLng(lat,lon);map.setCenter(pos);map.setLevel(3);if(tempMarker)tempMarker.setMap(null);tempMarker=new kakao.maps.Marker({map,position:pos,image:goImg})}sresults.style.display='none';search.value=name;openForm()}
 function openForm(){document.getElementById('sPlace').textContent=selName;document.getElementById('recDate').value=todayStr();document.getElementById('recTitle').value='';setCat('간 곳');document.getElementById('memo').value='';resetPhotoSlots();document.getElementById('sheet').classList.add('on')}
 function cancelForm(){document.getElementById('sheet').classList.remove('on');if(tempMarker){tempMarker.setMap(null);tempMarker=null}document.getElementById('catGo').disabled=false;document.getElementById('catWill').disabled=false;selLL=null;editingIdx=-1;search.value='';sresults.style.display='none'}
 function setCat(c){cat=c;document.getElementById('catGo').className=c==='간 곳'?'on-go':'';document.getElementById('catWill').className=c==='갈 곳'?'on-will':'';document.getElementById('photoBox').classList.toggle('hide',c==='갈 곳');const dBox=document.getElementById('dateBox');if(c==='갈 곳'){dBox.style.display='none'}else{dBox.style.display='block';document.getElementById('recDate').max=todayStr()}document.getElementById('memo').placeholder=c==='갈 곳'?'가고 싶은 이유':'한 줄 기록';document.getElementById('recTitle').placeholder=c==='갈 곳'?'제목 (선택)':'제목';if(tempMarker&&selLL)tempMarker.setImage(c==='간 곳'?goImg:willImg)}
-function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3);document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
+function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);if(kakaoLoaded){map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3)}document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
 function saveRecord(){if(!selLL)return;const dInp=document.getElementById('recDate');let useDate,useTs;if(cat==='간 곳'&&dInp.value){const p=dInp.value.split('-');const dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);useDate=dt.toLocaleDateString('ko-KR');useTs=dt.getTime()}else{const now=new Date();useDate=now.toLocaleDateString('ko-KR');useTs=now.getTime()}const title=document.getElementById('recTitle').value;if(editingIdx>=0){const r=records[editingIdx];if(r._mk){r._mk.setMap(null);delete r._mk}r.cat='간 곳';r.photos=[...photos];r.memo=document.getElementById('memo').value;r.title=title;r.date=useDate;r.ts=useTs;saveRecs();plotRecord(r);renderAll();cancelForm();return}const r={cat,ll:[...selLL],name:selName,addr:selAddr,region:window._region||'',photos:cat==='간 곳'?[...photos]:[],memo:document.getElementById('memo').value,title,date:useDate,ts:useTs};records.unshift(r);saveRecs();if(tempMarker){tempMarker.setMap(null);tempMarker=null}plotRecord(r);renderAll();cancelForm()}
 function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='go'?'on':'';document.getElementById('tabWill').className=t==='will'?'on':'';document.getElementById('goSection').style.display=t==='go'?'block':'none';document.getElementById('willSection').style.display=t==='will'?'block':'none'}
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');h+=`<div class="day ${dates[dt]?'has':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
@@ -160,7 +336,23 @@ function jumpToList(idx){const r=records[idx];if(!r)return;const tab=r.cat==='�
 function openDetail(idx){const r=records[idx];if(!r)return;document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden">${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div><div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:4px">${r.name}</div>${r.title?`<div style="font-size:13px;color:var(--brown);opacity:.8;margin-bottom:10px">[${r.title}]</div>`:''}<div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:14px">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px;background:#fff;border:1px solid var(--beige);border-radius:8px">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
 function closeDetail(){document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-list').classList.add('active')}
 function updateWillMemo(idx,val){records[idx].memo=val;saveRecs()}
-function normCity(region){if(!region)return '기타';var parts=region.split(' ').filter(function(x){return x&&!/^\d/.test(x)&&x.length>1});if(!parts.length)return '기타';for(var i=0;i<parts.length;i++){var p=parts[i];if(/특별시$|광역시$|특별자치시$/.test(p))return p;if(/시$|군$/.test(p)&&!/도$/.test(p))return p}var first=parts[0];if(first==='서울')return '서울특별시';if(first==='부산')return '부산광역시';if(first==='대구')return '대구광역시';if(first==='인천')return '인천광역시';if(first==='광주')return '광주광역시';if(first==='대전')return '대전광역시';if(first==='울산')return '울산광역시';if(first==='세종')return '세종특별자치시';if(/도$|특별자치도$/.test(first)&&parts[1])return parts[1];return '기타'}
+function normCity(region){
+  if(!region)return '기타';
+  var parts=region.split(' ').filter(function(x){return x&&!/^\d/.test(x)&&x.length>1});
+  if(!parts.length)return '기타';
+  var first=parts[0];
+  // 약칭 -> 정식명 변환
+  var shortMap={'서울':'서울특별시','부산':'부산광역시','대구':'대구광역시','인천':'인천광역시','광주':'광주광역시','대전':'대전광역시','울산':'울산광역시','세종':'세종특별자치시'};
+  if(shortMap[first])first=shortMap[first];
+  // 특별시/광역시/특별자치시는 그대로 반환 (산하 구·군 무시)
+  if(/특별시$|광역시$|특별자치시$/.test(first))return first;
+  // 도/특별자치도면 두 번째 단어가 시/군이어야 시 단위
+  if(/도$|특별자치도$/.test(first)){
+    if(parts[1]&&/시$|군$/.test(parts[1]))return parts[1];
+    return '기타';
+  }
+  return '기타';
+}
 function editRecord(idx){var r=records[idx];if(!r)return;editingIdx=idx;selLL=[].concat(r.ll);selName=r.name;selAddr=r.addr||'';window._region=r.region||'';
 document.getElementById('sPlace').textContent=selName+' (수정)';
 cat=r.cat;document.getElementById('catGo').className=r.cat==='간 곳'?'on-go':'';document.getElementById('catWill').className=r.cat==='갈 곳'?'on-will':'';document.getElementById('catGo').disabled=false;document.getElementById('catWill').disabled=false;
@@ -211,9 +403,333 @@ var pct=Math.round(d.count/total*100);
 return '<span style="display:inline-flex;align-items:center;gap:3px"><span style="width:8px;height:8px;border-radius:50%;background:'+colors[i%colors.length]+'"></span>'+d.name+' '+pct+'%</span>'
 }).join('');
 })();
-if(typeof L!=='undefined'&&document.getElementById('miniLeaflet')){if(!window._miniMap){try{window._miniMap=L.map('miniLeaflet',{zoomControl:true,attributionControl:false,dragging:true,scrollWheelZoom:true,doubleClickZoom:true,touchZoom:true}).setView([35.9,127.8],7);fetch('https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2018/json/skorea-provinces-2018-geo.json').then(function(r){return r.json()}).then(function(d){L.geoJSON(d,{style:{color:'#3D3929',weight:1,fillColor:'#F5F1EB',fillOpacity:1}}).addTo(window._miniMap);window._miniMap.invalidateSize()}).catch(function(){})}catch(e){}}setTimeout(function(){if(window._miniMap)window._miniMap.invalidateSize()},500);if(window._miniMarkers){window._miniMarkers.forEach(m=>window._miniMap.removeLayer(m))}window._miniMarkers=[];records.forEach(r=>{if(!r.ll)return;var ic=L.divIcon({html:'<div style="width:8px;height:8px;background:'+(r.cat==='간 곳'?'#1D4ED8':'#E63946')+';border-radius:50%"></div>',className:'',iconSize:[8,8]});var mk=L.marker(r.ll,{icon:ic,interactive:true}).addTo(window._miniMap);mk.bindPopup('<div style="font-family:Georgia,serif;font-size:12px;color:#3D3929;white-space:nowrap">'+r.name+(r.title?' <span style="opacity:.6">['+r.title+']</span>':'')+'</div>',{closeButton:false,offset:[0,-4]});window._miniMarkers.push(mk)})}}
-function openInvite(){const from=profile.email||'(마이페이지에서 이메일을 먼저 입력해주세요)';document.getElementById('invFrom').textContent=from;document.getElementById('invTo').value='';document.getElementById('invSubject').value='너나들이에 초대합니다';document.getElementById('invBody').value=profile.name+'님이 너나들이에 초대합니다.\n\n내 사람과 나누는, 지도 위 기억 일기.\n\n함께 기억을 나누고 살아가며 시간으로 보답하고 싶습니다.';document.getElementById('inviteModal').classList.add('on')}
-function sendInvite(){const to=document.getElementById('invTo').value;if(!to){toast('받는 사람 이메일을 입력해주세요');return}const subj=encodeURIComponent(document.getElementById('invSubject').value);const body=encodeURIComponent(document.getElementById('invBody').value);window.location.href='mailto:'+to+'?subject='+subj+'&body='+body;document.getElementById('inviteModal').classList.remove('on')}
+if(typeof L!=='undefined'&&document.getElementById('miniLeaflet')){if(!window._miniMap){try{window._miniMap=L.map('miniLeaflet',{zoomControl:true,attributionControl:false,dragging:true,scrollWheelZoom:true,doubleClickZoom:true,touchZoom:true,minZoom:6,maxZoom:11,maxBounds:[[32.5,123.5],[39.5,132.5]],maxBoundsViscosity:1.0}).setView([36.3,127.8],6);fetch('https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2018/json/skorea-provinces-2018-geo.json').then(function(r){return r.json()}).then(function(d){L.geoJSON(d,{style:{color:'#3D3929',weight:1,fillColor:'#F5F1EB',fillOpacity:1}}).addTo(window._miniMap);setTimeout(function(){window._miniMap.invalidateSize();window._miniMap.fitBounds([[32.7,124.0],[38.9,132.3]],{padding:[4,4]})},100)}).catch(function(){})}catch(e){}}setTimeout(function(){if(window._miniMap)window._miniMap.invalidateSize()},500);if(window._miniMarkers){window._miniMarkers.forEach(m=>window._miniMap.removeLayer(m))}window._miniMarkers=[];records.forEach(r=>{if(!r.ll)return;var ic=L.divIcon({html:'<div style="width:8px;height:8px;background:'+(r.cat==='간 곳'?'#1D4ED8':'#E63946')+';border-radius:50%"></div>',className:'',iconSize:[8,8]});var mk=L.marker(r.ll,{icon:ic,interactive:true}).addTo(window._miniMap);mk.bindPopup('<div style="font-family:Georgia,serif;font-size:12px;color:#3D3929;white-space:nowrap">'+r.name+(r.title?' <span style="opacity:.6">['+r.title+']</span>':'')+'</div>',{closeButton:false,offset:[0,-4]});window._miniMarkers.push(mk)})}}
+const NND_APP_URL = "https://mrleegreatlee-ctrl.github.io/neonadeuri/";
+function buildInviteMessage(){
+  var name=profile.name||'친구';
+  return name+' 님이 귀하를 너나들이에 초대합니다.\n\n'
+        +'내 사람과 나누는, 지도 위 기억 일기.\n'
+        +'함께 기억을 나누고 살아가며 시간으로 보답하고 싶습니다.\n\n'
+        +'바로 방문하기: '+NND_APP_URL;
+}
+function openInvite(){
+  if(!currentUser){toast('로그인 후 초대할 수 있습니다');return}
+  var from=profile.email||currentUser.email||'';
+  document.getElementById('invFrom').textContent=from;
+  document.getElementById('invTo').value='';
+  document.getElementById('invMsgPreview').textContent=buildInviteMessage();
+  document.getElementById('inviteModal').classList.add('on');
+}
+async function sendInvite(){
+  var to=document.getElementById('invTo').value.trim();
+  if(!to){toast('받는 사람 이메일을 입력해주세요');return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){toast('올바른 이메일 형식이 아닙니다');return}
+  // 친구 목록에 추가 (Supabase)
+  await addFriend(to);
+  // 메일 클라이언트 열기
+  var subj=encodeURIComponent('너나들이에 초대합니다');
+  var body=encodeURIComponent(buildInviteMessage());
+  window.location.href='mailto:'+to+'?subject='+subj+'&body='+body;
+  document.getElementById('inviteModal').classList.remove('on');
+  toast('초대 메일을 발송했습니다');
+}
+
+async function sendKakaoInvite(){
+  if(typeof Kakao==='undefined'||!Kakao.isInitialized()){toast('카카오 SDK 로드 실패');return}
+  var to=document.getElementById('invTo').value.trim();
+  // 카카오톡은 이메일 입력이 없어도 OK (공유 시 받는 사람이 카톡에서 선택)
+  if(to&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){toast('올바른 이메일 형식이 아닙니다');return}
+  if(to)await addFriend(to);
+  try{
+    Kakao.Share.sendDefault({
+      objectType:'feed',
+      content:{
+        title:'너나들이에 초대합니다',
+        description:buildInviteMessage(),
+        imageUrl:'',
+        link:{mobileWebUrl:NND_APP_URL,webUrl:NND_APP_URL}
+      },
+      buttons:[{title:'바로 방문하기',link:{mobileWebUrl:NND_APP_URL,webUrl:NND_APP_URL}}]
+    });
+    document.getElementById('inviteModal').classList.remove('on');
+    toast('카카오톡으로 공유했습니다');
+  }catch(e){
+    console.warn('Kakao share failed',e);
+    toast('카카오톡 공유 실패: '+e.message);
+  }
+}
+
+// ─── 친구 관리 ─────────────────────────────────────────────────
+async function addFriend(email){
+  if(!currentUser||!sb)return;
+  try{
+    var res=await sb.from('friends').upsert({user_id:currentUser.id,friend_email:email,status:'pending'},{onConflict:'user_id,friend_email'});
+    if(res.error)console.warn('addFriend',res.error);
+  }catch(e){console.warn('addFriend',e)}
+}
+
+async function loadFriends(){
+  if(!currentUser||!sb)return [];
+  try{
+    var res=await sb.from('friends').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+    return res.data||[];
+  }catch(e){console.warn('loadFriends',e);return []}
+}
+
+async function removeFriend(id){
+  if(!currentUser||!sb)return;
+  var ok=await customConfirm('친구 삭제','이 사람을 내 사람 목록에서 제외하시겠습니까?');
+  if(!ok)return;
+  try{
+    await sb.from('friends').delete().eq('id',id);
+    openFriendsList(); // 목록 갱신
+    toast('삭제되었습니다');
+  }catch(e){console.warn('removeFriend',e)}
+}
+
+async function openFriendsList(){
+  if(!currentUser){toast('로그인 후 이용할 수 있습니다');return}
+  var modal=document.getElementById('friendsModal');
+  document.getElementById('friendsList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
+  modal.classList.add('on');
+  var friends=await loadFriends();
+  var pending=friends.filter(function(f){return f.status==='pending'}).length;
+  var accepted=friends.filter(function(f){return f.status==='accepted'}).length;
+  document.getElementById('friendsCount').textContent='총 '+friends.length+'명 (수락 '+accepted+' · 대기 '+pending+')';
+  if(!friends.length){
+    document.getElementById('friendsList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:13px;line-height:1.6">아직 초대한 사람이 없습니다.<br/>새 사람을 초대해보세요.</div>';
+    return;
+  }
+  document.getElementById('friendsList').innerHTML=friends.map(function(f){
+    var statusBadge=f.status==='accepted'
+      ? '<span style="font-size:10px;color:#4AADA8;background:#EBF9F8;padding:2px 8px;border-radius:10px">수락됨</span>'
+      : '<span style="font-size:10px;color:var(--terra);background:#FFF0EB;padding:2px 8px;border-radius:10px">대기중</span>';
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:6px">'
+      +'<div style="flex:1;min-width:0">'
+        +'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis">'+(f.friend_name||f.friend_email)+'</div>'
+        +'<div style="font-size:10px;color:#8B7D6B;overflow:hidden;text-overflow:ellipsis">'+f.friend_email+'</div>'
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
+        +statusBadge
+        +'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
+      +'</div></div>';
+  }).join('');
+}
+
+async function updateFriendsBadge(){
+  var badge=document.getElementById('friendsBadge');
+  if(!badge||!currentUser){if(badge)badge.textContent='';return}
+  var friends=await loadFriends();
+  if(friends.length)badge.textContent=friends.length;
+  else badge.textContent='';
+}
 renderAll();
-document.querySelectorAll('nav button').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+btn.dataset.v).classList.add('active');if(btn.dataset.v==='my'&&window._miniMap){setTimeout(function(){window._miniMap.invalidateSize()},100)}});
+document.querySelectorAll('nav button').forEach(function(btn){
+  btn.onclick=async function(){
+    // 마이페이지에서 다른 페이지로 이동 시 프로필 편집 확인
+    var currentView=document.querySelector('main .view.active');
+    if(currentView&&currentView.id==='view-my'&&btn.dataset.v!=='my'){
+      var canLeave=await checkProfileBeforeLeave();
+      if(!canLeave)return;
+    }
+    document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+    document.querySelectorAll('main .view').forEach(function(v){v.classList.remove('active')});
+    document.getElementById('view-'+btn.dataset.v).classList.add('active');
+    if(btn.dataset.v==='my'&&window._miniMap){setTimeout(function(){window._miniMap.invalidateSize()},100)}
+  };
+});
+
+// ── Supabase 인증 ────────────────────────────────────────────────
+function switchAuthTab(mode){
+  var isLogin=mode==='login';
+  document.getElementById('tabLoginBtn').style.background=isLogin?'var(--vermillion)':'#fff';
+  document.getElementById('tabLoginBtn').style.color=isLogin?'#fff':'var(--brown)';
+  document.getElementById('tabSignupBtn').style.background=isLogin?'#fff':'var(--vermillion)';
+  document.getElementById('tabSignupBtn').style.color=isLogin?'var(--brown)':'#fff';
+  document.getElementById('authSubmitBtn').textContent=isLogin?'로그인':'회원가입';
+  document.getElementById('authSubmitBtn').onclick=isLogin?doLogin:doSignup;
+  hideAuthError();
+}
+function closeAuthModal(){document.getElementById('authModal').classList.remove('on')}
+function showAuthError(msg){var el=document.getElementById('authError');el.textContent=msg;el.style.display='block'}
+function hideAuthError(){document.getElementById('authError').style.display='none'}
+function clearMapMarkers(){
+  records.forEach(function(r){if(r._mk){try{r._mk.setMap(null)}catch(e){}}});
+  if(typeof tempMarker!=='undefined'&&tempMarker){try{tempMarker.setMap(null)}catch(e){}tempMarker=null}
+  if(typeof closeIW==='function')closeIW();
+}
+function updateLoginUI(){
+  var lc=document.getElementById('loginBtnCard'),lo=document.getElementById('logoutBtnCard'),bar=document.getElementById('loginStatusBar');
+  if(lc)lc.style.display=currentUser?'none':'block';
+  if(lo)lo.style.display=currentUser?'block':'none';
+  if(bar){
+    bar.textContent=currentUser?('로그인: '+(currentUser.email||'')):'비로그인 상태 — 기록이 저장되지 않습니다';
+    bar.style.color=currentUser?'#4AADA8':'var(--terra)';
+  }
+}
+async function doLogin(){
+  hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
+  var email=document.getElementById('authEmail').value.trim();
+  var pw=document.getElementById('authPassword').value;
+  if(!email||!pw){showAuthError('이메일과 비밀번호를 입력해주세요');return}
+  var btn=document.getElementById('authSubmitBtn');btn.textContent='로그인 중...';btn.disabled=true;
+  var res=await sb.auth.signInWithPassword({email:email,password:pw});
+  btn.textContent='로그인';btn.disabled=false;
+  if(res.error){showAuthError('로그인 실패: '+res.error.message);return}
+  onAuthSuccess(res.data.user);
+}
+async function doSignup(){
+  hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
+  var email=document.getElementById('authEmail').value.trim();
+  var pw=document.getElementById('authPassword').value;
+  if(!email||!pw){showAuthError('이메일과 비밀번호를 입력해주세요');return}
+  if(pw.length<6){showAuthError('비밀번호는 6자 이상이어야 합니다');return}
+  var btn=document.getElementById('authSubmitBtn');btn.textContent='가입 중...';btn.disabled=true;
+  var res=await sb.auth.signUp({email:email,password:pw});
+  btn.textContent='회원가입';btn.disabled=false;
+  if(res.error){showAuthError('회원가입 실패: '+res.error.message);return}
+  if(res.data.session){onAuthSuccess(res.data.user);return}
+  showAuthError('가입 확인 이메일을 발송했습니다. 받은 편지함을 확인해주세요.');
+}
+async function doKakaoLogin(){
+  hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
+  var res=await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:'https://mrleegreatlee-ctrl.github.io/neonadeuri/'}});
+  if(res.error){showAuthError('카카오 로그인 실패: '+res.error.message)}
+}
+async function doLogout(){
+  var ok=await customConfirm('로그아웃','로그아웃하시겠습니까?');
+  if(!ok)return;
+  if(!sb)return;
+  await sb.auth.signOut();
+  currentUser=null;
+  clearMapMarkers();
+  records=[];profile={name:'',bio:'',email:'',avatarImg:''};
+  localStorage.removeItem('nnd_records');localStorage.removeItem('nnd_profile');
+  document.getElementById('pname').value='';document.getElementById('pbio').value='';document.getElementById('pemail').value='';
+  document.getElementById('avatar').style.backgroundImage='';
+  if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='block';
+  renderAll();updateLoginUI();
+  document.getElementById('authModal').classList.add('on');
+  loadRememberedEmails();
+  toast('로그아웃되었습니다');
+}
+async function onAuthSuccess(user){
+  currentUser=user;
+  rememberEmail(user.email);
+  closeAuthModal();
+  toast('로그인 되었습니다');
+  clearMapMarkers();
+  await loadFromSupabase();
+  renderAll();
+  records.forEach(plotRecord);
+  updateLoginUI();
+  updateFriendsBadge();
+}
+async function loadFromSupabase(){
+  if(!currentUser||!sb)return;
+  try{
+    var pRes=await sb.from('profiles').select('*').eq('id',currentUser.id).maybeSingle();
+    if(pRes.data){
+      profile.name=pRes.data.name||'';profile.bio=pRes.data.bio||'';
+      profile.email=pRes.data.email||currentUser.email||'';profile.avatarImg=pRes.data.avatar_img||'';
+    }else{
+      profile.email=currentUser.email||'';profile.name=currentUser.email.split('@')[0]||'';profile.bio='';profile.avatarImg='';
+    }
+    localStorage.setItem('nnd_profile',JSON.stringify(profile));
+    document.getElementById('pname').value=profile.name;document.getElementById('pbio').value=profile.bio;document.getElementById('pemail').value=profile.email;
+    if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='none'}
+    var rRes=await sb.from('records').select('*').eq('user_id',currentUser.id).order('record_ts',{ascending:false});
+    if(rRes.data){
+      records=rRes.data.map(function(row){return{cat:row.cat,name:row.name,title:row.title||'',addr:row.addr||'',region:row.region||'',memo:row.memo||'',ll:[row.lat,row.lng],photos:row.photos||[],date:row.record_date||'',ts:row.record_ts||0}});
+      localStorage.setItem('nnd_records',JSON.stringify(records));
+    }
+  }catch(e){console.warn('loadFromSupabase failed',e)}
+}
+
+function loadRememberedEmails(){
+  try{
+    var saved=JSON.parse(localStorage.getItem('nnd_remembered_emails')||'[]');
+    var box=document.getElementById('rememberedEmails');
+    if(!box||!saved.length){if(box)box.style.display='none';return}
+    box.style.display='block';
+    box.innerHTML=saved.slice(0,3).map(function(em){
+      return '<div onclick="document.getElementById(\'authEmail\').value=\''+em+'\';document.getElementById(\'authPassword\').focus()" style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:#fff;border:1px solid var(--beige);border-radius:6px;font-size:11px;color:var(--brown);cursor:pointer;margin-bottom:4px">'
+        +'<span>'+em+'</span>'
+        +'<span onclick="event.stopPropagation();removeRememberedEmail(\''+em+'\')" style="color:#C96342;font-size:14px;padding:0 4px">×</span>'
+      +'</div>';
+    }).join('');
+  }catch(e){}
+}
+function rememberEmail(em){
+  if(!em)return;
+  try{
+    var saved=JSON.parse(localStorage.getItem('nnd_remembered_emails')||'[]');
+    saved=saved.filter(function(x){return x!==em});
+    saved.unshift(em);
+    saved=saved.slice(0,3);
+    localStorage.setItem('nnd_remembered_emails',JSON.stringify(saved));
+  }catch(e){}
+}
+function removeRememberedEmail(em){
+  try{
+    var saved=JSON.parse(localStorage.getItem('nnd_remembered_emails')||'[]');
+    saved=saved.filter(function(x){return x!==em});
+    localStorage.setItem('nnd_remembered_emails',JSON.stringify(saved));
+    loadRememberedEmails();
+  }catch(e){}
+}
+
+function customConfirm(title,msg){
+  return new Promise(function(resolve){
+    document.getElementById('confirmTitle').textContent=title||'';
+    document.getElementById('confirmMsg').textContent=msg||'';
+    var modal=document.getElementById('confirmModal');
+    var ok=document.getElementById('confirmOk');
+    var cancel=document.getElementById('confirmCancel');
+    function close(result){
+      modal.classList.remove('on');
+      ok.onclick=null;cancel.onclick=null;
+      resolve(result);
+    }
+    ok.onclick=function(){close(true)};
+    cancel.onclick=function(){close(false)};
+    modal.classList.add('on');
+  });
+}
+async function initAuth(){
+  if(!sb){updateLoginUI();return}
+  try{
+    var sessionRes=await sb.auth.getSession();
+    if(sessionRes.data&&sessionRes.data.session){
+      currentUser=sessionRes.data.session.user;
+      closeAuthModal();
+      await loadFromSupabase();
+      renderAll();
+      records.forEach(plotRecord);
+    }else{
+      // 비로그인 상태: 모든 프로필/기록 데이터 초기화
+      records=[];profile={name:'',bio:'',email:'',avatarImg:''};
+      localStorage.removeItem('nnd_records');localStorage.removeItem('nnd_profile');
+      document.getElementById('pname').value='';document.getElementById('pbio').value='';document.getElementById('pemail').value='';
+      document.getElementById('avatar').style.backgroundImage='';
+      if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='block';
+      renderAll();
+      document.getElementById('authModal').classList.add('on');
+      loadRememberedEmails();
+    }
+    updateLoginUI();
+    sb.auth.onAuthStateChange(function(event,session){
+      if(event==='SIGNED_IN'&&session&&!currentUser){
+        currentUser=session.user;closeAuthModal();clearMapMarkers();
+        loadFromSupabase().then(function(){renderAll();records.forEach(plotRecord);updateLoginUI()});
+      }else if(event==='SIGNED_OUT'){
+        currentUser=null;clearMapMarkers();records=[];renderAll();updateLoginUI();
+        document.getElementById('authModal').classList.add('on');loadRememberedEmails();
+      }
+    });
+  }catch(e){console.warn('initAuth failed',e);updateLoginUI()}
+}
+setTimeout(initAuth,100);
+
 </script></body></html>
