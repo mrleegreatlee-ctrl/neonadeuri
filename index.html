@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>너나들이</title>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>너나들이</title>
 <style>
 :root{--cream:#F5F1EB;--vermillion:#D97757;--beige:#E8DCC8;--brown:#3D3929;--terra:#C96342;--red:#E63946;--blue:#1D4ED8}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;font-family:Helvetica,sans-serif;background:var(--cream);color:var(--brown);font-size:14px;overflow:hidden}
-#app{position:relative;width:100vw;height:100vh;max-width:480px;margin:0 auto;background:var(--cream);display:flex;flex-direction:column}
+html,body{height:100%;height:100dvh;font-family:Helvetica,sans-serif;background:var(--cream);color:var(--brown);font-size:14px;overflow:hidden;-webkit-overflow-scrolling:touch}
+#app{position:relative;width:100vw;height:100vh;height:100dvh;max-width:480px;margin:0 auto;background:var(--cream);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0)}
 header{padding:12px 16px;border-bottom:1px solid var(--beige);background:var(--cream);z-index:10}
 header h1{font-family:Georgia,serif;font-size:18px}
 header .sub{font-size:10px;color:var(--terra);margin-top:2px}
@@ -173,6 +173,14 @@ textarea#memo{min-height:70px;resize:none}
     </div>
   </div>
 </div>
+<!-- 사진 확대 라이트박스 -->
+<div id="photoLightbox" onclick="closeLightbox(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:5000;justify-content:center;align-items:center;padding:20px;flex-direction:column">
+  <button onclick="closeLightbox()" style="position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;font-size:22px;cursor:pointer;z-index:5001">×</button>
+  <div id="lightboxCounter" style="position:absolute;top:24px;left:50%;transform:translateX(-50%);color:#fff;font-size:13px;font-family:Georgia,serif;z-index:5001;background:rgba(0,0,0,.4);padding:4px 12px;border-radius:12px"></div>
+  <button onclick="lightboxPrev(event)" id="lbPrev" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:none;background:rgba(255,255,255,.12);color:#fff;border-radius:50%;font-size:24px;cursor:pointer;z-index:5001">‹</button>
+  <button onclick="lightboxNext(event)" id="lbNext" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:none;background:rgba(255,255,255,.12);color:#fff;border-radius:50%;font-size:24px;cursor:pointer;z-index:5001">›</button>
+  <img id="lightboxImg" style="max-width:100%;max-height:90vh;object-fit:contain;border-radius:8px"/>
+</div>
 <div class="toast" id="toastBox"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -287,7 +295,48 @@ loadAvatar();
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000)}
 function saveRecs(){var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});localStorage.setItem('nnd_records',JSON.stringify(clean));if(currentUser&&sb)syncToSupabase()}
 var syncTimer=null;
-function syncToSupabase(){clearTimeout(syncTimer);syncTimer=setTimeout(function(){var clean=records.map(function(x){return{user_id:currentUser.id,cat:x.cat,name:x.name,title:x.title||'',addr:x.addr||'',region:x.region||'',memo:x.memo||'',lat:x.ll[0],lng:x.ll[1],photos:x.photos?x.photos.filter(function(p){return p}):[],record_date:x.date||'',record_ts:x.ts||0}});sb.from('records').delete().eq('user_id',currentUser.id).then(function(){if(!clean.length)return;sb.from('records').insert(clean).then(function(){})})},1500)}
+function syncToSupabase(){
+  clearTimeout(syncTimer);
+  syncTimer=setTimeout(async function(){
+    if(!currentUser||!sb)return;
+    try{
+      // 1. sbId가 있는 기록 = UPDATE 대상, 없는 기록 = INSERT 대상
+      var toInsert=[],toUpdate=[];
+      records.forEach(function(x,idx){
+        var row={
+          user_id:currentUser.id,cat:x.cat,name:x.name,title:x.title||'',
+          addr:x.addr||'',region:x.region||'',memo:x.memo||'',
+          lat:x.ll[0],lng:x.ll[1],
+          photos:x.photos?x.photos.filter(function(p){return p}):[],
+          record_date:x.date||'',record_ts:x.ts||0
+        };
+        if(x.sbId){row.id=x.sbId;toUpdate.push({row:row,idx:idx})}
+        else toInsert.push({row:row,idx:idx});
+      });
+      // 2. 새 기록 INSERT (sbId 없는 것)
+      if(toInsert.length){
+        var insRes=await sb.from('records').insert(toInsert.map(function(t){return t.row})).select();
+        if(insRes.error){console.warn('insert error:',insRes.error);toast('저장 실패: '+insRes.error.message);return}
+        // INSERT 결과의 id를 로컬 records에 sbId로 저장
+        if(insRes.data){
+          insRes.data.forEach(function(row,i){
+            var localIdx=toInsert[i].idx;
+            if(records[localIdx])records[localIdx].sbId=row.id;
+          });
+        }
+      }
+      // 3. 기존 기록 UPDATE (sbId 있는 것)
+      for(var i=0;i<toUpdate.length;i++){
+        var u=toUpdate[i];
+        var updRes=await sb.from('records').update(u.row).eq('id',u.row.id);
+        if(updRes.error)console.warn('update error:',updRes.error);
+      }
+      // 4. localStorage에 sbId 갱신된 records 다시 저장
+      var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
+      localStorage.setItem('nnd_records',JSON.stringify(clean));
+    }catch(e){console.warn('syncToSupabase error:',e);toast('저장 중 오류 발생')}
+  },1500);
+}
 let cat='간 곳',selLL=null,selName='',selAddr='',photos=[null,null,null,null,null,null],tempMarker=null,curTab='go',calDate=new Date(),editingIdx=-1;
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function resetPhotoSlots(){photos=[null,null,null,null,null,null];for(let i=0;i<6;i++)document.getElementById('ps'+i).innerHTML='<span>+</span>'}
@@ -335,7 +384,7 @@ function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='g
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');h+=`<div class="day ${dates[dt]?'has':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
 function openDay(dt){const recs=records.map((r,i)=>({r,i})).filter(x=>x.r.cat==='간 곳'&&new Date(x.r.ts||Date.now()).toLocaleDateString('ko-KR')===dt).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));if(!recs.length)return;document.getElementById('modalTitle').textContent=dt;document.getElementById('modalBody').innerHTML=recs.map(x=>`<div class="modal-rec"><div class="pname">${x.r.name}</div>${x.r.title?`<div class="ptitle">${x.r.title}</div>`:''}<div class="photos">${[0,1,2].map(i=>`<img src="${x.r.photos&&x.r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''" onclick="document.getElementById('dayModal').classList.remove('on');openDetail(${x.i})"/>`).join('')}</div></div>`).join('');document.getElementById('dayModal').classList.add('on')}
 function jumpToList(idx){const r=records[idx];if(!r)return;const tab=r.cat==='간 곳'?'go':'will';switchTab(tab);document.querySelector('nav button[data-v="list"]').click();setTimeout(()=>{const cards=document.querySelectorAll(tab==='go'?'#goCards .list-card':'#willCards .list-card');const filtered=records.filter(x=>x.cat===r.cat).sort((a,b)=>(b.ts||0)-(a.ts||0));const card=cards[filtered.indexOf(r)];if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.style.transition='background .3s';card.style.background='var(--beige)';setTimeout(()=>{card.style.background='#fff'},1500)}},150)}
-function openDetail(idx){const r=records[idx];if(!r)return;document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden">${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div><div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:4px">${r.name}</div>${r.title?`<div style="font-size:13px;color:var(--brown);opacity:.8;margin-bottom:10px">[${r.title}]</div>`:''}<div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:14px">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px;background:#fff;border:1px solid var(--beige);border-radius:8px">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
+function openDetail(idx){const r=records[idx];if(!r)return;var validPhotos=(r.photos||[]).filter(function(p){return p});window._lbPhotos=validPhotos;window._lbIdx=0;document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden;${r.photos&&r.photos[i]?'cursor:pointer':''}" ${r.photos&&r.photos[i]?`onclick="openLightbox(${validPhotos.indexOf(r.photos[i])})"`:''}>${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div><div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:4px">${r.name}</div>${r.title?`<div style="font-size:13px;color:var(--brown);opacity:.8;margin-bottom:10px">[${r.title}]</div>`:''}<div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:14px">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px;background:transparent;border:none;border-radius:8px">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
 function closeDetail(){document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-list').classList.add('active')}
 function updateWillMemo(idx,val){records[idx].memo=val;saveRecs()}
 function normCity(region){
@@ -363,7 +412,7 @@ var dBox=document.getElementById('dateBox');if(isGo&&r.ts){dBox.style.display='b
 photos=[null,null,null,null,null,null];if(r.photos){r.photos.forEach(function(p,i){if(p&&i<6){photos[i]=p}})}for(var i=0;i<6;i++){renderPhotoSlot(i)}
 document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on');
 closeDetail()}
-function deleteRecord(idx){var r=records[idx];if(!r)return;if(!confirm(r.name+' 기록을 삭제하시겠습니까?'))return;if(r._mk){r._mk.setMap(null)}records.splice(idx,1);saveRecs();renderAll();closeDetail();toast('기록이 삭제되었습니다')}
+async function deleteRecord(idx){var r=records[idx];if(!r)return;var ok=await customConfirm('기록 삭제',r.name+' 기록을 삭제하시겠습니까?');if(!ok)return;if(r._mk){r._mk.setMap(null)}var sbId=r.sbId;records.splice(idx,1);saveRecs();renderAll();closeDetail();toast('기록이 삭제되었습니다');if(sbId&&currentUser&&sb){sb.from('records').delete().eq('id',sbId).then(function(){})}}
 function renderAll(){const goRecs=records.filter(r=>r.cat==='간 곳').sort((a,b)=>(b.ts||0)-(a.ts||0)),wiRecs=records.filter(r=>r.cat==='갈 곳').sort((a,b)=>(b.ts||0)-(a.ts||0));
 document.getElementById('goCards').innerHTML=goRecs.length?goRecs.map(r=>{const idx=records.indexOf(r);return `<div class="list-card"><div class="photos" onclick="openDetail(${idx})">${[0,1,2].map(i=>`<img src="${r.photos&&r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''"/>`).join('')}</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px"><div style="font-size:11px"><span style="color:var(--terra)">${r.region||''}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">${r.name}</span></div></div>${r.title?`<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.7">[${r.title}]</div><div style="font-size:10px;color:var(--brown);opacity:.45;flex-shrink:0;margin-left:10px">${r.date}</div></div>`:`<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">${r.date}</div>`}</div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
 document.getElementById('willCards').innerHTML=wiRecs.length?wiRecs.map(r=>{const idx=records.indexOf(r);return `<div class="list-card will-card"><div style="font-size:12px;margin-bottom:5px"><span style="font-family:Georgia,serif;font-weight:bold;color:var(--brown)">${r.name}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-size:10px;color:var(--terra)">${r.addr||r.region||''}</span></div>${r.title?`<div style="font-size:11px;color:var(--brown);opacity:.7;margin-bottom:5px">[${r.title}]</div>`:''}<div style="padding:7px;background:var(--cream);border:1px solid var(--beige);border-radius:6px;font-size:12px;color:var(--brown);min-height:36px;line-height:1.4">${r.memo||'<span style="opacity:.4">메모 없음</span>'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="date" style="font-size:10px;opacity:.6">${r.date}</span><div style="display:flex;gap:4px"><button onclick="editRecord(${idx})" style="background:#fff;color:var(--brown);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="background:#fff;color:var(--terra);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">삭제</button><button onclick="startConvert(${idx})" style="background:var(--vermillion);color:#fff;border:none;border-radius:5px;padding:5px 10px;font-family:Georgia,serif;font-size:11px;cursor:pointer">다녀옴</button></div></div></div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
@@ -443,15 +492,12 @@ async function sendKakaoInvite(){
   if(to&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){toast('올바른 이메일 형식이 아닙니다');return}
   if(to)await addFriend(to);
   try{
+    // text 타입으로 메시지 전체 표시 (메일과 동일 포맷)
     Kakao.Share.sendDefault({
-      objectType:'feed',
-      content:{
-        title:'너나들이에 초대합니다',
-        description:buildInviteMessage(),
-        imageUrl:'',
-        link:{mobileWebUrl:NND_APP_URL,webUrl:NND_APP_URL}
-      },
-      buttons:[{title:'바로 방문하기',link:{mobileWebUrl:NND_APP_URL,webUrl:NND_APP_URL}}]
+      objectType:'text',
+      text:buildInviteMessage(),
+      link:{mobileWebUrl:NND_APP_URL,webUrl:NND_APP_URL},
+      buttonTitle:'바로 방문하기'
     });
     document.getElementById('inviteModal').classList.remove('on');
     toast('카카오톡으로 공유했습니다');
@@ -681,6 +727,62 @@ function removeRememberedEmail(em){
     loadRememberedEmails();
   }catch(e){}
 }
+
+
+// ── 사진 라이트박스 ─────────────────────────────────────────────
+function openLightbox(idx){
+  if(!window._lbPhotos||!window._lbPhotos.length)return;
+  window._lbIdx=idx||0;
+  updateLightbox();
+  document.getElementById('photoLightbox').style.display='flex';
+}
+function closeLightbox(e){
+  if(e&&e.target&&e.target.tagName==='IMG')return; // 이미지 자체 클릭은 닫지 않음
+  document.getElementById('photoLightbox').style.display='none';
+}
+function updateLightbox(){
+  var photos=window._lbPhotos||[];
+  if(!photos.length)return;
+  document.getElementById('lightboxImg').src=photos[window._lbIdx];
+  document.getElementById('lightboxCounter').textContent=(window._lbIdx+1)+' / '+photos.length;
+  document.getElementById('lbPrev').style.display=photos.length>1?'block':'none';
+  document.getElementById('lbNext').style.display=photos.length>1?'block':'none';
+}
+function lightboxPrev(e){
+  if(e)e.stopPropagation();
+  var photos=window._lbPhotos||[];
+  if(!photos.length)return;
+  window._lbIdx=(window._lbIdx-1+photos.length)%photos.length;
+  updateLightbox();
+}
+function lightboxNext(e){
+  if(e)e.stopPropagation();
+  var photos=window._lbPhotos||[];
+  if(!photos.length)return;
+  window._lbIdx=(window._lbIdx+1)%photos.length;
+  updateLightbox();
+}
+// 키보드 화살표 지원
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('photoLightbox').style.display!=='flex')return;
+  if(e.key==='Escape')closeLightbox();
+  else if(e.key==='ArrowLeft')lightboxPrev();
+  else if(e.key==='ArrowRight')lightboxNext();
+});
+// 스와이프 지원 (모바일)
+(function(){
+  var startX=0,startY=0;
+  var lb=document.getElementById('photoLightbox');
+  if(!lb)return;
+  lb.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;startY=e.touches[0].clientY},{passive:true});
+  lb.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-startX;
+    var dy=e.changedTouches[0].clientY-startY;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){
+      if(dx>0)lightboxPrev();else lightboxNext();
+    }
+  },{passive:true});
+})();
 
 function customConfirm(title,msg){
   return new Promise(function(resolve){
