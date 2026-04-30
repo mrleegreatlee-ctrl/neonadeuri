@@ -70,7 +70,7 @@ nav{height:60px;background:#fff;border-top:1px solid var(--beige);display:flex;z
 nav button{flex:1;border:none;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--brown);font-family:Georgia,serif;font-size:10px;opacity:.5}
 nav button.active{opacity:1;color:var(--vermillion)}
 nav button svg{width:22px;height:22px}
-.sheet{position:fixed;left:0;right:0;bottom:0;background:var(--cream);border-radius:16px 16px 0 0;padding:18px;max-height:75vh;overflow-y:auto;box-shadow:0 -4px 16px rgba(61,57,41,.2);z-index:1500;transform:translateY(100%);transition:transform .3s;max-width:480px;margin:0 auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:var(--cream);border-radius:16px 16px 0 0;padding:18px;max-height:80vh;height:auto;overflow-y:auto;box-shadow:0 -4px 16px rgba(61,57,41,.25);z-index:1500;transform:translateY(100%);transition:transform .3s;max-width:480px;margin:0 auto;padding-bottom:env(safe-area-inset-bottom,18px)}
 .sheet.on{transform:translateY(0)}
 .sheet h3{font-family:Georgia,serif;font-size:16px;margin-bottom:4px}
 .sheet .place{font-size:11px;color:var(--terra);margin-bottom:14px}
@@ -293,7 +293,15 @@ function saveAvatar(){if(_pendingAvatar){profile.avatarImg=_pendingAvatar;docume
 function loadAvatar(){if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';document.getElementById('avatarSvg').style.display='none'}}
 loadAvatar();
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000)}
-function saveRecs(){var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});localStorage.setItem('nnd_records',JSON.stringify(clean));if(currentUser&&sb)syncToSupabase()}
+function saveRecs(){
+  try{
+    var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
+    localStorage.setItem('nnd_records',JSON.stringify(clean));
+  }catch(e){console.warn('localStorage save:',e)}
+  if(currentUser&&sb){
+    try{syncToSupabase()}catch(e){console.warn('sync trigger:',e)}
+  }
+}
 var syncTimer=null;
 function syncToSupabase(){
   clearTimeout(syncTimer);
@@ -374,12 +382,95 @@ function plotRecord(r){if(!kakaoLoaded)return;const pos=new kakao.maps.LatLng(r.
 records.forEach(plotRecord);
 const search=document.getElementById('search'),sresults=document.getElementById('sresults');
 let tm;search.addEventListener('input',()=>{clearTimeout(tm);const q=search.value.trim();if(!q){sresults.style.display='none';return}tm=setTimeout(()=>{fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=10`,{headers:{Authorization:'KakaoAK '+KAKAO_REST}}).then(r=>r.json()).then(d=>{sresults.innerHTML='';(d.documents||[]).forEach(x=>{const el=document.createElement('div');el.innerHTML=`<div class="nm">${x.place_name}</div><div class="ad">${x.road_address_name||x.address_name||''}</div>`;el.onclick=()=>selectPlace(+x.y,+x.x,x.place_name,x.road_address_name||x.address_name||'',x.address_name||'');sresults.appendChild(el)});sresults.style.display=(d.documents&&d.documents.length)?'block':'none'}).catch(()=>{sresults.innerHTML='<div class="ad" style="padding:11px 14px">검색 실패</div>';sresults.style.display='block'})},350)});
-function selectPlace(lat,lon,name,addr,region){selLL=[lat,lon];selName=name;selAddr=addr;window._region=region||'';if(kakaoLoaded){const pos=new kakao.maps.LatLng(lat,lon);map.setCenter(pos);map.setLevel(3);if(tempMarker)tempMarker.setMap(null);tempMarker=new kakao.maps.Marker({map,position:pos,image:goImg})}sresults.style.display='none';search.value=name;openForm()}
+function selectPlace(lat,lon,name,addr,region){
+  selLL=[lat,lon];selName=name;selAddr=addr;window._region=region||'';
+  if(kakaoLoaded){
+    var pos=new kakao.maps.LatLng(lat,lon);
+    map.setCenter(pos);map.setLevel(3);
+    if(tempMarker)tempMarker.setMap(null);
+    tempMarker=new kakao.maps.Marker({map:map,position:pos,image:goImg});
+  }
+  sresults.style.display='none';
+  search.value=name;
+  search.blur(); // 키보드 닫기
+  // 약간의 지연 후 시트 열기 (지도 이동 + 키보드 닫힘 후)
+  setTimeout(function(){openForm()},200);
+}
 function openForm(){document.getElementById('sPlace').textContent=selName;document.getElementById('recDate').value=todayStr();document.getElementById('recTitle').value='';setCat('간 곳');document.getElementById('memo').value='';resetPhotoSlots();document.getElementById('sheet').classList.add('on')}
 function cancelForm(){document.getElementById('sheet').classList.remove('on');if(tempMarker){tempMarker.setMap(null);tempMarker=null}document.getElementById('catGo').disabled=false;document.getElementById('catWill').disabled=false;selLL=null;editingIdx=-1;search.value='';sresults.style.display='none'}
 function setCat(c){cat=c;document.getElementById('catGo').className=c==='간 곳'?'on-go':'';document.getElementById('catWill').className=c==='갈 곳'?'on-will':'';document.getElementById('photoBox').classList.toggle('hide',c==='갈 곳');const dBox=document.getElementById('dateBox');if(c==='갈 곳'){dBox.style.display='none'}else{dBox.style.display='block';document.getElementById('recDate').max=todayStr()}document.getElementById('memo').placeholder=c==='갈 곳'?'가고 싶은 이유':'한 줄 기록';document.getElementById('recTitle').placeholder=c==='갈 곳'?'제목 (선택)':'제목';if(tempMarker&&selLL)tempMarker.setImage(c==='간 곳'?goImg:willImg)}
 function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);if(kakaoLoaded){map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3)}document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
-function saveRecord(){if(!selLL)return;const dInp=document.getElementById('recDate');let useDate,useTs;if(cat==='간 곳'&&dInp.value){const p=dInp.value.split('-');const dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);useDate=dt.toLocaleDateString('ko-KR');useTs=dt.getTime()}else{const now=new Date();useDate=now.toLocaleDateString('ko-KR');useTs=now.getTime()}const title=document.getElementById('recTitle').value;if(editingIdx>=0){const r=records[editingIdx];if(r._mk){r._mk.setMap(null);delete r._mk}r.cat='간 곳';r.photos=[...photos];r.memo=document.getElementById('memo').value;r.title=title;r.date=useDate;r.ts=useTs;saveRecs();plotRecord(r);renderAll();cancelForm();return}const r={cat,ll:[...selLL],name:selName,addr:selAddr,region:window._region||'',photos:cat==='간 곳'?[...photos]:[],memo:document.getElementById('memo').value,title,date:useDate,ts:useTs};records.unshift(r);saveRecs();if(tempMarker){tempMarker.setMap(null);tempMarker=null}plotRecord(r);renderAll();cancelForm()}
+function saveRecord(){
+  try{
+    if(!selLL){toast('장소를 먼저 선택해주세요');return}
+    var dInp=document.getElementById('recDate');
+    var useDate,useTs;
+    if(cat==='간 곳'&&dInp.value){
+      var p=dInp.value.split('-');
+      var dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);
+      useDate=dt.toLocaleDateString('ko-KR');
+      useTs=dt.getTime();
+    }else{
+      var now=new Date();
+      useDate=now.toLocaleDateString('ko-KR');
+      useTs=now.getTime();
+    }
+    var title=document.getElementById('recTitle').value;
+    var memo=document.getElementById('memo').value;
+    
+    // 수정 모드
+    if(editingIdx>=0){
+      var r=records[editingIdx];
+      if(r._mk){try{r._mk.setMap(null)}catch(e){}delete r._mk}
+      r.cat=cat;
+      r.photos=cat==='간 곳'?photos.slice():[];
+      r.memo=memo;
+      r.title=title;
+      r.date=useDate;
+      r.ts=useTs;
+      // selLL/selAddr/region이 변경되었을 수 있음
+      r.ll=selLL.slice();
+      r.name=selName;
+      r.addr=selAddr;
+      r.region=window._region||r.region||'';
+      
+      var savedIdx=editingIdx;
+      cancelForm();
+      
+      try{plotRecord(r)}catch(e){console.warn('plotRecord:',e)}
+      try{renderAll()}catch(e){console.warn('renderAll:',e)}
+      try{saveRecs()}catch(e){console.warn('saveRecs:',e)}
+      toast('수정되었습니다');
+      return;
+    }
+    
+    // 신규 작성
+    var newRec={
+      cat:cat,
+      ll:selLL.slice(),
+      name:selName,
+      addr:selAddr,
+      region:window._region||'',
+      photos:cat==='간 곳'?photos.slice():[],
+      memo:memo,
+      title:title,
+      date:useDate,
+      ts:useTs
+    };
+    records.unshift(newRec);
+    
+    if(tempMarker){try{tempMarker.setMap(null)}catch(e){}tempMarker=null}
+    cancelForm();
+    
+    try{plotRecord(newRec)}catch(e){console.warn('plotRecord:',e)}
+    try{renderAll()}catch(e){console.warn('renderAll:',e)}
+    try{saveRecs()}catch(e){console.warn('saveRecs:',e)}
+    toast('저장되었습니다');
+  }catch(err){
+    console.error('saveRecord error:',err);
+    toast('저장 오류: '+err.message);
+  }
+}
 function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='go'?'on':'';document.getElementById('tabWill').className=t==='will'?'on':'';document.getElementById('goSection').style.display=t==='go'?'block':'none';document.getElementById('willSection').style.display=t==='will'?'block':'none'}
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');h+=`<div class="day ${dates[dt]?'has':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
 function openDay(dt){const recs=records.map((r,i)=>({r,i})).filter(x=>x.r.cat==='간 곳'&&new Date(x.r.ts||Date.now()).toLocaleDateString('ko-KR')===dt).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));if(!recs.length)return;document.getElementById('modalTitle').textContent=dt;document.getElementById('modalBody').innerHTML=recs.map(x=>`<div class="modal-rec"><div class="pname">${x.r.name}</div>${x.r.title?`<div class="ptitle">${x.r.title}</div>`:''}<div class="photos">${[0,1,2].map(i=>`<img src="${x.r.photos&&x.r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''" onclick="document.getElementById('dayModal').classList.remove('on');openDetail(${x.i})"/>`).join('')}</div></div>`).join('');document.getElementById('dayModal').classList.add('on')}
@@ -574,7 +665,6 @@ async function updateFriendsBadge(){
 renderAll();
 document.querySelectorAll('nav button').forEach(function(btn){
   btn.onclick=async function(){
-    // 마이페이지에서 다른 페이지로 이동 시 프로필 편집 확인
     var currentView=document.querySelector('main .view.active');
     if(currentView&&currentView.id==='view-my'&&btn.dataset.v!=='my'){
       var canLeave=await checkProfileBeforeLeave();
@@ -584,7 +674,28 @@ document.querySelectorAll('nav button').forEach(function(btn){
     btn.classList.add('active');
     document.querySelectorAll('main .view').forEach(function(v){v.classList.remove('active')});
     document.getElementById('view-'+btn.dataset.v).classList.add('active');
-    if(btn.dataset.v==='my'&&window._miniMap){setTimeout(function(){window._miniMap.invalidateSize()},100)}
+    // 마이페이지 진입 시 모든 통계·차트·미니맵 강제 갱신
+    if(btn.dataset.v==='my'){
+      try{renderAll()}catch(e){console.warn('renderAll:',e)}
+      setTimeout(function(){
+        if(window._miniMap){
+          try{
+            window._miniMap.invalidateSize();
+            // 마커 재배치
+            if(window._miniMarkers){window._miniMarkers.forEach(function(m){window._miniMap.removeLayer(m)})}
+            window._miniMarkers=[];
+            records.forEach(function(r){
+              if(!r.ll)return;
+              var color=r.cat==='간 곳'?'#1D4ED8':'#E63946';
+              var ic=L.divIcon({html:'<div style="width:8px;height:8px;background:'+color+';border-radius:50%"></div>',className:'',iconSize:[8,8]});
+              var mk=L.marker(r.ll,{icon:ic,interactive:true}).addTo(window._miniMap);
+              mk.bindPopup('<div style="font-family:Georgia,serif;font-size:12px;color:#3D3929;white-space:nowrap">'+r.name+(r.title?' <span style="opacity:.6">['+r.title+']</span>':'')+'</div>',{closeButton:false,offset:[0,-4]});
+              window._miniMarkers.push(mk);
+            });
+          }catch(e){console.warn('miniMap update:',e)}
+        }
+      },150);
+    }
   };
 });
 
