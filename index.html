@@ -80,12 +80,16 @@ nav button svg{width:22px;height:22px}
 .cat-row button.on-will{background:var(--red);color:#fff;border-color:var(--red)}
 .photo-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
 .photo-slots.hide{display:none}
-.photo-slot{aspect-ratio:1;background:#fff;border:1px dashed var(--brown);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;overflow:hidden;position:relative}
-.photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.photo-slot{aspect-ratio:1;background:#fff;border:1px dashed var(--brown);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;overflow:hidden;position:relative;transition:all .2s ease;color:var(--vermillion)}
+.photo-slot:active{transform:scale(0.96);background:var(--cream)}
+.photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;animation:photoFadeIn .35s ease-out}
+@keyframes photoFadeIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+.sheet{transition:transform .35s cubic-bezier(.32,.72,.4,1)}
 .form-input{width:100%;padding:9px 11px;border:1px solid var(--beige);border-radius:7px;font-family:inherit;font-size:13px;background:#fff;color:var(--brown);outline:none;margin-bottom:12px}
 textarea#memo{min-height:70px;resize:none}
 #dateBox{margin-bottom:12px}#dateBox label{display:block;font-size:11px;color:var(--terra);margin-bottom:5px}
-#recDate{width:100%;padding:9px 11px;border:1px solid var(--beige);border-radius:7px;font-family:inherit;font-size:13px;background:#fff;color:var(--brown);outline:none}
+#recDate{width:100%;padding:11px 14px;border:1px solid var(--beige);border-radius:8px;font-family:Georgia,serif;font-size:14px;background:#fff;color:var(--brown);outline:none;-webkit-appearance:none;appearance:none}
+#recDate::-webkit-date-and-time-value{text-align:left;font-family:Georgia,serif}
 .btn-row{display:flex;gap:6px}
 .btn{flex:1;padding:12px;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer}
 .btn-primary{background:var(--vermillion);color:#fff}.btn-ghost{background:#fff;color:var(--brown);border:1px solid var(--brown)}
@@ -298,9 +302,7 @@ function saveRecs(){
     var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
     localStorage.setItem('nnd_records',JSON.stringify(clean));
   }catch(e){console.warn('localStorage save:',e)}
-  if(currentUser&&sb){
-    try{syncToSupabase()}catch(e){console.warn('sync trigger:',e)}
-  }
+  if(currentUser&&sb)syncToSupabase();
 }
 var syncTimer=null;
 function syncToSupabase(){
@@ -308,7 +310,6 @@ function syncToSupabase(){
   syncTimer=setTimeout(async function(){
     if(!currentUser||!sb)return;
     try{
-      // 1. sbId가 있는 기록 = UPDATE 대상, 없는 기록 = INSERT 대상
       var toInsert=[],toUpdate=[];
       records.forEach(function(x,idx){
         var row={
@@ -321,35 +322,50 @@ function syncToSupabase(){
         if(x.sbId){row.id=x.sbId;toUpdate.push({row:row,idx:idx})}
         else toInsert.push({row:row,idx:idx});
       });
-      // 2. 새 기록 INSERT (sbId 없는 것)
       if(toInsert.length){
         var insRes=await sb.from('records').insert(toInsert.map(function(t){return t.row})).select();
-        if(insRes.error){console.warn('insert error:',insRes.error);toast('저장 실패: '+insRes.error.message);return}
-        // INSERT 결과의 id를 로컬 records에 sbId로 저장
+        if(insRes.error){console.warn('insert error:',insRes.error);return}
         if(insRes.data){
           insRes.data.forEach(function(row,i){
             var localIdx=toInsert[i].idx;
             if(records[localIdx])records[localIdx].sbId=row.id;
           });
+          // sbId 즉시 localStorage에 저장 (중복 INSERT 방지)
+          try{
+            var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
+            localStorage.setItem('nnd_records',JSON.stringify(clean));
+          }catch(e){}
         }
       }
-      // 3. 기존 기록 UPDATE (sbId 있는 것)
       for(var i=0;i<toUpdate.length;i++){
         var u=toUpdate[i];
         var updRes=await sb.from('records').update(u.row).eq('id',u.row.id);
         if(updRes.error)console.warn('update error:',updRes.error);
       }
-      // 4. localStorage에 sbId 갱신된 records 다시 저장
-      var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
-      localStorage.setItem('nnd_records',JSON.stringify(clean));
-    }catch(e){console.warn('syncToSupabase error:',e);toast('저장 중 오류 발생')}
+    }catch(e){console.warn('syncToSupabase error:',e)}
   },1500);
 }
 let cat='간 곳',selLL=null,selName='',selAddr='',photos=[null,null,null,null,null,null],tempMarker=null,curTab='go',calDate=new Date(),editingIdx=-1;
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function resetPhotoSlots(){photos=[null,null,null,null,null,null];for(let i=0;i<6;i++)document.getElementById('ps'+i).innerHTML='<span>+</span>'}
 function renderPhotoSlot(i){document.getElementById('ps'+i).innerHTML=photos[i]?`<img src="${photos[i]}"/>`:'<span>+</span>'}
-function compressImage(file){return new Promise(res=>{const rd=new FileReader();rd.onload=ev=>{const img=new Image();img.onload=()=>{const max=1024;let w=img.width,h=img.height;if(w>max||h>max){if(w>h){h=h*max/w;w=max}else{w=w*max/h;h=max}}const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);res(cv.toDataURL('image/jpeg',0.7))};img.src=ev.target.result};rd.readAsDataURL(file)})}
+function compressImage(file){return new Promise(function(res){
+  var rd=new FileReader();
+  rd.onload=function(ev){
+    var img=new Image();
+    img.onload=function(){
+      var max=900;
+      var w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){h=h*max/w;w=max}else{w=w*max/h;h=max}}
+      var cv=document.createElement('canvas');
+      cv.width=w;cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      res(cv.toDataURL('image/jpeg',0.6));
+    };
+    img.src=ev.target.result;
+  };
+  rd.readAsDataURL(file);
+})}
 async function pickPhotos(e){const files=Array.from(e.target.files||[]);if(!files.length)return;let slot=photos.findIndex(p=>!p);if(slot<0)return;for(const f of files){if(slot>=6)break;photos[slot]=await compressImage(f);renderPhotoSlot(slot);slot=photos.findIndex(p=>!p);if(slot<0)break}e.target.value=''}
 let map;
 try{
@@ -401,75 +417,38 @@ function cancelForm(){document.getElementById('sheet').classList.remove('on');if
 function setCat(c){cat=c;document.getElementById('catGo').className=c==='간 곳'?'on-go':'';document.getElementById('catWill').className=c==='갈 곳'?'on-will':'';document.getElementById('photoBox').classList.toggle('hide',c==='갈 곳');const dBox=document.getElementById('dateBox');if(c==='갈 곳'){dBox.style.display='none'}else{dBox.style.display='block';document.getElementById('recDate').max=todayStr()}document.getElementById('memo').placeholder=c==='갈 곳'?'가고 싶은 이유':'한 줄 기록';document.getElementById('recTitle').placeholder=c==='갈 곳'?'제목 (선택)':'제목';if(tempMarker&&selLL)tempMarker.setImage(c==='간 곳'?goImg:willImg)}
 function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);if(kakaoLoaded){map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3)}document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
 function saveRecord(){
-  try{
-    if(!selLL){toast('장소를 먼저 선택해주세요');return}
-    var dInp=document.getElementById('recDate');
-    var useDate,useTs;
-    if(cat==='간 곳'&&dInp.value){
-      var p=dInp.value.split('-');
-      var dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);
-      useDate=dt.toLocaleDateString('ko-KR');
-      useTs=dt.getTime();
-    }else{
-      var now=new Date();
-      useDate=now.toLocaleDateString('ko-KR');
-      useTs=now.getTime();
-    }
-    var title=document.getElementById('recTitle').value;
-    var memo=document.getElementById('memo').value;
-    
-    // 수정 모드
-    if(editingIdx>=0){
-      var r=records[editingIdx];
-      if(r._mk){try{r._mk.setMap(null)}catch(e){}delete r._mk}
-      r.cat=cat;
-      r.photos=cat==='간 곳'?photos.slice():[];
-      r.memo=memo;
-      r.title=title;
-      r.date=useDate;
-      r.ts=useTs;
-      // selLL/selAddr/region이 변경되었을 수 있음
-      r.ll=selLL.slice();
-      r.name=selName;
-      r.addr=selAddr;
-      r.region=window._region||r.region||'';
-      
-      var savedIdx=editingIdx;
-      cancelForm();
-      
-      try{plotRecord(r)}catch(e){console.warn('plotRecord:',e)}
-      try{renderAll()}catch(e){console.warn('renderAll:',e)}
-      try{saveRecs()}catch(e){console.warn('saveRecs:',e)}
-      toast('수정되었습니다');
-      return;
-    }
-    
-    // 신규 작성
-    var newRec={
-      cat:cat,
-      ll:selLL.slice(),
-      name:selName,
-      addr:selAddr,
-      region:window._region||'',
-      photos:cat==='간 곳'?photos.slice():[],
-      memo:memo,
-      title:title,
-      date:useDate,
-      ts:useTs
-    };
-    records.unshift(newRec);
-    
-    if(tempMarker){try{tempMarker.setMap(null)}catch(e){}tempMarker=null}
-    cancelForm();
-    
-    try{plotRecord(newRec)}catch(e){console.warn('plotRecord:',e)}
-    try{renderAll()}catch(e){console.warn('renderAll:',e)}
-    try{saveRecs()}catch(e){console.warn('saveRecs:',e)}
-    toast('저장되었습니다');
-  }catch(err){
-    console.error('saveRecord error:',err);
-    toast('저장 오류: '+err.message);
+  if(!selLL)return;
+  var dInp=document.getElementById('recDate');
+  var useDate,useTs;
+  if(cat==='간 곳'&&dInp.value){
+    var p=dInp.value.split('-');
+    var dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);
+    useDate=dt.toLocaleDateString('ko-KR');
+    useTs=dt.getTime();
+  }else{
+    var now=new Date();
+    useDate=now.toLocaleDateString('ko-KR');
+    useTs=now.getTime();
   }
+  var title=document.getElementById('recTitle').value;
+  if(editingIdx>=0){
+    var r=records[editingIdx];
+    if(r._mk){r._mk.setMap(null);delete r._mk}
+    r.cat=cat;
+    r.photos=cat==='간 곳'?photos.slice():[];
+    r.memo=document.getElementById('memo').value;
+    r.title=title;r.date=useDate;r.ts=useTs;
+    r.ll=selLL.slice();r.name=selName;r.addr=selAddr;
+    r.region=window._region||r.region||'';
+    saveRecs();plotRecord(r);renderAll();cancelForm();return;
+  }
+  var newRec={cat:cat,ll:selLL.slice(),name:selName,addr:selAddr,region:window._region||'',
+    photos:cat==='간 곳'?photos.slice():[],
+    memo:document.getElementById('memo').value,title:title,date:useDate,ts:useTs};
+  records.unshift(newRec);
+  saveRecs();
+  if(tempMarker){tempMarker.setMap(null);tempMarker=null}
+  plotRecord(newRec);renderAll();cancelForm();
 }
 function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='go'?'on':'';document.getElementById('tabWill').className=t==='will'?'on':'';document.getElementById('goSection').style.display=t==='go'?'block':'none';document.getElementById('willSection').style.display=t==='will'?'block':'none'}
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');h+=`<div class="day ${dates[dt]?'has':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
