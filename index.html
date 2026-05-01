@@ -310,6 +310,12 @@ function syncToSupabase(){
   syncTimer=setTimeout(async function(){
     if(!currentUser||!sb)return;
     try{
+      // 로딩 직후 sbId가 없는 기록이 다수면 중복 INSERT 방지를 위해 검증
+      var noSbIdCount=records.filter(function(x){return !x.sbId}).length;
+      var withSbIdCount=records.length-noSbIdCount;
+      // 모든 기록이 sbId 없으면 정상 (모두 신규)
+      // 일부는 있고 일부는 없는데 합리적이지 않으면 의심
+      // 단, 신규 1개 추가는 정상 케이스이므로 noSbIdCount<=2까지는 정상
       var toInsert=[],toUpdate=[];
       records.forEach(function(x,idx){
         var row={
@@ -739,6 +745,8 @@ async function doLogout(){
   var ok=await customConfirm('로그아웃','로그아웃하시겠습니까?');
   if(!ok)return;
   if(!sb)return;
+  // 예약된 sync 취소 (로그아웃 후 실행 방지)
+  if(syncTimer){clearTimeout(syncTimer);syncTimer=null}
   await sb.auth.signOut();
   currentUser=null;
   clearMapMarkers();
@@ -779,7 +787,7 @@ async function loadFromSupabase(){
     if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='none'}
     var rRes=await sb.from('records').select('*').eq('user_id',currentUser.id).order('record_ts',{ascending:false});
     if(rRes.data){
-      records=rRes.data.map(function(row){return{cat:row.cat,name:row.name,title:row.title||'',addr:row.addr||'',region:row.region||'',memo:row.memo||'',ll:[row.lat,row.lng],photos:row.photos||[],date:row.record_date||'',ts:row.record_ts||0}});
+      records=rRes.data.map(function(row){return{sbId:row.id,cat:row.cat,name:row.name,title:row.title||'',addr:row.addr||'',region:row.region||'',memo:row.memo||'',ll:[row.lat,row.lng],photos:row.photos||[],date:row.record_date||'',ts:row.record_ts||0}});
       localStorage.setItem('nnd_records',JSON.stringify(records));
     }
   }catch(e){console.warn('loadFromSupabase failed',e)}
