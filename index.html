@@ -99,7 +99,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><button id="locBtn" onclick="updateCurrentLocation()" title="현재 위치" style="position:absolute;bottom:20px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 8px rgba(61,57,41,.18);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:400"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value=""/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람 목록<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="toast('v1.1에서 제공 예정')">알림 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div class="menu-card" id="logoutBtnCard" style="margin-bottom:8px"><div class="item" onclick="doLogout()">로그아웃<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value=""/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람 목록<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div class="menu-card" id="logoutBtnCard" style="margin-bottom:8px"><div class="item" onclick="doLogout()">로그아웃<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.3</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -305,17 +305,14 @@ function saveRecs(){
   if(currentUser&&sb)syncToSupabase();
 }
 var syncTimer=null;
+var syncInProgress=false;
 function syncToSupabase(){
   clearTimeout(syncTimer);
   syncTimer=setTimeout(async function(){
     if(!currentUser||!sb)return;
+    if(syncInProgress)return;
+    syncInProgress=true;
     try{
-      // 로딩 직후 sbId가 없는 기록이 다수면 중복 INSERT 방지를 위해 검증
-      var noSbIdCount=records.filter(function(x){return !x.sbId}).length;
-      var withSbIdCount=records.length-noSbIdCount;
-      // 모든 기록이 sbId 없으면 정상 (모두 신규)
-      // 일부는 있고 일부는 없는데 합리적이지 않으면 의심
-      // 단, 신규 1개 추가는 정상 케이스이므로 noSbIdCount<=2까지는 정상
       var toInsert=[],toUpdate=[];
       records.forEach(function(x,idx){
         var row={
@@ -349,12 +346,48 @@ function syncToSupabase(){
         if(updRes.error)console.warn('update error:',updRes.error);
       }
     }catch(e){console.warn('syncToSupabase error:',e)}
+    finally{syncInProgress=false}
   },1500);
 }
 let cat='간 곳',selLL=null,selName='',selAddr='',photos=[null,null,null,null,null,null],tempMarker=null,curTab='go',calDate=new Date(),editingIdx=-1;
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function resetPhotoSlots(){photos=[null,null,null,null,null,null];for(let i=0;i<6;i++)document.getElementById('ps'+i).innerHTML='<span>+</span>'}
 function renderPhotoSlot(i){document.getElementById('ps'+i).innerHTML=photos[i]?`<img src="${photos[i]}"/>`:'<span>+</span>'}
+// ─── 좌표·장소 유틸 (v2.1 보강) ─────────────────────────────────
+function distM(lat1,lng1,lat2,lng2){
+  var R=6371000,toRad=Math.PI/180;
+  var dLat=(lat2-lat1)*toRad,dLng=(lng2-lng1)*toRad;
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*toRad)*Math.cos(lat2*toRad)*Math.sin(dLng/2)*Math.sin(dLng/2);
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+function isSamePlace(a,b){
+  if(!a||!b||!a.ll||!b.ll)return false;
+  if((a.name||'').trim()!==(b.name||'').trim())return false;
+  return distM(a.ll[0],a.ll[1],b.ll[0],b.ll[1])<=50;
+}
+function findSamePlaceRecs(target,includeWill){
+  return records.filter(function(r){
+    if(!includeWill&&r.cat==='갈 곳')return false;
+    return isSamePlace(r,target);
+  });
+}
+function groupRecsByPlace(recs){
+  var groups=[];
+  recs.forEach(function(r){
+    var found=groups.find(function(g){return isSamePlace(g.recs[0],r)});
+    if(found)found.recs.push(r);
+    else groups.push({key:(r.name||'')+'@'+(r.ll?r.ll[0].toFixed(4)+','+r.ll[1].toFixed(4):''),recs:[r]});
+  });
+  groups.forEach(function(g){g.recs.sort(function(a,b){return(b.ts||0)-(a.ts||0)})});
+  groups.sort(function(a,b){return(b.recs[0].ts||0)-(a.recs[0].ts||0)});
+  return groups;
+}
+window._expandedGroups=window._expandedGroups||{};
+function toggleGroup(key){
+  if(window._expandedGroups[key])delete window._expandedGroups[key];
+  else window._expandedGroups[key]=true;
+  renderAll();
+}
 function compressImage(file){return new Promise(function(res){
   var rd=new FileReader();
   rd.onload=function(ev){
@@ -422,8 +455,16 @@ function openForm(){document.getElementById('sPlace').textContent=selName;docume
 function cancelForm(){document.getElementById('sheet').classList.remove('on');if(tempMarker){tempMarker.setMap(null);tempMarker=null}document.getElementById('catGo').disabled=false;document.getElementById('catWill').disabled=false;selLL=null;editingIdx=-1;search.value='';sresults.style.display='none'}
 function setCat(c){cat=c;document.getElementById('catGo').className=c==='간 곳'?'on-go':'';document.getElementById('catWill').className=c==='갈 곳'?'on-will':'';document.getElementById('photoBox').classList.toggle('hide',c==='갈 곳');const dBox=document.getElementById('dateBox');if(c==='갈 곳'){dBox.style.display='none'}else{dBox.style.display='block';document.getElementById('recDate').max=todayStr()}document.getElementById('memo').placeholder=c==='갈 곳'?'가고 싶은 이유':'한 줄 기록';document.getElementById('recTitle').placeholder=c==='갈 곳'?'제목 (선택)':'제목';if(tempMarker&&selLL)tempMarker.setImage(c==='간 곳'?goImg:willImg)}
 function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);if(kakaoLoaded){map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3)}document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
-function saveRecord(){
+async function saveRecord(){
   if(!selLL)return;
+  // 중복 경고 (가안): 신규 작성 + 간 곳 + 같은 장소가 이미 있을 때
+  if(editingIdx<0&&cat==='간 곳'){
+    var dups=findSamePlaceRecs({ll:selLL,name:selName},false);
+    if(dups.length){
+      var ok=await customConfirm('이미 기록한 곳입니다',dups.length+'건의 기록이 있는 장소입니다.\n새 기록을 추가하시겠습니까?');
+      if(!ok)return;
+    }
+  }
   var dInp=document.getElementById('recDate');
   var useDate,useTs;
   if(cat==='간 곳'&&dInp.value){
@@ -490,7 +531,46 @@ document.querySelector('nav button[data-v="map"]').click();document.getElementBy
 closeDetail()}
 async function deleteRecord(idx){var r=records[idx];if(!r)return;var ok=await customConfirm('기록 삭제',r.name+' 기록을 삭제하시겠습니까?');if(!ok)return;if(r._mk){r._mk.setMap(null)}var sbId=r.sbId;records.splice(idx,1);saveRecs();renderAll();closeDetail();toast('기록이 삭제되었습니다');if(sbId&&currentUser&&sb){sb.from('records').delete().eq('id',sbId).then(function(){})}}
 function renderAll(){const goRecs=records.filter(r=>r.cat==='간 곳').sort((a,b)=>(b.ts||0)-(a.ts||0)),wiRecs=records.filter(r=>r.cat==='갈 곳').sort((a,b)=>(b.ts||0)-(a.ts||0));
-document.getElementById('goCards').innerHTML=goRecs.length?goRecs.map(r=>{const idx=records.indexOf(r);return `<div class="list-card"><div class="photos" onclick="openDetail(${idx})">${[0,1,2].map(i=>`<img src="${r.photos&&r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''"/>`).join('')}</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px"><div style="font-size:11px"><span style="color:var(--terra)">${r.region||''}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">${r.name}</span></div></div>${r.title?`<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.7">[${r.title}]</div><div style="font-size:10px;color:var(--brown);opacity:.45;flex-shrink:0;margin-left:10px">${r.date}</div></div>`:`<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">${r.date}</div>`}</div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
+// 카드 묶음 (B안 후보 2): 같은 장소 다중 기록을 한 카드로
+var goGroups=groupRecsByPlace(goRecs);
+document.getElementById('goCards').innerHTML=goGroups.length?goGroups.map(function(g){
+  if(g.recs.length===1){
+    var r=g.recs[0];var idx=records.indexOf(r);
+    return '<div class="list-card"><div class="photos" onclick="openDetail('+idx+')">'+[0,1,2].map(function(i){return '<img src="'+(r.photos&&r.photos[i]||'')+'" onerror="this.style.background=\'#E8DCC8\';this.src=\'\'"/>'}).join('')+'</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px"><div style="font-size:11px"><span style="color:var(--terra)">'+(r.region||'')+'</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">'+r.name+'</span></div></div>'+(r.title?'<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.7">['+r.title+']</div><div style="font-size:10px;color:var(--brown);opacity:.45;flex-shrink:0;margin-left:10px">'+r.date+'</div></div>':'<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">'+r.date+'</div>')+'</div>';
+  }
+  // 다중 기록 묶음 카드
+  var head=g.recs[0];
+  var expanded=!!window._expandedGroups[g.key];
+  var keyEsc=g.key.replace(/'/g,"\\'");
+  var coverPhotos=[];
+  for(var i=0;i<g.recs.length&&coverPhotos.length<3;i++){
+    if(g.recs[i].photos)g.recs[i].photos.forEach(function(p){if(p&&coverPhotos.length<3)coverPhotos.push(p)});
+  }
+  while(coverPhotos.length<3)coverPhotos.push('');
+  var html='<div class="list-card group-card">';
+  html+='<div class="photos" onclick="toggleGroup(\''+keyEsc+'\')" style="cursor:pointer">';
+  html+=coverPhotos.map(function(p){return '<img src="'+p+'" onerror="this.style.background=\'#E8DCC8\';this.src=\'\'"/>'}).join('');
+  html+='</div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;cursor:pointer" onclick="toggleGroup(\''+keyEsc+'\')">';
+  html+='<div style="font-size:11px"><span style="color:var(--terra)">'+(head.region||'')+'</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">'+head.name+'</span></div>';
+  html+='<span style="display:inline-flex;align-items:center;gap:6px"><span style="font-size:10px;color:#fff;background:var(--vermillion);padding:2px 7px;border-radius:10px;font-family:Georgia,serif">'+g.recs.length+'건의 기억</span><span style="color:var(--terra);font-size:13px">'+(expanded?'▾':'▸')+'</span></span>';
+  html+='</div>';
+  if(!expanded){
+    // 접힌 상태: 최신 한 건의 메타만 표시
+    html+='<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">최근 '+head.date+'</div>';
+  }else{
+    // 펼친 상태: 시점별 미니 카드 리스트
+    html+='<div style="margin-top:10px;border-top:1px solid var(--beige);padding-top:10px;display:flex;flex-direction:column;gap:8px">';
+    html+=g.recs.map(function(r){
+      var idx=records.indexOf(r);
+      var thumbs=[0,1,2].map(function(i){return '<img src="'+(r.photos&&r.photos[i]||'')+'" onerror="this.style.background=\'#E8DCC8\';this.src=\'\'" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:5px;background:var(--beige);min-width:0"/>'}).join('');
+      return '<div onclick="openDetail('+idx+')" style="cursor:pointer;padding:8px;background:var(--cream);border:1px solid var(--beige);border-radius:8px"><div style="display:flex;gap:5px;margin-bottom:6px">'+thumbs+'</div>'+(r.title?'<div style="font-size:11px;color:var(--brown);opacity:.75;margin-bottom:2px">['+r.title+']</div>':'')+'<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.85;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:8px">'+(r.memo?r.memo.replace(/</g,'&lt;'):'<span style="opacity:.4">기록 없음</span>')+'</div><div style="font-size:10px;color:var(--brown);opacity:.5;flex-shrink:0">'+r.date+'</div></div></div>';
+    }).join('');
+    html+='</div>';
+  }
+  html+='</div>';
+  return html;
+}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
 document.getElementById('willCards').innerHTML=wiRecs.length?wiRecs.map(r=>{const idx=records.indexOf(r);return `<div class="list-card will-card"><div style="font-size:12px;margin-bottom:5px"><span style="font-family:Georgia,serif;font-weight:bold;color:var(--brown)">${r.name}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-size:10px;color:var(--terra)">${r.addr||r.region||''}</span></div>${r.title?`<div style="font-size:11px;color:var(--brown);opacity:.7;margin-bottom:5px">[${r.title}]</div>`:''}<div style="padding:7px;background:var(--cream);border:1px solid var(--beige);border-radius:6px;font-size:12px;color:var(--brown);min-height:36px;line-height:1.4">${r.memo||'<span style="opacity:.4">메모 없음</span>'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="date" style="font-size:10px;opacity:.6">${r.date}</span><div style="display:flex;gap:4px"><button onclick="editRecord(${idx})" style="background:#fff;color:var(--brown);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="background:#fff;color:var(--terra);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">삭제</button><button onclick="startConvert(${idx})" style="background:var(--vermillion);color:#fff;border:none;border-radius:5px;padding:5px 10px;font-family:Georgia,serif;font-size:11px;cursor:pointer">다녀옴</button></div></div></div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
 document.getElementById('sAll').textContent=records.length;document.getElementById('sGo').textContent=goRecs.length;document.getElementById('sWill').textContent=wiRecs.length;
 var goByCity={},wiByCity={};goRecs.forEach(r=>{var city=normCity(r.region);goByCity[city]=(goByCity[city]||0)+1});wiRecs.forEach(r=>{var city=normCity(r.region);wiByCity[city]=(wiByCity[city]||0)+1});
@@ -587,7 +667,16 @@ async function sendKakaoInvite(){
 async function addFriend(email){
   if(!currentUser||!sb)return;
   try{
-    var res=await sb.from('friends').upsert({user_id:currentUser.id,friend_email:email,status:'pending'},{onConflict:'user_id,friend_email'});
+    var inviterName=(profile&&profile.name)||currentUser.email||'';
+    // 초대 대상이 가입자인지 조회 (가입자라면 friend_user_id 매핑)
+    var friendUid=null;
+    try{
+      var pr=await sb.from('profiles').select('id').eq('email',email).maybeSingle();
+      if(pr&&pr.data&&pr.data.id)friendUid=pr.data.id;
+    }catch(e){}
+    var row={user_id:currentUser.id,friend_email:email,status:'pending',inviter_name:inviterName};
+    if(friendUid)row.friend_user_id=friendUid;
+    var res=await sb.from('friends').upsert(row,{onConflict:'user_id,friend_email'});
     if(res.error)console.warn('addFriend',res.error);
   }catch(e){console.warn('addFriend',e)}
 }
@@ -595,9 +684,46 @@ async function addFriend(email){
 async function loadFriends(){
   if(!currentUser||!sb)return [];
   try{
-    var res=await sb.from('friends').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
-    return res.data||[];
+    // 내가 보낸 초대 (수락됨/대기 모두)
+    var sent=await sb.from('friends').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false});
+    // 내가 받은 초대 (RLS friends_select_received 정책으로 가능)
+    var received=await sb.from('friends').select('*').eq('friend_user_id',currentUser.id).order('created_at',{ascending:false});
+    var sentRows=(sent.data||[]).map(function(r){r._dir='sent';return r});
+    var recvRows=(received.data||[]).map(function(r){r._dir='received';return r});
+    return sentRows.concat(recvRows);
   }catch(e){console.warn('loadFriends',e);return []}
+}
+
+// 24시간 이내 새 항목 판정용
+function isFresh(ts){
+  if(!ts)return false;
+  var t=new Date(ts).getTime();
+  return Date.now()-t<24*60*60*1000;
+}
+
+async function acceptInvite(id){
+  if(!currentUser||!sb)return;
+  try{
+    var res=await sb.from('friends').update({status:'accepted'}).eq('id',id).eq('friend_user_id',currentUser.id);
+    if(res.error){console.warn('acceptInvite',res.error);toast('수락 실패');return}
+    toast('수락되었습니다');
+    openFriendsList();
+    updateFriendsBadge();
+  }catch(e){console.warn('acceptInvite',e)}
+}
+
+async function rejectInvite(id){
+  if(!currentUser||!sb)return;
+  var ok=await customConfirm('초대 거절','이 초대를 거절하시겠습니까?');
+  if(!ok)return;
+  try{
+    // 거절은 status를 rejected로 표시하거나, row 자체 삭제. 여기선 status 변경
+    var res=await sb.from('friends').update({status:'rejected'}).eq('id',id).eq('friend_user_id',currentUser.id);
+    if(res.error){console.warn('rejectInvite',res.error);toast('거절 실패');return}
+    toast('거절되었습니다');
+    openFriendsList();
+    updateFriendsBadge();
+  }catch(e){console.warn('rejectInvite',e)}
 }
 
 async function removeFriend(id){
@@ -613,39 +739,117 @@ async function removeFriend(id){
 
 async function openFriendsList(){
   if(!currentUser){toast('로그인 후 이용할 수 있습니다');return}
+  clearUnread();
   var modal=document.getElementById('friendsModal');
   document.getElementById('friendsList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
   modal.classList.add('on');
   var friends=await loadFriends();
-  var pending=friends.filter(function(f){return f.status==='pending'}).length;
-  var accepted=friends.filter(function(f){return f.status==='accepted'}).length;
-  document.getElementById('friendsCount').textContent='총 '+friends.length+'명 (수락 '+accepted+' · 대기 '+pending+')';
+
+  // 분류
+  var receivedPending=friends.filter(function(f){return f._dir==='received'&&f.status==='pending'});
+  var sentList=friends.filter(function(f){return f._dir==='sent'&&f.status!=='rejected'});
+  var receivedAccepted=friends.filter(function(f){return f._dir==='received'&&f.status==='accepted'});
+  // 친구 목록(수락된 관계): 보낸 수락 + 받은 수락
+  var allFriends=sentList.concat(receivedAccepted);
+
+  var pendingCount=sentList.filter(function(f){return f.status==='pending'}).length;
+  var acceptedCount=allFriends.filter(function(f){return f.status==='accepted'}).length;
+  var totalDisplay=allFriends.length;
+  var countText='총 '+totalDisplay+'명 (수락 '+acceptedCount+' · 대기 '+pendingCount+')';
+  if(receivedPending.length)countText+=' · 받은 초대 '+receivedPending.length;
+  document.getElementById('friendsCount').textContent=countText;
+
   if(!friends.length){
     document.getElementById('friendsList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:13px;line-height:1.6">아직 초대한 사람이 없습니다.<br/>새 사람을 초대해보세요.</div>';
     return;
   }
-  document.getElementById('friendsList').innerHTML=friends.map(function(f){
-    var statusBadge=f.status==='accepted'
-      ? '<span style="font-size:10px;color:#4AADA8;background:#EBF9F8;padding:2px 8px;border-radius:10px">수락됨</span>'
-      : '<span style="font-size:10px;color:var(--terra);background:#FFF0EB;padding:2px 8px;border-radius:10px">대기중</span>';
-    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:6px">'
-      +'<div style="flex:1;min-width:0">'
-        +'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis">'+(f.friend_name||f.friend_email)+'</div>'
-        +'<div style="font-size:10px;color:#8B7D6B;overflow:hidden;text-overflow:ellipsis">'+f.friend_email+'</div>'
-      +'</div>'
-      +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
-        +statusBadge
-        +'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
-      +'</div></div>';
-  }).join('');
+
+  var html='';
+
+  // 받은 초대 섹션 (있을 때만)
+  if(receivedPending.length){
+    html+='<div style="font-size:11px;color:var(--terra);margin:4px 0 8px;font-family:Georgia,serif">받은 초대 ('+receivedPending.length+')</div>';
+    html+=receivedPending.map(function(f){
+      var displayName=f.inviter_name||f.friend_email||'';
+      return '<div style="padding:12px;background:#FFF8F3;border:1px solid var(--vermillion);border-radius:8px;margin-bottom:6px">'
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'
+          +'<div style="flex:1;min-width:0">'
+            +'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis">'+displayName+'</div>'
+            +'<div style="font-size:10px;color:#8B7D6B">내 사람으로 초대했습니다</div>'
+          +'</div>'
+        +'</div>'
+        +'<div style="display:flex;gap:6px">'
+          +'<button onclick="acceptInvite(\''+f.id+'\')" style="flex:1;padding:8px;background:var(--vermillion);color:#fff;border:none;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">수락</button>'
+          +'<button onclick="rejectInvite(\''+f.id+'\')" style="flex:1;padding:8px;background:#fff;color:var(--brown);border:1px solid var(--beige);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">거절</button>'
+        +'</div>'
+      +'</div>';
+    }).join('');
+    html+='<div style="height:8px"></div>';
+  }
+
+  // 내 사람 목록 섹션
+  if(allFriends.length){
+    if(receivedPending.length){
+      html+='<div style="font-size:11px;color:var(--terra);margin:4px 0 8px;font-family:Georgia,serif">내 사람</div>';
+    }
+    // 정렬: 신선한(24h) 항목이 위로, 그다음 created_at 내림차순
+    allFriends.sort(function(a,b){
+      var fa=isFresh(a.status==='accepted'?(a.updated_at||a.created_at):a.created_at);
+      var fb=isFresh(b.status==='accepted'?(b.updated_at||b.created_at):b.created_at);
+      if(fa&&!fb)return -1;
+      if(!fa&&fb)return 1;
+      return new Date(b.created_at).getTime()-new Date(a.created_at).getTime();
+    });
+    html+=allFriends.map(function(f){
+      var statusBadge;
+      var freshAccept=f.status==='accepted'&&isFresh(f.updated_at||f.created_at);
+      var freshSentPending=f._dir==='sent'&&f.status==='pending'&&isFresh(f.created_at);
+      if(freshAccept){
+        statusBadge='<span style="font-size:10px;color:#fff;background:var(--vermillion);padding:2px 8px;border-radius:10px;font-family:Georgia,serif">방금 수락됨</span>';
+      }else if(f.status==='accepted'){
+        statusBadge='<span style="font-size:10px;color:#4AADA8;background:#EBF9F8;padding:2px 8px;border-radius:10px">수락됨</span>';
+      }else if(freshSentPending){
+        statusBadge='<span style="font-size:10px;color:var(--terra);background:#FFF0EB;padding:2px 8px;border-radius:10px">답장 대기</span>';
+      }else{
+        statusBadge='<span style="font-size:10px;color:var(--terra);background:#FFF0EB;padding:2px 8px;border-radius:10px">대기중</span>';
+      }
+      // 표시 이름: 내가 보낸 초대면 friend_name 또는 friend_email, 받은 수락이면 inviter_name
+      var displayName,subEmail;
+      if(f._dir==='received'){
+        displayName=f.inviter_name||f.friend_email||'';
+        subEmail=f.friend_email||'';
+      }else{
+        displayName=f.friend_name||f.friend_email||'';
+        subEmail=f.friend_email||'';
+      }
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:6px">'
+        +'<div style="flex:1;min-width:0">'
+          +'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis">'+displayName+'</div>'
+          +'<div style="font-size:10px;color:#8B7D6B;overflow:hidden;text-overflow:ellipsis">'+subEmail+'</div>'
+        +'</div>'
+        +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
+          +statusBadge
+          +(f._dir==='sent'?'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>':'')
+        +'</div></div>';
+    }).join('');
+  }
+
+  document.getElementById('friendsList').innerHTML=html;
 }
 
 async function updateFriendsBadge(){
   var badge=document.getElementById('friendsBadge');
   if(!badge||!currentUser){if(badge)badge.textContent='';return}
   var friends=await loadFriends();
-  if(friends.length)badge.textContent=friends.length;
-  else badge.textContent='';
+  var receivedPending=friends.filter(function(f){return f._dir==='received'&&f.status==='pending'}).length;
+  var visible=friends.filter(function(f){return f.status!=='rejected'}).length;
+  if(receivedPending){
+    badge.innerHTML='<span style="color:var(--vermillion);font-weight:bold">+'+receivedPending+'</span> '+visible;
+  }else if(visible){
+    badge.textContent=visible;
+  }else{
+    badge.textContent='';
+  }
 }
 renderAll();
 document.querySelectorAll('nav button').forEach(function(btn){
@@ -745,8 +949,8 @@ async function doLogout(){
   var ok=await customConfirm('로그아웃','로그아웃하시겠습니까?');
   if(!ok)return;
   if(!sb)return;
-  // 예약된 sync 취소 (로그아웃 후 실행 방지)
-  if(syncTimer){clearTimeout(syncTimer);syncTimer=null}
+  stopRealtime();
+  setUnread(0);
   await sb.auth.signOut();
   currentUser=null;
   clearMapMarkers();
@@ -771,6 +975,8 @@ async function onAuthSuccess(user){
   records.forEach(plotRecord);
   updateLoginUI();
   updateFriendsBadge();
+  startRealtime();
+  renderUnreadDot();
 }
 async function loadFromSupabase(){
   if(!currentUser||!sb)return;
@@ -899,6 +1105,70 @@ function customConfirm(title,msg){
     modal.classList.add('on');
   });
 }
+// ─── Realtime 알림 시스템 (v2.1 보강) ────────────────────────────
+window._rtChannels=[];
+
+function getUnread(){return parseInt(localStorage.getItem('nnd_unread_notif')||'0',10)}
+function setUnread(n){localStorage.setItem('nnd_unread_notif',String(Math.max(0,n)));renderUnreadDot()}
+function pushNotif(text){
+  toast(text);
+  setUnread(getUnread()+1);
+}
+function clearUnread(){setUnread(0)}
+function renderUnreadDot(){
+  var menu=document.querySelectorAll('#view-my .menu-card .item');
+  // "내 사람 목록" 메뉴 항목에 빨간 점 표시
+  menu.forEach(function(item){
+    if(item.textContent.indexOf('내 사람 목록')<0)return;
+    var existing=item.querySelector('.unread-dot');
+    if(existing)existing.remove();
+    if(getUnread()>0){
+      var dot=document.createElement('span');
+      dot.className='unread-dot';
+      dot.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;background:#E63946;margin-left:6px;flex-shrink:0';
+      var arrow=item.querySelector('.arrow');
+      if(arrow)item.insertBefore(dot,arrow);
+    }
+  });
+}
+
+function startRealtime(){
+  if(!sb||!currentUser)return;
+  stopRealtime();
+  try{
+    // (1) 내가 초대받음: friends에 friend_user_id=내 INSERT
+    // (2) 친구가 내 초대 수락: user_id=내 + status='accepted' UPDATE
+    var chFriends=sb.channel('rt-friends-'+currentUser.id)
+      .on('postgres_changes',
+        {event:'INSERT',schema:'public',table:'friends',filter:'friend_user_id=eq.'+currentUser.id},
+        function(payload){
+          var name=(payload.new&&(payload.new.inviter_name||payload.new.user_id))||'';
+          pushNotif(name+'님이 당신을 내 사람으로 초대했습니다');
+          updateFriendsBadge();
+        })
+      .on('postgres_changes',
+        {event:'UPDATE',schema:'public',table:'friends',filter:'user_id=eq.'+currentUser.id},
+        function(payload){
+          if(payload.new&&payload.new.status==='accepted'&&(!payload.old||payload.old.status!=='accepted')){
+            pushNotif((payload.new.friend_email||'')+'님이 초대를 수락했습니다');
+            updateFriendsBadge();
+          }
+        })
+      .subscribe();
+
+    window._rtChannels=[chFriends];
+  }catch(e){console.warn('startRealtime failed',e)}
+}
+
+function stopRealtime(){
+  (window._rtChannels||[]).forEach(function(ch){
+    try{if(sb)sb.removeChannel(ch)}catch(e){}
+  });
+  window._rtChannels=[];
+}
+
+// syncToSupabase 래퍼 제거됨 (records Realtime 미사용으로 불필요)
+
 async function initAuth(){
   if(!sb){updateLoginUI();return}
   try{
@@ -909,6 +1179,8 @@ async function initAuth(){
       await loadFromSupabase();
       renderAll();
       records.forEach(plotRecord);
+      startRealtime();
+      renderUnreadDot();
     }else{
       // 비로그인 상태: 모든 프로필/기록 데이터 초기화
       records=[];profile={name:'',bio:'',email:'',avatarImg:''};
@@ -924,8 +1196,9 @@ async function initAuth(){
     sb.auth.onAuthStateChange(function(event,session){
       if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;closeAuthModal();clearMapMarkers();
-        loadFromSupabase().then(function(){renderAll();records.forEach(plotRecord);updateLoginUI()});
+        loadFromSupabase().then(function(){renderAll();records.forEach(plotRecord);updateLoginUI();startRealtime();renderUnreadDot()});
       }else if(event==='SIGNED_OUT'){
+        stopRealtime();
         currentUser=null;clearMapMarkers();records=[];renderAll();updateLoginUI();
         document.getElementById('authModal').classList.add('on');loadRememberedEmails();
       }
