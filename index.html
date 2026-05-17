@@ -100,7 +100,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" style="font-size:11px;color:#B8860B;margin-left:auto;margin-right:8px;font-weight:bold"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.20</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" style="font-size:11px;color:#B8860B;margin-left:auto;margin-right:8px;font-weight:bold"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.24</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -149,6 +149,10 @@ textarea#memo{min-height:70px;resize:none}
   <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">계정 정보</div>
   <div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:12px;margin-bottom:18px">
     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+      <span style="font-size:11px;color:#8B7D6B">로그인 방식</span>
+      <span id="settingsProvider" style="font-size:12px;color:var(--brown);font-family:Georgia,serif">-</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
       <span style="font-size:11px;color:#8B7D6B">이메일</span>
       <span id="settingsEmail" style="font-size:12px;color:var(--brown);font-family:Georgia,serif">-</span>
     </div>
@@ -166,7 +170,7 @@ textarea#memo{min-height:70px;resize:none}
   </div>
   <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">계정 관리</div>
   <div class="menu-card" style="margin-bottom:8px">
-    <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');openPasswordChangeModal()">비밀번호 변경<span class="arrow">›</span></div>
+    <div class="item" id="menuPasswordChange" onclick="document.getElementById('settingsModal').classList.remove('on');openPasswordChangeModal()">비밀번호 변경<span class="arrow">›</span></div>
     <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doLogout()">로그아웃<span class="arrow">›</span></div>
     <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doWithdraw()" style="color:#C96342">회원 탈퇴<span class="arrow">›</span></div>
   </div>
@@ -196,7 +200,8 @@ textarea#memo{min-height:70px;resize:none}
     <h3 style="font-family:Georgia,serif;margin:0">비밀번호 변경</h3>
     <button onclick="document.getElementById('passwordChangeModal').classList.remove('on')" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
   </div>
-  <div style="font-size:12px;color:var(--brown);line-height:1.6;margin-bottom:14px">새로 사용하실 비밀번호를 입력해주세요.</div>
+  <div style="font-size:12px;color:var(--brown);line-height:1.6;margin-bottom:14px">본인 확인을 위해 현재 비밀번호를 입력해주세요.</div>
+  <input id="chgPwdCur" type="password" placeholder="현재 비밀번호" autocomplete="current-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px"/>
   <input id="chgPwd1" type="password" placeholder="새 비밀번호 (6자 이상)" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:8px"/>
   <input id="chgPwd2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px"/>
   <button onclick="confirmPasswordChange()" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer;margin-bottom:8px">변경 완료</button>
@@ -749,9 +754,9 @@ async function openShareReceiverModal(){
     var receivers=[];
     accepted.forEach(function(f){
       if(f._dir==='sent'&&f.friend_user_id){
-        receivers.push({uid:f.friend_user_id,name:f.friend_name||f.friend_email,email:f.friend_email});
+        receivers.push({uid:f.friend_user_id,nameOnly:f.friend_name||'',email:f.friend_email||''});
       }else if(f._dir==='received'){
-        receivers.push({uid:f.user_id,name:f.inviter_name||f.friend_email,email:f.friend_email});
+        receivers.push({uid:f.user_id,nameOnly:f.inviter_name||'',email:f.friend_email||''});
       }
     });
     if(!receivers.length){
@@ -759,8 +764,14 @@ async function openShareReceiverModal(){
       return;
     }
     document.getElementById('shareReceiverList').innerHTML=receivers.map(function(r){
-      var safeName=(r.name||'').replace(/'/g,"\\'");
-      return '<div onclick="sendGift(\''+r.uid+'\',\''+safeName+'\')" style="display:flex;align-items:center;padding:14px 12px;border-bottom:1px solid var(--beige);cursor:pointer"><div style="flex:1;font-family:Georgia,serif;font-size:14px;color:var(--brown)">'+r.name+'</div><span style="color:#D4AF37;font-size:18px">›</span></div>';
+      // sendGift에 넘길 표시명: 이름 우선, 없으면 이메일
+      var passName=r.nameOnly||r.email||'';
+      var safeName=passName.replace(/'/g,"\\'");
+      // 한 줄 양식: 이름이 있고 이메일과 다르면 "이름 ㅣ 이메일", 아니면 단독
+      var lineText=(r.nameOnly&&r.email&&r.nameOnly!==r.email)
+        ? r.nameOnly+' <span style="color:#C4B8A2">ㅣ</span> '+r.email
+        : (r.nameOnly||r.email||'');
+      return '<div onclick="sendGift(\''+r.uid+'\',\''+safeName+'\')" style="display:flex;align-items:center;padding:14px 12px;border-bottom:1px solid var(--beige);cursor:pointer"><div style="flex:1;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div><span style="color:#D4AF37;font-size:18px;flex-shrink:0;margin-left:8px">›</span></div>';
     }).join('');
   }catch(e){console.warn(e);document.getElementById('shareReceiverList').innerHTML='<div style="text-align:center;padding:30px;color:#C96342;font-size:12px">불러오기 실패</div>'}
 }
@@ -823,7 +834,8 @@ function openGiftDetail(r){
   if(r.title)html+='<div style="font-size:12px;color:var(--brown);opacity:.75;margin-bottom:6px">['+r.title+']</div>';
   html+='<div style="font-size:11px;color:var(--terra);margin-bottom:10px">'+(r.region||'')+(r.date?' · '+r.date:'')+'</div>';
   if(r.memo)html+='<div style="font-size:13px;color:var(--brown);line-height:1.6;margin-bottom:14px;padding:10px;background:var(--cream);border-radius:6px">'+r.memo.replace(/</g,'&lt;').replace(/\n/g,'<br/>')+'</div>';
-  html+='<button onclick="attemptConvertGift(\''+r.sbId+'\')" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">내 기억으로 전환</button>';
+  html+='<button onclick="attemptConvertGift(\''+r.sbId+'\')" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer;margin-bottom:8px">내 기억으로 전환</button>';
+  html+='<button onclick="declineGift(\''+r.sbId+'\')" style="width:100%;padding:11px;background:#fff;color:#8B7D6B;border:1px solid var(--beige);border-radius:8px;font-family:Georgia,serif;font-size:12px;cursor:pointer">기억 비우기</button>';
   document.getElementById('giftDetailBody').innerHTML=html;
   document.getElementById('giftDetailModal').classList.add('on');
 }
@@ -833,6 +845,30 @@ function attemptConvertGift(sbId){
   document.getElementById('giftDetailModal').classList.remove('on');
   window._convertTargetSbId=sbId;
   document.getElementById('categoryPickModal').classList.add('on');
+}
+
+// 받은 곳 핀 비우기 — 받는 사람이 들인 기억을 정리
+async function declineGift(sbId){
+  if(!sbId||!sb||!currentUser)return;
+  var r=records.find(function(x){return x.sbId===sbId});
+  if(!r)return;
+  var ok=await customConfirm('기억 비우기','이 기억을 정리하시겠습니까?\n당신의 지도에서 사라집니다.');
+  if(!ok)return;
+  try{
+    // 1. share_log status를 revoked로 (보낸 사람의 건넨 기억 목록에서 자연스럽게 사라짐)
+    if(r.giftedLogId){
+      await sb.from('share_log').update({status:'revoked'}).eq('id',r.giftedLogId);
+    }
+    // 2. 받는 사람의 records 삭제
+    var dRes=await sb.from('records').delete().eq('id',sbId);
+    if(dRes.error){console.warn('declineGift records',dRes.error);toast('비우기 실패');return}
+    // 3. 로컬 상태 정리
+    if(r._mk){r._mk.setMap(null);delete r._mk}
+    records=records.filter(function(x){return x.sbId!==sbId});
+    saveRecs();renderAll();updateReceivedBadge();
+    document.getElementById('giftDetailModal').classList.remove('on');
+    toast('기억을 비웠습니다');
+  }catch(e){console.warn('declineGift',e);toast('비우기 중 오류')}
 }
 
 async function confirmCategoryPick(newCat){
@@ -862,7 +898,7 @@ async function openSentShares(){
   document.getElementById('sentSharesList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
   document.getElementById('sentSharesModal').classList.add('on');
   try{
-    var res=await sb.from('share_log').select('*').eq('sender_id',currentUser.id).order('created_at',{ascending:false});
+    var res=await sb.from('share_log').select('*').eq('sender_id',currentUser.id).neq('status','revoked').order('created_at',{ascending:false});
     if(res.error){console.warn(res.error);document.getElementById('sentSharesList').innerHTML='<div style="text-align:center;padding:20px;color:#C96342;font-size:12px">불러오기 실패</div>';return}
     var logs=res.data||[];
     if(!logs.length){
@@ -870,13 +906,17 @@ async function openSentShares(){
       return;
     }
     var friends=await loadFriends();
-    function findName(uid){
+    function findRecv(uid){
       var f=(friends||[]).find(function(x){return (x.friend_user_id===uid&&x._dir==='sent')||(x.user_id===uid&&x._dir==='received')});
-      if(!f)return '내 사람';
-      return f._dir==='sent'?(f.friend_name||f.friend_email):(f.inviter_name||f.friend_email);
+      if(!f)return {name:'',email:''};
+      if(f._dir==='sent')return {name:f.friend_name||'',email:f.friend_email||''};
+      return {name:f.inviter_name||'',email:f.friend_email||''};
     }
     document.getElementById('sentSharesList').innerHTML=logs.map(function(l){
-      var recvName=findName(l.receiver_id);
+      var rcv=findRecv(l.receiver_id);
+      var lineText=(rcv.name&&rcv.email&&rcv.name!==rcv.email)
+        ? rcv.name+' <span style="color:#C4B8A2">ㅣ</span> '+rcv.email
+        : (rcv.name||rcv.email||'내 사람');
       var dateStr=new Date(l.created_at).toLocaleDateString('ko-KR');
       var badge,actions;
       if(l.status==='active'){
@@ -891,8 +931,8 @@ async function openSentShares(){
         actions='';
       }
       return '<div style="padding:12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:8px">'
-        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">'
-          +'<div style="font-family:Georgia,serif;font-size:13px;color:var(--brown)">'+recvName+'님께</div>'+badge
+        +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px">'
+          +'<div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div>'+badge
         +'</div>'
         +'<div style="font-size:12px;color:var(--brown);margin-bottom:6px">'+(l.pin_name||'(이름 없음)')+'</div>'
         +'<div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#8B7D6B">'
@@ -1344,6 +1384,10 @@ async function confirmNewPassword(){
 
 function openPasswordChangeModal(){
   if(!currentUser){toast('로그인이 필요합니다');return}
+  // 카카오 가입자는 메뉴가 숨겨져 있어야 하지만 안전장치
+  var prov=(currentUser.app_metadata&&currentUser.app_metadata.provider)||'';
+  if(prov==='kakao'){toast('카카오로 가입한 계정은 비밀번호 변경이 불필요합니다');return}
+  document.getElementById('chgPwdCur').value='';
   document.getElementById('chgPwd1').value='';
   document.getElementById('chgPwd2').value='';
   document.getElementById('passwordChangeModal').classList.add('on');
@@ -1351,13 +1395,27 @@ function openPasswordChangeModal(){
 
 async function confirmPasswordChange(){
   if(!sb||!currentUser){toast('로그인이 필요합니다');return}
+  var cur=document.getElementById('chgPwdCur').value;
   var p1=document.getElementById('chgPwd1').value;
   var p2=document.getElementById('chgPwd2').value;
-  if(!p1||!p2){toast('비밀번호를 입력해주세요');return}
-  if(p1.length<6){toast('비밀번호는 6자 이상이어야 합니다');return}
-  if(p1!==p2){toast('두 비밀번호가 일치하지 않습니다');return}
+  if(!cur){toast('현재 비밀번호를 입력해주세요');return}
+  if(!p1||!p2){toast('새 비밀번호를 입력해주세요');return}
+  if(p1.length<6){toast('새 비밀번호는 6자 이상이어야 합니다');return}
+  if(p1!==p2){toast('새 비밀번호가 일치하지 않습니다');return}
+  if(cur===p1){toast('현재 비밀번호와 동일합니다');return}
   try{
+    // 1. 현재 비밀번호 재인증
+    // SIGNED_IN 이벤트가 메인 초기화를 다시 트리거하지 않도록 플래그 설정
+    window._reauthInProgress=true;
+    var reauth=await sb.auth.signInWithPassword({email:currentUser.email,password:cur});
+    if(reauth.error){
+      window._reauthInProgress=false;
+      toast('현재 비밀번호가 일치하지 않습니다');
+      return;
+    }
+    // 2. 새 비밀번호로 변경
     var res=await sb.auth.updateUser({password:p1});
+    window._reauthInProgress=false;
     if(res.error){
       console.warn('updateUser',res.error);
       toast('비밀번호 변경 실패: '+res.error.message);
@@ -1365,7 +1423,10 @@ async function confirmPasswordChange(){
     }
     document.getElementById('passwordChangeModal').classList.remove('on');
     toast('비밀번호가 변경되었습니다');
-  }catch(e){console.warn(e);toast('변경 중 오류')}
+  }catch(e){
+    window._reauthInProgress=false;
+    console.warn(e);toast('변경 중 오류');
+  }
 }
 
 // ─── 내 사람 코드 ──────────────────────────────────────────
@@ -1586,12 +1647,12 @@ async function rejectInvite(id){
 
 async function removeFriend(id){
   if(!currentUser||!sb)return;
-  var ok=await customConfirm('친구 삭제','이 사람을 내 사람 목록에서 제외하시겠습니까?');
+  var ok=await customConfirm('내 사람 정리','이 사람과의 관계를 정리하시겠습니까?\n양쪽 모두에서 내 사람 목록이 갱신됩니다.');
   if(!ok)return;
   try{
     await sb.from('friends').delete().eq('id',id);
     openFriendsList(); // 목록 갱신
-    toast('삭제되었습니다');
+    toast('정리되었습니다');
   }catch(e){console.warn('removeFriend',e)}
 }
 
@@ -1692,7 +1753,7 @@ async function openFriendsList(){
         +'<div style="flex:1;min-width:0;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div>'
         +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
           +statusBadge
-          +(f._dir==='sent'?'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>':'')
+          +'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
         +'</div></div>';
     }).join('');
   }
@@ -1812,6 +1873,13 @@ async function doKakaoLogin(){
 }
 function openSettings(){
   if(!currentUser){toast('로그인 후 이용할 수 있습니다');return}
+  // 로그인 방식 표시
+  var prov=(currentUser.app_metadata&&currentUser.app_metadata.provider)||'email';
+  var provLabel='이메일';
+  if(prov==='kakao')provLabel='카카오';
+  else if(prov==='google')provLabel='구글';
+  else if(prov==='apple')provLabel='애플';
+  document.getElementById('settingsProvider').textContent=provLabel;
   document.getElementById('settingsEmail').textContent=currentUser.email||'-';
   var joinDate='-';
   if(currentUser.created_at){
@@ -1819,6 +1887,9 @@ function openSettings(){
   }
   document.getElementById('settingsJoinDate').textContent=joinDate;
   document.getElementById('settingsMyCode').textContent=(profile&&profile.nndCode)||'-';
+  // 카카오 등 소셜 가입자는 비밀번호 변경 메뉴 숨김
+  var menuPwd=document.getElementById('menuPasswordChange');
+  if(menuPwd)menuPwd.style.display=(prov==='email')?'':'none';
   document.getElementById('settingsModal').classList.add('on');
 }
 
@@ -2076,14 +2147,38 @@ function startRealtime(){
       .subscribe();
 
     // (3) 누군가가 나에게 기억을 건넴: share_log INSERT
+    // 묶음 처리 — 같은 보낸 사람의 1초 내 알림은 1번의 토스트로 합침
+    // 큐 구조: {senderId: {name, firstPin, count, timer}}
+    window._giftNotifQueue=window._giftNotifQueue||{};
     var chShare=sb.channel('rt-share-'+currentUser.id)
       .on('postgres_changes',
         {event:'INSERT',schema:'public',table:'share_log',filter:'receiver_id=eq.'+currentUser.id},
         async function(payload){
-          var senderName=(payload.new&&payload.new.sender_name)||'내 사람';
-          var pinName=(payload.new&&payload.new.pin_name)||'';
-          pushNotif(senderName+'님이 기억을 건넸습니다'+(pinName?': '+pinName:''));
-          // records 다시 로드해서 새 받은 곳 핀 표시
+          var p=payload.new||{};
+          var senderId=p.sender_id||'unknown';
+          var senderName=p.sender_name||'내 사람';
+          var pinName=p.pin_name||'';
+          // 같은 보낸 사람의 큐 갱신
+          var q=window._giftNotifQueue[senderId];
+          if(q){
+            q.count++;
+            // 기존 타이머 취소
+            if(q.timer)clearTimeout(q.timer);
+          }else{
+            q={name:senderName,firstPin:pinName,count:1,timer:null};
+            window._giftNotifQueue[senderId]=q;
+          }
+          // 1초 후 큐를 비우고 토스트 1번
+          q.timer=setTimeout(function(){
+            var msg=q.name+'님이 기억을 건넸습니다';
+            if(q.firstPin){
+              msg+=': '+q.firstPin;
+              if(q.count>1)msg+=' 외 '+(q.count-1)+'건';
+            }
+            pushNotif(msg);
+            delete window._giftNotifQueue[senderId];
+          },1000);
+          // records와 지도는 즉시 갱신 (지연 없음)
           try{
             await loadFromSupabase();
             clearMapMarkers();
@@ -2146,6 +2241,8 @@ async function initAuth(){
     }
     updateLoginUI();
     sb.auth.onAuthStateChange(function(event,session){
+      // 비밀번호 변경 중 재인증으로 인한 SIGNED_IN은 무시 (메인 초기화 방지)
+      if(window._reauthInProgress&&event==='SIGNED_IN')return;
       // recovery 플래그가 있으면 SIGNED_IN/PASSWORD_RECOVERY 어느 쪽이든 비밀번호 모달 우선
       var isRecovery=false;
       try{isRecovery=localStorage.getItem('nnd_pending_recovery')==='1'}catch(e){}
