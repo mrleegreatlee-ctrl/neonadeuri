@@ -100,7 +100,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" style="font-size:11px;color:#B8860B;margin-left:auto;margin-right:8px;font-weight:bold"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.27</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" style="font-size:11px;color:var(--terra);margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" style="font-size:11px;color:#8B7D6B;margin-left:auto;margin-right:8px"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" style="font-size:11px;color:#B8860B;margin-left:auto;margin-right:8px;font-weight:bold"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.29</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -293,7 +293,11 @@ textarea#memo{min-height:70px;resize:none}
     <label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">이메일</label>
     <input id="authEmail" type="email" placeholder="이메일 주소 입력" autocomplete="email" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:6px"/><div id="rememberedEmails" style="display:none;margin-bottom:12px;padding:0 4px"></div>
     <label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">비밀번호</label>
-    <input id="authPassword" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:16px"/>
+    <input id="authPassword" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:10px"/>
+    <label style="display:flex;align-items:center;gap:6px;margin-bottom:14px;cursor:pointer;font-size:12px;color:#8B7D6B">
+      <input type="checkbox" id="authRememberEmail" style="width:14px;height:14px;cursor:pointer;accent-color:var(--vermillion)"/>
+      <span>이메일 저장</span>
+    </label>
     <button id="authSubmitBtn" onclick="doLogin()" style="width:100%;padding:13px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:15px;cursor:pointer;margin-bottom:14px">로그인</button>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
       <div style="flex:1;height:1px;background:var(--beige)"></div>
@@ -761,7 +765,7 @@ async function openShareReceiverModal(){
   document.getElementById('shareReceiverList').innerHTML='<div style="text-align:center;padding:20px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
   document.getElementById('shareReceiverModal').classList.add('on');
   try{
-    var friends=await loadFriends();
+    var friends=await loadFriends();friends=await enrichFriendNames(friends);
     var accepted=(friends||[]).filter(function(f){return f.status==='accepted'});
     var receivers=[];
     accepted.forEach(function(f){
@@ -824,6 +828,7 @@ async function sendGift(receiverUid,receiverName){
     }catch(e){console.warn(e);fail++}
   }
   exitShareMode();
+  updateSentBadge();
   if(ok&&!fail)toast(receiverName+'님께 '+ok+'개의 기억을 건넸습니다');
   else if(ok&&fail)toast(ok+'개 전송, '+fail+'개 실패');
   else toast('전송 실패');
@@ -877,7 +882,7 @@ async function declineGift(sbId){
     // 3. 로컬 상태 정리
     if(r._mk){r._mk.setMap(null);delete r._mk}
     records=records.filter(function(x){return x.sbId!==sbId});
-    saveRecs();renderAll();updateReceivedBadge();
+    saveRecs();renderAll();updateReceivedBadge();updateSentBadge();
     document.getElementById('giftDetailModal').classList.remove('on');
     toast('기억을 비웠습니다');
   }catch(e){console.warn('declineGift',e);toast('비우기 중 오류')}
@@ -897,7 +902,7 @@ async function confirmCategoryPick(newCat){
     r.cat=newCat;r.giftedLogId=null;
     if(r._mk){r._mk.setMap(null);delete r._mk}
     plotRecord(r);
-    saveRecs();renderAll();updateReceivedBadge();
+    saveRecs();renderAll();updateReceivedBadge();updateSentBadge();
     document.getElementById('categoryPickModal').classList.remove('on');
     window._convertTargetSbId=null;
     toast('이 기억은 이제 당신의 것입니다');
@@ -917,7 +922,7 @@ async function openSentShares(){
       document.getElementById('sentSharesList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:13px;line-height:1.6">아직 건넨 기억이 없습니다.<br/>지도에서 핀을 선택해 건네보세요.</div>';
       return;
     }
-    var friends=await loadFriends();
+    var friends=await loadFriends();friends=await enrichFriendNames(friends);
     function findRecv(uid){
       var f=(friends||[]).find(function(x){return (x.friend_user_id===uid&&x._dir==='sent')||(x.user_id===uid&&x._dir==='received')});
       if(!f)return {name:'',email:''};
@@ -967,6 +972,7 @@ async function revokeShare(logId){
     var del=await sb.from('share_log').delete().eq('id',logId).eq('status','active');
     if(del.error){toast('철회 실패');return}
     toast('건넨 기억을 거뒀습니다');
+    updateSentBadge();
     openSentShares();
   }catch(e){console.warn(e);toast('철회 중 오류')}
 }
@@ -1011,6 +1017,16 @@ function updateReceivedBadge(){
   var b=document.getElementById('receivedBadge');if(!b)return;
   var n=records.filter(function(r){return r.cat==='받은 곳'}).length;
   b.textContent=n>0?n:'';
+}
+
+async function updateSentBadge(){
+  var b=document.getElementById('sentBadge');if(!b)return;
+  if(!currentUser||!sb){b.textContent='';return}
+  try{
+    var res=await sb.from('share_log').select('id',{count:'exact',head:true}).eq('sender_id',currentUser.id).in('status',['active','accepted']);
+    var n=(res&&typeof res.count==='number')?res.count:0;
+    b.textContent=n>0?n:'';
+  }catch(e){console.warn('updateSentBadge',e);b.textContent=''}
 }
 
 const search=document.getElementById('search'),sresults=document.getElementById('sresults');
@@ -1388,7 +1404,7 @@ async function confirmNewPassword(){
         await reconcileFriendInvites();
         await consumePendingInvite();
         renderAll();records.forEach(plotRecord);
-        updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();
+        updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge();
       }
     }catch(e){console.warn('post-recovery init',e)}
   }catch(e){console.warn(e);toast('변경 중 오류')}
@@ -1491,6 +1507,7 @@ async function addFriendByCode(){
       user_id:currentUser.id,
       friend_user_id:target.id,
       friend_email:target.email||'',
+      friend_name:target.name||'',
       inviter_name:myName,
       inviter_email:myEmail,
       status:'accepted'
@@ -1578,6 +1595,7 @@ async function consumePendingInvite(){
       user_id:ic.inviter_id,
       friend_user_id:currentUser.id,
       friend_email:currentUser.email||'',
+      friend_name:(profile&&profile.name)||'',
       inviter_name:ic.inviter_name||'',
       inviter_email:inviterEmail,
       status:'accepted'
@@ -1626,7 +1644,48 @@ async function loadFriends(){
   }catch(e){console.warn('loadFriends',e);return []}
 }
 
-// 24시간 이내 새 항목 판정용
+// 친구 목록에서 비어있는 이름·이메일 필드를 profiles에서 한 번에 조회해 채움
+// stale 데이터 방지 + 표시 정확성 확보
+async function enrichFriendNames(friends){
+  if(!friends||!friends.length||!sb)return friends;
+  try{
+    // 보강이 필요한 user_id 모으기 (받는 쪽이면 user_id의 정보, 보낸 쪽이면 friend_user_id의 정보)
+    var missingIds=[];
+    friends.forEach(function(f){
+      if(f._dir==='received'){
+        // 보낸 사람의 이름·이메일 부족 시 user_id로 조회
+        if(!f.inviter_name||!f.inviter_email){if(f.user_id)missingIds.push(f.user_id)}
+      }else{
+        // 받는 사람의 이름·이메일 부족 시 friend_user_id로 조회
+        if((!f.friend_name||!f.friend_email)&&f.friend_user_id){missingIds.push(f.friend_user_id)}
+      }
+    });
+    if(!missingIds.length)return friends;
+    // 중복 제거 후 단일 쿼리
+    var uniqIds=Array.from(new Set(missingIds));
+    var pRes=await sb.from('profiles').select('id,name,email').in('id',uniqIds);
+    if(!pRes||!pRes.data)return friends;
+    var map={};
+    pRes.data.forEach(function(p){map[p.id]={name:p.name||'',email:p.email||''}});
+    // 매핑
+    friends.forEach(function(f){
+      if(f._dir==='received'){
+        var info=map[f.user_id];
+        if(info){
+          if(!f.inviter_name)f.inviter_name=info.name;
+          if(!f.inviter_email)f.inviter_email=info.email;
+        }
+      }else{
+        var info=map[f.friend_user_id];
+        if(info){
+          if(!f.friend_name)f.friend_name=info.name;
+          if(!f.friend_email)f.friend_email=info.email;
+        }
+      }
+    });
+    return friends;
+  }catch(e){console.warn('enrichFriendNames',e);return friends}
+}
 function isFresh(ts){
   if(!ts)return false;
   var t=new Date(ts).getTime();
@@ -1695,7 +1754,7 @@ async function openFriendsList(){
   var modal=document.getElementById('friendsModal');
   document.getElementById('friendsList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
   modal.classList.add('on');
-  var friends=await loadFriends();
+  var friends=await loadFriends();friends=await enrichFriendNames(friends);
 
   // 분류
   var receivedPending=friends.filter(function(f){return f._dir==='received'&&f.status==='pending'});
@@ -1801,7 +1860,7 @@ async function openFriendsList(){
 async function updateFriendsBadge(){
   var badge=document.getElementById('friendsBadge');
   if(!badge||!currentUser){if(badge)badge.textContent='';return}
-  var friends=await loadFriends();
+  var friends=await loadFriends();friends=await enrichFriendNames(friends);
   var receivedPending=friends.filter(function(f){return f._dir==='received'&&f.status==='pending'}).length;
   var visible=friends.filter(function(f){return f.status!=='rejected'}).length;
   if(receivedPending){
@@ -1816,6 +1875,10 @@ renderAll();
 document.querySelectorAll('nav button').forEach(function(btn){
   btn.onclick=async function(){
     var currentView=document.querySelector('main .view.active');
+    // 다른 뷰로 이동 시 건넬 기억 모드 자동 해제
+    if(window._shareMode&&btn.dataset.v!=='map'){
+      try{exitShareMode()}catch(e){}
+    }
     if(currentView&&currentView.id==='view-my'&&btn.dataset.v!=='my'){
       var canLeave=await checkProfileBeforeLeave();
       if(!canLeave)return;
@@ -1983,6 +2046,8 @@ async function doLogout(){
   toast('로그아웃되었습니다');
 }
 async function onAuthSuccess(user){
+  // 안전망: 이전 사용자가 shareMode를 켜둔 채 로그아웃했을 수도 있음
+  if(window._shareMode){try{exitShareMode()}catch(e){}}
   currentUser=user;
   rememberEmail(user.email);
   closeAuthModal();
@@ -2000,7 +2065,7 @@ async function onAuthSuccess(user){
   updateFriendsBadge();
   startRealtime();
   renderUnreadDot();
-  updateReceivedBadge();
+  updateReceivedBadge();updateSentBadge();
   // 신규 이메일 가입자에게 환영 모달 (이름 입력 안내)
   // 카카오 가입자는 이미 이름이 있으므로 제외, 이름이 비어있는 이메일 가입자만
   try{
@@ -2064,6 +2129,9 @@ function loadRememberedEmails(){
   try{
     var saved=JSON.parse(localStorage.getItem('nnd_remembered_emails')||'[]');
     var box=document.getElementById('rememberedEmails');
+    // 체크박스 상태: 저장된 이메일이 있으면 체크
+    var chk=document.getElementById('authRememberEmail');
+    if(chk)chk.checked=saved.length>0;
     if(!box||!saved.length){if(box)box.style.display='none';return}
     box.style.display='block';
     box.innerHTML=saved.slice(0,3).map(function(em){
@@ -2077,7 +2145,16 @@ function loadRememberedEmails(){
 function rememberEmail(em){
   if(!em)return;
   try{
+    // 체크박스 확인 — 체크 안 됐으면 저장 안 함, 기존 항목도 제거
+    var chk=document.getElementById('authRememberEmail');
+    var keep=chk?chk.checked:false;
     var saved=JSON.parse(localStorage.getItem('nnd_remembered_emails')||'[]');
+    if(!keep){
+      // 이 이메일을 목록에서 제거 (다른 이메일은 그대로 둠)
+      saved=saved.filter(function(x){return x!==em});
+      localStorage.setItem('nnd_remembered_emails',JSON.stringify(saved));
+      return;
+    }
     saved=saved.filter(function(x){return x!==em});
     saved.unshift(em);
     saved=saved.slice(0,3);
@@ -2255,7 +2332,7 @@ function startRealtime(){
             clearMapMarkers();
             records.forEach(plotRecord);
             renderAll();
-            updateReceivedBadge();
+            updateReceivedBadge();updateSentBadge();
           }catch(e){console.warn('share rt refresh',e)}
         })
       .subscribe();
@@ -2287,7 +2364,7 @@ async function initAuth(){
       records.forEach(plotRecord);
       startRealtime();
       renderUnreadDot();
-      updateReceivedBadge();
+      updateReceivedBadge();updateSentBadge();
     }else{
       // 비로그인 상태: 모든 프로필/기록 데이터 초기화
       records=[];profile={name:'',bio:'',email:'',avatarImg:'',nndCode:''};
@@ -2323,9 +2400,10 @@ async function initAuth(){
         openNewPasswordModal();
       }else if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;closeAuthModal();clearMapMarkers();
-        loadFromSupabase().then(function(){return reconcileFriendInvites()}).then(function(){return consumePendingInvite()}).then(function(){renderAll();records.forEach(plotRecord);updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge()});
+        loadFromSupabase().then(function(){return reconcileFriendInvites()}).then(function(){return consumePendingInvite()}).then(function(){renderAll();records.forEach(plotRecord);updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge()});
       }else if(event==='SIGNED_OUT'){
         stopRealtime();
+        if(window._shareMode){try{exitShareMode()}catch(e){}}
         currentUser=null;clearMapMarkers();records=[];renderAll();updateLoginUI();
         document.getElementById('authModal').classList.add('on');loadRememberedEmails();
       }
