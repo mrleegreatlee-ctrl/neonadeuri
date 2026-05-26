@@ -103,14 +103,574 @@ textarea#memo{min-height:70px;resize:none}
 .milestone-card .ms-body{font-size:12px;color:var(--brown);line-height:1.7;opacity:.85;margin-bottom:14px;padding:0 4px}
 .milestone-card .ms-cta{padding:10px 22px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer}
 .milestone-card .ms-cta:active{transform:scale(0.97)}
-.received-notice{position:fixed;top:20px;left:50%;transform:translateX(-50%);max-width:340px;width:calc(100% - 32px);background:#fff;border:1px solid var(--beige);border-radius:12px;padding:16px 18px;z-index:700;box-shadow:0 4px 20px rgba(61,57,41,.18);display:none;animation:rnFadeIn .45s ease-out}
-.received-notice.show{display:flex;align-items:center;gap:12px}
-@keyframes rnFadeIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
-.received-notice .rn-icon{width:32px;height:32px;flex-shrink:0;color:var(--vermillion)}
-.received-notice .rn-text{flex:1;font-family:Georgia,serif;font-size:13px;color:var(--brown);line-height:1.5}
-.received-notice .rn-close{background:transparent;border:none;font-size:20px;color:#8B7D6B;cursor:pointer;padding:0 4px;line-height:1;flex-shrink:0}
+
+/* ══════════════════════════════════════════
+   ONBOARDING OVERLAY  (너나들이 v4)
+══════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
+#onboardingOverlay {
+  position: fixed; inset: 0;
+  z-index: 9999;
+  background: #2a2419;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.5s ease;
+  /* 변수 재선언 (앱 변수와 충돌 방지) */
+  --ob-cream:     #F5F1EB;
+  --ob-vermil:    #D97757;
+  --ob-brown:     #3D3929;
+  --ob-brown-lt:  #6B6452;
+  --ob-brown-xlt: #A89F8C;
+  --ob-warm-wht:  #FAF8F4;
+  --ob-line:      #E2DDD5;
+  --ob-map-bg:    #1C1F2A;
+}
+#onboardingOverlay.ob-hidden {
+  opacity: 0; pointer-events: none;
+}
+#onboardingOverlay *,
+#onboardingOverlay *::before,
+#onboardingOverlay *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* 폰 프레임 */
+#onboardingOverlay .ob-phone {
+  width: 390px; height: 844px;
+  background: var(--ob-cream);
+  border-radius: 48px; overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 0 2px #2a2419, 0 40px 120px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+#onboardingOverlay .ob-notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 126px; height: 34px;
+  background: var(--ob-map-bg);
+  border-radius: 0 0 20px 20px; z-index: 100;
+}
+#onboardingOverlay .ob-slides {
+  width: 100%; height: 100%; display: flex;
+  transition: transform 0.6s cubic-bezier(0.77,0,0.175,1);
+  will-change: transform;
+}
+#onboardingOverlay .ob-slide {
+  min-width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 36px 44px; position: relative;
+  opacity: 0; transition: opacity 0.4s ease;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+#onboardingOverlay .ob-slide.ob-active { opacity: 1; }
+
+#onboardingOverlay .ob-tag {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 3px; color: var(--ob-brown-xlt);
+  text-transform: uppercase; margin-bottom: 16px;
+}
+#onboardingOverlay .ob-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 26px; font-weight: 600;
+  color: var(--ob-brown); line-height: 1.35;
+  text-align: center; margin-bottom: 20px;
+}
+#onboardingOverlay .ob-title em {
+  font-style: normal; color: var(--ob-vermil); position: relative;
+}
+#onboardingOverlay .ob-title em::after {
+  content:''; position: absolute;
+  bottom: 1px; left: 0; right: 0;
+  height: 2px; background: var(--ob-vermil);
+  opacity: 0.3; border-radius: 2px;
+}
+#onboardingOverlay .ob-body {
+  font-size: 13px; font-weight: 300;
+  color: var(--ob-brown-lt); line-height: 1.95;
+  text-align: center; max-width: 270px;
+}
+#onboardingOverlay .ob-dots {
+  display: flex; gap: 7px; margin-bottom: 20px;
+}
+#onboardingOverlay .ob-dot {
+  width: 6px; height: 6px; border-radius: 3px;
+  background: var(--ob-line); transition: all 0.35s ease;
+}
+#onboardingOverlay .ob-dot.ob-active { width: 22px; background: var(--ob-vermil); }
+
+#onboardingOverlay .ob-btn-area {
+  width: 100%; display: flex; flex-direction: column;
+  gap: 10px; align-items: center;
+}
+#onboardingOverlay .ob-btn-main {
+  width: 100%; height: 52px;
+  background: var(--ob-brown); color: var(--ob-cream);
+  border: none; border-radius: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; font-weight: 500;
+  letter-spacing: 0.5px; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(61,57,41,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+#onboardingOverlay .ob-btn-main:active { transform: scale(0.98); }
+#onboardingOverlay .ob-btn-main.ob-vermil {
+  background: var(--ob-vermil);
+  box-shadow: 0 4px 24px rgba(217,119,87,0.4);
+}
+#onboardingOverlay .ob-btn-skip {
+  background: none; border: none;
+  font-size: 12px; color: var(--ob-brown-xlt);
+  cursor: pointer; padding: 4px 8px;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* SLIDE 1 */
+#onboardingOverlay .ob-slide-1 {
+  background: var(--ob-map-bg); padding: 0; justify-content: flex-end;
+}
+#onboardingOverlay .ob-map-cover {
+  position: absolute; top: 0; left: 0; width: 100%; height: 66%; overflow: hidden;
+}
+#onboardingOverlay .ob-s1-bottom {
+  position: relative; z-index: 2; width: 100%;
+  padding: 0 36px 50px;
+  display: flex; flex-direction: column; align-items: center;
+}
+#onboardingOverlay .ob-brand-mark {
+  display: flex; flex-direction: column; align-items: center; margin-bottom: 26px;
+}
+#onboardingOverlay .ob-brand-name {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 44px; font-weight: 600;
+  color: var(--ob-cream); letter-spacing: -1px; line-height: 1; margin-bottom: 10px;
+}
+#onboardingOverlay .ob-brand-div {
+  width: 28px; height: 1.5px;
+  background: var(--ob-vermil); margin: 8px 0; opacity: 0.8;
+}
+#onboardingOverlay .ob-brand-sub {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px; font-weight: 300;
+  color: rgba(245,241,235,0.6);
+  letter-spacing: 0.5px; text-align: center; line-height: 1.75;
+}
+#onboardingOverlay .ob-slide-1 .ob-dots .ob-dot { background: rgba(255,255,255,0.18); }
+#onboardingOverlay .ob-slide-1 .ob-dots .ob-dot.ob-active { background: var(--ob-vermil); }
+#onboardingOverlay .ob-btn-start {
+  width: 100%; height: 54px;
+  background: var(--ob-vermil); color: white;
+  border: none; border-radius: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; font-weight: 500;
+  letter-spacing: 0.5px; cursor: pointer;
+  box-shadow: 0 4px 24px rgba(217,119,87,0.45);
+  transition: transform 0.15s;
+}
+#onboardingOverlay .ob-btn-start:active { transform: scale(0.98); }
+
+/* SLIDE 2 */
+#onboardingOverlay .ob-steps { width: 100%; display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+#onboardingOverlay .ob-step {
+  display: flex; align-items: flex-start; gap: 13px;
+  background: var(--ob-warm-wht); border: 1px solid var(--ob-line);
+  border-radius: 14px; padding: 14px 16px;
+}
+#onboardingOverlay .ob-step-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--ob-brown);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+#onboardingOverlay .ob-step-text { font-size: 13px; color: var(--ob-brown); line-height: 1.5; padding-top: 2px; }
+#onboardingOverlay .ob-step-text strong { font-weight: 500; display: block; margin-bottom: 3px; font-size: 13.5px; }
+#onboardingOverlay .ob-step-text span { color: var(--ob-brown-lt); font-size: 12px; }
+
+/* SLIDE 3 */
+#onboardingOverlay .ob-photo-row { display: flex; gap: 7px; width: 100%; margin: 14px 0; }
+#onboardingOverlay .ob-photo-box { flex: 1; aspect-ratio: 1; border-radius: 12px; overflow: hidden; }
+#onboardingOverlay .ob-photo-box svg { width: 100%; height: 100%; }
+#onboardingOverlay .ob-record-card {
+  width: 100%; background: var(--ob-warm-wht); border: 1px solid var(--ob-line);
+  border-radius: 14px; padding: 13px 16px; margin-bottom: 10px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+#onboardingOverlay .ob-record-pin {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ob-vermil);
+  flex-shrink: 0; margin-top: 5px;
+}
+#onboardingOverlay .ob-record-place {
+  font-family: 'Noto Serif KR', serif; font-size: 13.5px; font-weight: 600;
+  color: var(--ob-brown); margin-bottom: 2px;
+}
+#onboardingOverlay .ob-record-date { font-size: 10.5px; color: var(--ob-brown-xlt); letter-spacing: 0.3px; margin-bottom: 4px; }
+#onboardingOverlay .ob-record-memo { font-size: 11.5px; color: var(--ob-brown-lt); line-height: 1.6; }
+#onboardingOverlay .ob-quote-box {
+  width: 100%; background: var(--ob-warm-wht);
+  border-left: 3px solid var(--ob-vermil);
+  border-radius: 0 12px 12px 0; padding: 12px 16px; margin-bottom: 12px;
+}
+#onboardingOverlay .ob-quote-box p {
+  font-family: 'Noto Serif KR', serif; font-size: 12.5px; font-weight: 300;
+  color: var(--ob-brown); line-height: 1.9; font-style: italic;
+}
+
+/* SLIDE 4 */
+#onboardingOverlay .ob-slide-4 { background: var(--ob-brown); }
+#onboardingOverlay .ob-slide-4 .ob-tag       { color: rgba(245,241,235,0.35); }
+#onboardingOverlay .ob-slide-4 .ob-title     { color: var(--ob-cream); }
+#onboardingOverlay .ob-slide-4 .ob-title em  { color: var(--ob-vermil); }
+#onboardingOverlay .ob-slide-4 .ob-body      { color: rgba(245,241,235,0.62); }
+#onboardingOverlay .ob-slide-4 .ob-dots .ob-dot { background: rgba(255,255,255,0.18); }
+#onboardingOverlay .ob-slide-4 .ob-dots .ob-dot.ob-active { background: var(--ob-vermil); }
+
+#onboardingOverlay .ob-pin-cta {
+  width: 96px; height: 96px; border-radius: 50%;
+  background: var(--ob-vermil);
+  display: flex; align-items: center; justify-content: center;
+  margin: 14px auto 20px; position: relative;
+}
+#onboardingOverlay .ob-pin-cta::before,
+#onboardingOverlay .ob-pin-cta::after {
+  content:''; position: absolute; border-radius: 50%;
+  background: var(--ob-vermil); opacity: 0;
+  animation: obRipple 2.6s ease-out infinite;
+}
+#onboardingOverlay .ob-pin-cta::before { width:100%; height:100%; animation-delay:0s; }
+#onboardingOverlay .ob-pin-cta::after  { width:100%; height:100%; animation-delay:1.3s; }
+#onboardingOverlay .ob-pin-cta svg {
+  width: 42px; height: 42px;
+  animation: obPinDrop 0.7s 0.2s both cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes obRipple {
+  0%   { transform: scale(1); opacity: 0.35; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes obPinDrop {
+  0%   { transform: translateY(-22px) scale(0.75); opacity: 0; }
+  70%  { transform: translateY(4px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes obPinDrop1 {
+  0%   { transform: translateY(-28px) scale(0.7); opacity: 0; }
+  65%  { transform: translateY(4px) scale(1.1); }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes obFloatUp {
+  0%   { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+#onboardingOverlay .ob-slide.ob-active .ob-tag         { animation: obFloatUp 0.5s 0.05s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-title       { animation: obFloatUp 0.5s 0.12s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-brand-mark  { animation: obFloatUp 0.5s 0.08s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-steps       { animation: obFloatUp 0.5s 0.14s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-photo-row   { animation: obFloatUp 0.5s 0.10s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-record-card { animation: obFloatUp 0.5s 0.18s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-quote-box   { animation: obFloatUp 0.5s 0.22s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-body        { animation: obFloatUp 0.5s 0.20s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-pin-cta     { animation: obFloatUp 0.5s 0.10s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-btn-area    { animation: obFloatUp 0.5s 0.28s both ease-out; }
+#onboardingOverlay .ob-slide.ob-active .ob-dots        { animation: obFloatUp 0.5s 0.24s both ease-out; }
+
+@media (max-width:420px) {
+  #onboardingOverlay .ob-phone { width:100vw; height:100dvh; border-radius:0; }
+}
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
-<div class="received-notice" id="receivedNotice"><svg class="rn-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="22" height="16" rx="2"/><path d="M5 12l11 7 11-7"/><path d="M16 4v5"/></svg><div class="rn-text" id="receivedNoticeText">새로 들인 기억이 있습니다.</div><button class="rn-close" onclick="closeReceivedNotice()" aria-label="닫기">×</button></div>
+<!-- ═══════════════════════════════════════════
+     너나들이 온보딩 오버레이 v4  (v2.1.34)
+═══════════════════════════════════════════ -->
+<div id="onboardingOverlay" style="display:none">
+  <div class="ob-phone">
+    <div class="ob-notch"></div>
+    <div class="ob-slides" id="obSlides">
+
+      <!-- SLIDE 1 -->
+      <div class="ob-slide ob-slide-1 ob-active" id="ob-slide-0">
+        <div class="ob-map-cover">
+          <svg viewBox="0 0 390 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="390" height="560" fill="#1C1F2A"/>
+            <rect x="0"   y="0" width="10"  height="560" fill="#252B3E"/>
+            <rect x="56"  y="0" width="10"  height="560" fill="#252B3E"/>
+            <rect x="124" y="0" width="14"  height="560" fill="#2D3450"/>
+            <rect x="256" y="0" width="14"  height="560" fill="#2D3450"/>
+            <rect x="326" y="0" width="10"  height="560" fill="#252B3E"/>
+            <rect x="376" y="0" width="14"  height="560" fill="#252B3E"/>
+            <rect x="0" y="0"   width="390" height="10"  fill="#252B3E"/>
+            <rect x="0" y="60"  width="390" height="10"  fill="#252B3E"/>
+            <rect x="0" y="148" width="390" height="14"  fill="#2D3450"/>
+            <rect x="0" y="282" width="390" height="14"  fill="#2D3450"/>
+            <rect x="0" y="400" width="390" height="10"  fill="#252B3E"/>
+            <rect x="0" y="490" width="390" height="10"  fill="#252B3E"/>
+            <line x1="0" y1="100" x2="390" y2="100" stroke="#252B3E" stroke-width="6"/>
+            <line x1="0" y1="210" x2="390" y2="210" stroke="#252B3E" stroke-width="5"/>
+            <line x1="0" y1="340" x2="390" y2="340" stroke="#252B3E" stroke-width="5"/>
+            <line x1="0" y1="445" x2="390" y2="445" stroke="#252B3E" stroke-width="4"/>
+            <line x1="192" y1="0" x2="192" y2="560" stroke="#252B3E" stroke-width="6"/>
+            <line x1="92"  y1="0" x2="92"  y2="560" stroke="#252B3E" stroke-width="5"/>
+            <line x1="300" y1="0" x2="300" y2="560" stroke="#252B3E" stroke-width="5"/>
+            <rect x="20"  y="20"  width="30" height="34" rx="4" fill="#242A3C"/>
+            <rect x="20"  y="72"  width="30" height="70" rx="4" fill="#242A3C"/>
+            <rect x="70"  y="20"  width="48" height="34" rx="4" fill="#242A3C"/>
+            <rect x="70"  y="72"  width="24" height="70" rx="4" fill="#242A3C"/>
+            <rect x="102" y="72"  width="16" height="35" rx="4" fill="#242A3C"/>
+            <rect x="142" y="20"  width="44" height="34" rx="4" fill="#242A3C"/>
+            <rect x="196" y="20"  width="54" height="34" rx="4" fill="#242A3C"/>
+            <rect x="142" y="72"  width="44" height="70" rx="4" fill="#2A3044"/>
+            <rect x="196" y="72"  width="30" height="45" rx="4" fill="#242A3C"/>
+            <rect x="234" y="72"  width="16" height="70" rx="4" fill="#242A3C"/>
+            <rect x="270" y="20"  width="50" height="34" rx="4" fill="#242A3C"/>
+            <rect x="270" y="72"  width="26" height="70" rx="4" fill="#242A3C"/>
+            <rect x="304" y="72"  width="16" height="45" rx="4" fill="#242A3C"/>
+            <rect x="340" y="20"  width="40" height="65" rx="4" fill="#2A3044"/>
+            <rect x="20"  y="166" width="30" height="38" rx="4" fill="#242A3C"/>
+            <rect x="20"  y="226" width="30" height="48" rx="4" fill="#242A3C"/>
+            <rect x="70"  y="166" width="48" height="38" rx="4" fill="#2A3044"/>
+            <rect x="70"  y="226" width="24" height="48" rx="4" fill="#242A3C"/>
+            <rect x="102" y="226" width="16" height="24" rx="4" fill="#242A3C"/>
+            <rect x="142" y="166" width="44" height="38" rx="4" fill="#242A3C"/>
+            <rect x="196" y="166" width="54" height="38" rx="4" fill="#242A3C"/>
+            <rect x="142" y="226" width="44" height="48" rx="4" fill="#242A3C"/>
+            <rect x="196" y="226" width="30" height="48" rx="4" fill="#2A3044"/>
+            <rect x="234" y="226" width="16" height="48" rx="4" fill="#242A3C"/>
+            <rect x="270" y="166" width="50" height="38" rx="4" fill="#242A3C"/>
+            <rect x="270" y="226" width="26" height="48" rx="4" fill="#242A3C"/>
+            <rect x="340" y="166" width="40" height="108" rx="4" fill="#242A3C"/>
+            <path d="M0,330 Q70,310 140,325 Q210,340 280,312 Q330,295 390,305" stroke="#2A4878" stroke-width="22" fill="none" opacity="0.6"/>
+            <path d="M0,330 Q70,310 140,325 Q210,340 280,312 Q330,295 390,305" stroke="#3A5A9A" stroke-width="8" fill="none" opacity="0.2"/>
+            <path d="M60,318 Q90,312 120,318" stroke="rgba(255,255,255,0.07)" stroke-width="2" fill="none"/>
+            <path d="M200,324 Q230,318 260,322" stroke="rgba(255,255,255,0.07)" stroke-width="2" fill="none"/>
+            <rect x="20"  y="360" width="30" height="34" rx="4" fill="#242A3C"/>
+            <rect x="20"  y="412" width="30" height="68" rx="4" fill="#242A3C"/>
+            <rect x="70"  y="360" width="48" height="34" rx="4" fill="#242A3C"/>
+            <rect x="70"  y="412" width="48" height="28" rx="4" fill="#2A3044"/>
+            <rect x="142" y="360" width="44" height="34" rx="4" fill="#242A3C"/>
+            <rect x="196" y="360" width="54" height="34" rx="4" fill="#242A3C"/>
+            <rect x="142" y="412" width="30" height="28" rx="4" fill="#242A3C"/>
+            <rect x="180" y="412" width="16" height="28" rx="4" fill="#242A3C"/>
+            <rect x="270" y="360" width="50" height="34" rx="4" fill="#242A3C"/>
+            <rect x="270" y="412" width="50" height="68" rx="4" fill="#242A3C"/>
+            <rect x="340" y="360" width="40" height="34" rx="4" fill="#242A3C"/>
+            <ellipse cx="192" cy="450" rx="30" ry="18" fill="#1A2D1C" opacity="0.85"/>
+            <ellipse cx="85"  cy="260" rx="16" ry="10" fill="#1A2D1C" opacity="0.7"/>
+            <ellipse cx="310" cy="250" rx="14" ry="9"  fill="#1A2D1C" opacity="0.7"/>
+            <g style="animation:obPinDrop1 0.7s 0.7s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="192" cy="222" r="22" fill="#D97757" opacity="0.12"/>
+              <circle cx="192" cy="222" r="13" fill="#D97757" opacity="0.25"/>
+              <circle cx="192" cy="222" r="7"  fill="#D97757"/>
+              <line   x1="192" y1="229" x2="192" y2="248" stroke="#D97757" stroke-width="2.5"/>
+              <ellipse cx="192" cy="250" rx="5" ry="2" fill="#D97757" opacity="0.25"/>
+            </g>
+            <g style="animation:obPinDrop1 0.6s 1.0s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="90"  cy="186" r="5" fill="#F5F1EB" opacity="0.75"/>
+              <line   x1="90"  y1="191" x2="90" y2="202" stroke="#F5F1EB" stroke-width="1.5" opacity="0.75"/>
+            </g>
+            <g style="animation:obPinDrop1 0.6s 1.2s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="305" cy="196" r="5" fill="#F5F1EB" opacity="0.75"/>
+              <line   x1="305" y1="201" x2="305" y2="212" stroke="#F5F1EB" stroke-width="1.5" opacity="0.75"/>
+            </g>
+            <g style="animation:obPinDrop1 0.6s 1.4s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="145" cy="382" r="4.5" fill="#A89F8C" opacity="0.8"/>
+              <line   x1="145" y1="386" x2="145" y2="396" stroke="#A89F8C" stroke-width="1.5" opacity="0.8"/>
+            </g>
+            <g style="animation:obPinDrop1 0.6s 1.6s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="295" cy="375" r="4.5" fill="#A89F8C" opacity="0.8"/>
+              <line   x1="295" y1="379" x2="295" y2="389" stroke="#A89F8C" stroke-width="1.5" opacity="0.8"/>
+            </g>
+            <g style="animation:obPinDrop1 0.6s 1.8s both cubic-bezier(0.34,1.56,0.64,1)">
+              <circle cx="68"  cy="430" r="4"   fill="#D97757" opacity="0.55"/>
+              <line   x1="68"  y1="434" x2="68" y2="443" stroke="#D97757" stroke-width="1.5" opacity="0.55"/>
+            </g>
+            <defs>
+              <linearGradient id="obMapFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="45%" stop-color="#1C1F2A" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#1C1F2A" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+            <rect width="390" height="560" fill="url(#obMapFade)"/>
+          </svg>
+        </div>
+        <div class="ob-s1-bottom">
+          <div class="ob-brand-mark">
+            <div class="ob-brand-name">너나들이</div>
+            <div class="ob-brand-div"></div>
+            <div class="ob-brand-sub">내 사람과 나누는<br>지도 위 기억 일기</div>
+          </div>
+          <div class="ob-dots" style="margin-bottom:18px">
+            <div class="ob-dot ob-active"></div>
+            <div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+          </div>
+          <button class="ob-btn-start" onclick="obNext()">시작하기</button>
+        </div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="ob-slide" id="ob-slide-1">
+        <div class="ob-tag">HOW IT WORKS</div>
+        <div class="ob-title"><em>어렵지</em> 않습니다</div>
+        <div class="ob-steps">
+          <div class="ob-step">
+            <div class="ob-step-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="7.5" r="5.5" stroke="#F5F1EB" stroke-width="1.2" opacity="0.35"/>
+                <circle cx="9" cy="7.5" r="3"   fill="#D97757"/>
+                <path d="M9 10.5 L9 16" stroke="#D97757" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="ob-step-text">
+              <strong>장소를 검색하고 결정하세요</strong>
+              <span>지도 위에 핀이 생성됩니다</span>
+            </div>
+          </div>
+          <div class="ob-step">
+            <div class="ob-step-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="2" y="5.5" width="14" height="9.5" rx="2" stroke="#F5F1EB" stroke-width="1.2"/>
+                <circle cx="9" cy="10.25" r="2.5" fill="#D97757"/>
+                <path d="M6.5 5.5 L7.8 3 L10.2 3 L11.5 5.5" stroke="#F5F1EB" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="ob-step-text">
+              <strong>사진과 글을 남기세요</strong>
+              <span>길게 써도, 또 그렇지 않아도 됩니다</span>
+            </div>
+          </div>
+          <div class="ob-step">
+            <div class="ob-step-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="14" cy="4"  r="2"   fill="#D97757"/>
+                <circle cx="4"  cy="9"  r="2"   fill="#F5F1EB" opacity="0.7"/>
+                <circle cx="14" cy="14" r="2"   fill="#F5F1EB" opacity="0.7"/>
+                <line x1="6" y1="8"  x2="12" y2="5"  stroke="#F5F1EB" stroke-width="1.2" opacity="0.45"/>
+                <line x1="6" y1="10" x2="12" y2="13" stroke="#F5F1EB" stroke-width="1.2" opacity="0.45"/>
+              </svg>
+            </div>
+            <div class="ob-step-text">
+              <strong>내 사람에게 기억을 건네세요</strong>
+              <span>내 사람끼리면 건네고 들일 수 있습니다</span>
+            </div>
+          </div>
+        </div>
+        <div class="ob-body">갈 곳은 간 곳이 되고,<br>간 곳은 기억이 됩니다.</div>
+        <div style="height:16px"></div>
+        <div class="ob-dots">
+          <div class="ob-dot"></div><div class="ob-dot ob-active"></div>
+          <div class="ob-dot"></div><div class="ob-dot"></div>
+        </div>
+        <div class="ob-btn-area">
+          <button class="ob-btn-main" onclick="obNext()">다음</button>
+          <button class="ob-btn-skip" onclick="obGoTo(3)">건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="ob-slide" id="ob-slide-2">
+        <div class="ob-tag">WHY NEONADEURI</div>
+        <div class="ob-title"><em>스스로의</em> 기록입니다</div>
+        <div class="ob-photo-row">
+          <div class="ob-photo-box">
+            <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="obG1sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8EA8C0"/><stop offset="100%" stop-color="#C2B898"/>
+              </linearGradient></defs>
+              <rect width="90" height="90" fill="url(#obG1sky)"/>
+              <polygon points="0,90 22,48 42,64 62,36 90,90" fill="#5E7050" opacity="0.95"/>
+              <polygon points="0,90 22,48 42,64" fill="#4A5C3E"/>
+              <polygon points="62,36 78,58 90,52 90,90" fill="#4A5C3E"/>
+              <rect x="0" y="74" width="90" height="16" fill="#6A7A58" opacity="0.7"/>
+              <rect x="0" y="65" width="90" height="12" fill="rgba(200,195,185,0.18)"/>
+            </svg>
+          </div>
+          <div class="ob-photo-box">
+            <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="obG2sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#C8BBA8"/><stop offset="100%" stop-color="#D8C8B4"/>
+              </linearGradient></defs>
+              <rect width="90" height="90" fill="url(#obG2sky)"/>
+              <rect x="0"  y="18" width="28" height="72" fill="#9A8878"/>
+              <rect x="31" y="32" width="25" height="58" fill="#B0A090"/>
+              <rect x="59" y="14" width="31" height="76" fill="#8A7868"/>
+              <rect x="5"  y="26" width="8" height="7" rx="1" fill="#D4C4B0" opacity="0.8"/>
+              <rect x="16" y="26" width="8" height="7" rx="1" fill="#D4C4B0" opacity="0.6"/>
+              <rect x="5"  y="40" width="8" height="7" rx="1" fill="#D4C4B0" opacity="0.7"/>
+              <rect x="16" y="40" width="8" height="7" rx="1" fill="#D97757" opacity="0.55"/>
+              <rect x="5"  y="54" width="8" height="7" rx="1" fill="#D4C4B0" opacity="0.5"/>
+              <rect x="36" y="40" width="7" height="7" rx="1" fill="#D4C4B0" opacity="0.6"/>
+              <rect x="36" y="54" width="7" height="7" rx="1" fill="#D4C4B0" opacity="0.5"/>
+              <rect x="63" y="24" width="7" height="7" rx="1" fill="#D97757" opacity="0.4"/>
+              <rect x="74" y="24" width="7" height="7" rx="1" fill="#D4C4B0" opacity="0.6"/>
+              <rect x="0"  y="78" width="90" height="12" fill="#786858"/>
+            </svg>
+          </div>
+          <div class="ob-photo-box">
+            <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="obG3sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8C090"/><stop offset="60%" stop-color="#D4946A"/>
+                </linearGradient>
+                <linearGradient id="obG3sea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#5278A0"/><stop offset="100%" stop-color="#344E70"/>
+                </linearGradient>
+              </defs>
+              <rect width="90" height="90" fill="url(#obG3sky)"/>
+              <circle cx="68" cy="28" r="12" fill="#F0B040" opacity="0.75"/>
+              <circle cx="68" cy="28" r="8"  fill="#F8C860" opacity="0.9"/>
+              <rect x="0" y="52" width="90" height="38" fill="url(#obG3sea)"/>
+              <path d="M0,56 Q22,52 45,56 Q68,60 90,56" stroke="rgba(255,220,160,0.4)" stroke-width="1.5" fill="none"/>
+              <path d="M0,64 Q22,60 45,64 Q68,68 90,64" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+              <path d="M60,53 Q68,50 76,53" stroke="rgba(248,200,96,0.5)" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+        </div>
+        <div class="ob-record-card">
+          <div class="ob-record-pin"></div>
+          <div>
+            <div class="ob-record-place">경복궁 후원 산책로</div>
+            <div class="ob-record-date">2026. 04. 12 · 간 곳</div>
+            <div class="ob-record-memo">봄에 다시 꼭 와야지. 그늘이 좋았던 곳.</div>
+          </div>
+        </div>
+        <div class="ob-quote-box">
+          <p>"좋아요도 없고, 팔로워도 없습니다.<br>
+          내가 선택한 기억을,<br>
+          내가 그러고픈 사람에게만 건넵니다."</p>
+        </div>
+        <div class="ob-dots">
+          <div class="ob-dot"></div><div class="ob-dot"></div>
+          <div class="ob-dot ob-active"></div><div class="ob-dot"></div>
+        </div>
+        <div class="ob-btn-area">
+          <button class="ob-btn-main" onclick="obNext()">다음</button>
+          <button class="ob-btn-skip" onclick="obGoTo(3)">건너뛰기</button>
+        </div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="ob-slide ob-slide-4" id="ob-slide-3">
+        <div class="ob-tag">LET'S START</div>
+        <div class="ob-title">첫 기억을<br><em>남겨보세요</em></div>
+        <div class="ob-pin-cta">
+          <svg viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="18" r="10" fill="white" opacity="0.88"/>
+            <circle cx="22" cy="18" r="5.5" fill="#D97757"/>
+            <path d="M22 28 L22 44" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="22" cy="46" rx="7" ry="2.5" fill="rgba(255,255,255,0.18)"/>
+          </svg>
+        </div>
+        <div class="ob-body" style="margin-bottom:22px">
+          기록은 내게 쓰는 편지,<br>
+          건넴은 조용한 선물,<br>
+          그리고 이 지도는<br>
+          언젠가 한 권의 책이 됩니다.
+        </div>
+        <div class="ob-dots" style="margin-bottom:20px">
+          <div class="ob-dot"></div><div class="ob-dot"></div>
+          <div class="ob-dot"></div><div class="ob-dot ob-active"></div>
+        </div>
+        <div class="ob-btn-area">
+          <button class="ob-btn-main ob-vermil" onclick="obFinish()">첫 기록 남기러 가기</button>
+        </div>
+      </div>
+
+    </div><!-- /ob-slides -->
+  </div><!-- /ob-phone -->
+</div><!-- /onboardingOverlay -->
 <div id="app">
 <header><h1 style="font-family:Georgia,serif;font-size:18px">너나들이</h1><div class="sub">내 사람과 나누는, 지도 위 기억 일기</div></header>
 <main>
@@ -813,17 +1373,10 @@ async function sendGift(receiverUid,receiverName){
   if(!sb||!currentUser)return;
   var pinIds=Array.from(window._shareSelected||[]);
   if(!pinIds.length)return;
-  // 1. 확인 알림 — 건네는 행위는 되돌리기 어려우므로 한 번 더 묻습니다
-  var firstSbId=pinIds[0];
-  var firstRec=records.find(function(r){return r.sbId===firstSbId});
-  var pinLabel=firstRec?firstRec.name:'';
-  var detail=pinIds.length>1?(pinLabel+' 외 '+(pinIds.length-1)+'건'):pinLabel;
-  var ok=await customConfirm('이 기억을 건네시겠습니까?',receiverName+'님에게 '+detail+'이(가) 전해집니다.');
-  if(!ok)return;
   var senderName=(profile&&profile.name)||currentUser.email||'';
   document.getElementById('shareReceiverModal').classList.remove('on');
   toast('보내는 중...');
-  var okCnt=0,fail=0;
+  var ok=0,fail=0;
   for(var i=0;i<pinIds.length;i++){
     var sbId=pinIds[i];
     var src=records.find(function(r){return r.sbId===sbId});
@@ -848,14 +1401,14 @@ async function sendGift(receiverUid,receiverName){
         continue;
       }
       await sb.from('share_log').update({target_record_id:recRes.data.id}).eq('id',logId);
-      okCnt++;
+      ok++;
     }catch(e){console.warn(e);fail++}
   }
   exitShareMode();
   updateSentBadge();
-  if(okCnt&&!fail)toast('기억이 '+receiverName+'님에게 전해졌습니다');
-  else if(okCnt&&fail)toast(okCnt+'개 전해짐, '+fail+'개 전달 실패');
-  else toast('전달 실패');
+  if(ok&&!fail)toast(receiverName+'님께 '+ok+'개의 기억을 건넸습니다');
+  else if(ok&&fail)toast(ok+'개 전송, '+fail+'개 실패');
+  else toast('전송 실패');
 }
 
 // ─── 받은 곳 핀 핸들러 ──────────────────────────────────────
@@ -893,7 +1446,7 @@ async function declineGift(sbId){
   if(!sbId||!sb||!currentUser)return;
   var r=records.find(function(x){return x.sbId===sbId});
   if(!r)return;
-  var ok=await customConfirm('이 기억을 비우시겠습니까?','내 지도에서 사라집니다. 보낸 분의 건넨 기억 목록에서도 함께 정리됩니다.');
+  var ok=await customConfirm('기억 비우기','이 기억을 정리하시겠습니까?\n당신의 지도에서 사라집니다.');
   if(!ok)return;
   try{
     // 1. share_log status를 revoked로 (보낸 사람의 건넨 기억 목록에서 자연스럽게 사라짐)
@@ -1060,38 +1613,6 @@ function updateReceivedBadge(){
     b.textContent='';
     b.style.display='none';
   }
-}
-// ─── 받은 사실 안내 카드 (v2.1.34) ───
-function showReceivedNoticeIfNeeded(){
-  if(!currentUser)return;
-  var lastSeen=0;
-  try{var v=localStorage.getItem('nnd_last_seen_received');if(v)lastSeen=Date.parse(v)||0}catch(e){}
-  // 이 세션에서 이미 닫았으면 다시 띄우지 않음
-  if(window._receivedNoticeDismissed)return;
-  var n=records.filter(function(r){
-    if(r.cat!=='받은 곳')return false;
-    if(!r.created_at)return true;
-    return Date.parse(r.created_at)>lastSeen;
-  }).length;
-  var card=document.getElementById('receivedNotice');
-  var txt=document.getElementById('receivedNoticeText');
-  if(!card||!txt)return;
-  if(n>0){
-    txt.textContent='새로 들인 기억이 '+n+'개 있습니다.';
-    card.classList.add('show');
-  }else{
-    card.classList.remove('show');
-  }
-}
-function closeReceivedNotice(){
-  var card=document.getElementById('receivedNotice');
-  if(card)card.classList.remove('show');
-  // 이 세션에서는 다시 띄우지 않음
-  window._receivedNoticeDismissed=true;
-  // localStorage 시각도 갱신 — 다음 로그인/새로고침에서도 안 뜸
-  try{localStorage.setItem('nnd_last_seen_received',new Date().toISOString())}catch(e){}
-  // 뱃지도 함께 갱신
-  if(typeof updateReceivedBadge==='function')updateReceivedBadge();
 }
 
 // 건넨 기억 중 마지막 본 시점 이후에 'accepted'로 바뀐 것만 카운트
@@ -1848,11 +2369,9 @@ async function rejectInvite(id){
   }catch(e){console.warn('rejectInvite',e)}
 }
 
-async function removeFriend(id,encodedName){
+async function removeFriend(id){
   if(!currentUser||!sb)return;
-  var fname='내 사람';
-  try{if(encodedName)fname=decodeURIComponent(encodedName)}catch(e){}
-  var ok=await customConfirm(fname+'님과의 연결을 정리하시겠습니까?','정리 후에는 서로에게 기억을 건넬 수 없게 됩니다. 지금까지 주고받은 기억은 그대로 남습니다.');
+  var ok=await customConfirm('내 사람 정리','이 사람과의 관계를 정리하시겠습니까?\n양쪽 모두에서 내 사람 목록이 갱신됩니다.');
   if(!ok)return;
   try{
     var dRes=await sb.from('friends').delete().eq('id',id).select();
@@ -1868,7 +2387,7 @@ async function removeFriend(id,encodedName){
       return;
     }
     openFriendsList(); // 목록 갱신
-    toast('연결이 정리되었습니다');
+    toast('정리되었습니다');
   }catch(e){console.warn('removeFriend',e);toast('정리 중 오류')}
 }
 
@@ -1973,7 +2492,7 @@ async function openFriendsList(){
         +'<div style="flex:1;min-width:0;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div>'
         +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
           +statusBadge
-          +'<button onclick="removeFriend(\''+f.id+'\',\''+encodeURIComponent(displayName||subEmail||'내 사람')+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
+          +'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
         +'</div></div>';
     }).join('');
   }
@@ -2119,9 +2638,9 @@ function openSettings(){
 
 async function doWithdraw(){
   if(!currentUser||!sb)return;
-  var ok1=await customConfirm('너나들이를 떠나시겠습니까?','그동안 쌓은 모든 기록과 내 사람과의 연결이 사라집니다. 이 작업은 되돌릴 수 없습니다.');
+  var ok1=await customConfirm('회원 탈퇴','정말 탈퇴하시겠습니까?\n모든 기록과 친구 관계가 영구 삭제됩니다.');
   if(!ok1)return;
-  var ok2=await customConfirm('마지막으로 한 번 더 여쭙니다.','정말 진행하시겠습니까?');
+  var ok2=await customConfirm('마지막 확인','이 작업은 되돌릴 수 없습니다.\n정말 진행하시겠습니까?');
   if(!ok2)return;
   try{
     var uid=currentUser.id;
@@ -2143,7 +2662,7 @@ async function doWithdraw(){
     if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='block';
     renderAll();updateLoginUI();
     document.getElementById('authModal').classList.add('on');
-    toast('잘 가셨습니다. 언제든 다시 들어오셔도 됩니다.');
+    toast('탈퇴가 완료되었습니다');
   }catch(e){
     console.warn('doWithdraw',e);
     toast('탈퇴 처리 중 오류가 발생했습니다');
@@ -2151,7 +2670,7 @@ async function doWithdraw(){
 }
 
 async function doLogout(){
-  var ok=await customConfirm('로그아웃하시겠습니까?','다시 들어오실 때는 같은 계정으로 로그인해주세요.');
+  var ok=await customConfirm('로그아웃','로그아웃하시겠습니까?');
   if(!ok)return;
   if(!sb)return;
   stopRealtime();
@@ -2200,10 +2719,6 @@ async function onAuthSuccess(user){
   startRealtime();
   renderUnreadDot();
   updateReceivedBadge();updateSentBadge();
-  // 받은 사실 안내 카드 — 새 들인 기억이 있으면 표시
-  setTimeout(function(){
-    try{showReceivedNoticeIfNeeded()}catch(e){console.warn('showReceivedNoticeIfNeeded',e)}
-  },800);
   // 신규 이메일 가입자에게 환영 모달 (이름 입력 안내)
   // 카카오 가입자는 이미 이름이 있으므로 제외, 이름이 비어있는 이메일 가입자만
   try{
@@ -2550,4 +3065,77 @@ async function initAuth(){
 }
 setTimeout(initAuth,100);
 
+
+// ═══════════════════════════════════
+//  온보딩 오버레이 JS  (v4 / v2.1.34)
+// ═══════════════════════════════════
+(function(){
+  var obCurrent = 0;
+  var obTotal   = 4;
+
+  function obGoTo(n){
+    var slides = document.querySelectorAll('#onboardingOverlay .ob-slide');
+    slides[obCurrent].classList.remove('ob-active');
+    obCurrent = n;
+    slides[obCurrent].classList.add('ob-active');
+    document.getElementById('obSlides').style.transform = 'translateX(-' + (obCurrent * 100) + '%)';
+    document.querySelectorAll('#onboardingOverlay .ob-dots').forEach(function(g){
+      g.querySelectorAll('.ob-dot').forEach(function(d,i){ d.classList.toggle('ob-active', i === obCurrent); });
+    });
+  }
+
+  function obNext(){ if(obCurrent < obTotal - 1) obGoTo(obCurrent + 1); }
+
+  function obFinish(){
+    try{ localStorage.setItem('nnd_onboarded','1'); }catch(e){}
+    var ov = document.getElementById('onboardingOverlay');
+    ov.classList.add('ob-hidden');
+    setTimeout(function(){ ov.style.display='none'; }, 500);
+    // 로그인 안 된 경우 authModal 표시
+    try{
+      if(typeof currentUser === 'undefined' || !currentUser){
+        var am = document.getElementById('authModal');
+        if(am){ am.classList.add('on'); if(typeof loadRememberedEmails==='function') loadRememberedEmails(); }
+      }
+    }catch(e){}
+  }
+
+  // 전역 노출
+  window.obGoTo   = obGoTo;
+  window.obNext   = obNext;
+  window.obFinish = obFinish;
+
+  // 스와이프
+  var sx = 0;
+  var phone = document.querySelector('#onboardingOverlay .ob-phone');
+  if(phone){
+    phone.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+    phone.addEventListener('touchend',   function(e){
+      var d = sx - e.changedTouches[0].clientX;
+      if(Math.abs(d) > 50){
+        if(d > 0 && obCurrent < obTotal-1) obNext();
+        else if(d < 0 && obCurrent > 0) obGoTo(obCurrent-1);
+      }
+    }, {passive:true});
+  }
+
+  // 키보드
+  document.addEventListener('keydown', function(e){
+    var ov = document.getElementById('onboardingOverlay');
+    if(!ov || ov.style.display==='none') return;
+    if(e.key==='ArrowRight' && obCurrent < obTotal-1) obNext();
+    if(e.key==='ArrowLeft'  && obCurrent > 0) obGoTo(obCurrent-1);
+  });
+
+  // 초기화: 이미 온보딩 완료한 유저는 표시 안 함
+  document.addEventListener('DOMContentLoaded', function(){
+    try{
+      if(localStorage.getItem('nnd_onboarded') !== '1'){
+        document.getElementById('onboardingOverlay').style.display = 'flex';
+      }
+    }catch(e){
+      document.getElementById('onboardingOverlay').style.display = 'flex';
+    }
+  });
+})();
 </script></body></html>
