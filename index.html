@@ -374,7 +374,7 @@ textarea#memo{min-height:70px;resize:none}
 }
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
 <!-- ═══════════════════════════════════════════
-     너나들이 온보딩 오버레이 v4  (v2.1.36)
+     너나들이 온보딩 오버레이 v4  (v2.1.37)
 ═══════════════════════════════════════════ -->
 <div id="onboardingOverlay" style="display:none">
   <div class="ob-phone">
@@ -677,7 +677,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="giftBanner" onclick="focusLatestGift()" style="display:none;position:absolute;top:62px;left:10px;right:10px;background:linear-gradient(135deg,#D4AF37 0%,#C9A028 100%);color:#3D3929;padding:11px 14px;z-index:550;font-family:Georgia,serif;font-size:13px;border-radius:8px;box-shadow:0 3px 12px rgba(212,175,55,.35);cursor:pointer;align-items:center;gap:10px"><span style="font-size:16px;flex-shrink:0">✦</span><span id="giftBannerText" style="flex:1;font-weight:600"></span><span style="font-size:11px;opacity:.7;font-family:Helvetica,sans-serif;white-space:nowrap">보러가기 ›</span></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.36</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.37</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -746,11 +746,27 @@ textarea#memo{min-height:70px;resize:none}
     </div>
   </div>
   <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">계정 관리</div>
-  <div class="menu-card" style="margin-bottom:8px">
+  <div class="menu-card" style="margin-bottom:18px">
     <div class="item" id="menuPasswordChange" onclick="document.getElementById('settingsModal').classList.remove('on');openPasswordChangeModal()">비밀번호 변경<span class="arrow">›</span></div>
     <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doLogout()">로그아웃<span class="arrow">›</span></div>
     <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doWithdraw()" style="color:#C96342">회원 탈퇴<span class="arrow">›</span></div>
   </div>
+  <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">약관 및 정책</div>
+  <div class="menu-card">
+    <div class="item" onclick="openPolicyModal('terms')">이용약관<span class="arrow">›</span></div>
+    <div class="item" onclick="openPolicyModal('privacy')">개인정보처리방침<span class="arrow">›</span></div>
+    <div class="item" onclick="openPolicyModal('location')">위치정보 이용약관<span class="arrow">›</span></div>
+    <div class="item" onclick="openPolicyModal('opensource')">오픈소스 라이선스<span class="arrow">›</span></div>
+    <div class="item" onclick="openPolicyModal('contact')">문의하기<span class="arrow">›</span></div>
+  </div>
+</div></div>
+<!-- 약관·정책 모달 -->
+<div class="modal" id="policyModal"><div class="modal-inner" style="max-width:480px;max-height:85vh;display:flex;flex-direction:column">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0">
+    <h3 id="policyTitle" style="font-family:Georgia,serif;margin:0;font-size:16px">약관</h3>
+    <button onclick="document.getElementById('policyModal').classList.remove('on')" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
+  </div>
+  <div id="policyBody" style="overflow-y:auto;font-size:12px;color:var(--brown);line-height:1.8;font-family:Helvetica,sans-serif;padding-right:4px"></div>
 </div></div>
 <!-- 비밀번호 재설정 — 이메일 입력 모달 (로그인 화면용) -->
 <div class="modal" id="passwordResetModal"><div class="modal-inner" style="max-width:380px">
@@ -2797,6 +2813,129 @@ function openSettings(){
   document.getElementById('settingsModal').classList.add('on');
 }
 
+// ─── 약관 및 정책 (v2.1.37) ────────────────────────────────
+// 초안 형태로 작성되었습니다. 정식 출시 전 법률 전문가 검토를 권장합니다.
+// 운영 정보는 [추후 기재]로 두었습니다 (운영자명, 사업자번호, 연락처 등).
+var POLICY_VERSION='2025.05.26';
+var POLICY_CONTACT_EMAIL='[추후 기재]';
+var POLICY_OPERATOR='[추후 기재]';
+
+var POLICY_TEXTS={
+  terms:{
+    title:'이용약관',
+    body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">시행일: '+POLICY_VERSION+'</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제1조 (목적)</h4>'
++'<p>본 약관은 \'너나들이\'(이하 "서비스")를 이용함에 있어 운영자와 이용자 간의 권리, 의무 및 책임 사항을 규정함을 목적으로 합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제2조 (서비스의 정의)</h4>'
++'<p>본 서비스는 이용자가 방문한 장소와 가고자 하는 장소를 지도 위에 기록하고, 가까운 사람들과 그 기억을 나누는 위치 기반 기록 서비스입니다. 핵심 기능은 다음과 같습니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">간 곳·갈 곳 기록 및 사진·메모 저장</li><li style="margin-bottom:3px">친구 초대 및 기억 건네기·들이기</li><li style="margin-bottom:3px">개인 통계 및 지도 시각화</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제3조 (회원가입 및 이용계약)</h4>'
++'<p>① 회원가입은 이메일·비밀번호 입력 또는 소셜 로그인(카카오, 구글, 애플)을 통해 이루어집니다.<br/>② 이용자는 본인의 실제 정보를 정확하게 입력해야 하며, 허위 정보 등록 시 서비스 이용이 제한될 수 있습니다.<br/>③ 만 14세 미만 아동의 회원가입은 법정대리인의 동의 절차를 거쳐야 하며, 현재 본 서비스는 만 14세 이상을 대상으로 운영됩니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제4조 (이용자의 의무)</h4>'
++'<p>이용자는 다음 행위를 해서는 안 됩니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">타인의 실명·연락처·집주소 등 개인정보를 메모나 핀 정보에 무단 기재하는 행위</li><li style="margin-bottom:3px">실제로 방문하지 않은 장소를 방문한 것처럼 허위 등록하는 행위</li><li style="margin-bottom:3px">타인을 비방하거나 혐오 표현, 욕설을 포함한 콘텐츠를 등록하는 행위</li><li style="margin-bottom:3px">상업적 광고·홍보를 목적으로 핀이나 기억을 등록하는 행위</li><li style="margin-bottom:3px">자동화 도구(크롤러, 봇 등)를 사용하여 서비스에 접근하는 행위</li><li style="margin-bottom:3px">타인의 계정을 도용하거나 무단으로 사용하는 행위</li><li style="margin-bottom:3px">서비스의 정상적인 운영을 방해하는 모든 행위</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제5조 (기억 건네기 및 들이기)</h4>'
++'<p>① 이용자는 자신이 등록한 기억(간 곳·갈 곳)을 다른 이용자에게 건넬 수 있습니다.<br/>② 건네받은 기억(받은 기억)은 받는 사람의 \'들인 기억\' 보관함에 저장됩니다.<br/>③ 받는 사람은 받은 기억을 자신의 \'갈 곳\'으로 담을 수 있으며, 이때 보낸 사람의 사진과 메모는 함께 옮겨지지 않습니다. 위치·이름·추천인 정보만 복사본으로 생성됩니다.<br/>④ 받은 기억 원본은 받는 사람의 \'들인 기억\' 보관함에 저장되며, 이용자가 원하면 언제든지 보관함에서 삭제할 수 있습니다. 삭제된 항목은 복원할 수 없습니다.<br/>⑤ 보낸 사람은 받는 사람이 아직 담지 않은 기억을 회수(거두기)할 수 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제6조 (콘텐츠의 권리와 책임)</h4>'
++'<p>① 이용자가 등록한 사진, 메모, 위치 정보 등 모든 콘텐츠의 저작권은 해당 이용자에게 귀속됩니다.<br/>② 운영자는 서비스 운영을 위해 필요한 범위 내에서 해당 콘텐츠를 저장·전송·표시할 수 있는 권한을 가집니다.<br/>③ 이용자가 등록한 콘텐츠로 인해 발생하는 법적 분쟁의 책임은 해당 이용자에게 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제7조 (서비스 이용의 제한)</h4>'
++'<p>운영자는 이용자가 본 약관을 위반하거나 서비스의 정상적인 운영을 방해한 경우, 사전 통지 없이 서비스 이용을 일시 또는 영구 제한할 수 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제8조 (회원 탈퇴 및 데이터 처리)</h4>'
++'<p>① 이용자는 언제든지 \'개인 설정 > 회원 탈퇴\'를 통해 탈퇴할 수 있습니다.<br/>② 탈퇴 시 이용자의 모든 기록, 친구 관계, 받은 기억은 영구 삭제되며 복원할 수 없습니다.<br/>③ 단, 관계 법령에 따라 보존이 필요한 정보는 일정 기간 보관될 수 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제9조 (서비스의 변경 및 중단)</h4>'
++'<p>운영자는 서비스의 기능 개선, 안정성 확보 등을 위해 서비스 내용을 변경하거나 일시 중단할 수 있으며, 중요한 변경 사항은 사전에 공지합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제10조 (면책 조항)</h4>'
++'<p>① 운영자는 천재지변, 시스템 장애 등 불가항력으로 인한 서비스 중단에 대하여 책임을 지지 않습니다.<br/>② 이용자가 등록한 콘텐츠의 정확성, 신뢰성에 대해 운영자는 보증하지 않습니다.<br/>③ 이용자 간 분쟁이나 이용자와 제3자 간의 분쟁에 대하여 운영자는 개입할 의무가 없으며, 이로 인한 손해를 배상할 책임이 없습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제11조 (약관의 변경)</h4>'
++'<p>본 약관은 변경될 수 있으며, 변경 시에는 변경 사항과 적용일을 사전에 공지합니다. 이용자가 변경된 약관에 동의하지 않을 경우 서비스 이용을 중단할 수 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제12조 (준거법 및 관할)</h4>'
++'<p>본 약관에 관한 분쟁은 대한민국 법률에 따르며, 분쟁 발생 시 운영자 주소지 관할 법원을 제1심 관할 법원으로 합니다.</p>'
++'<p style="margin-top:20px;padding-top:14px;border-top:1px solid var(--beige);color:#8B7D6B;font-size:11px">운영자: '+POLICY_OPERATOR+'<br/>문의: '+POLICY_CONTACT_EMAIL+'</p>'
+  },
+  privacy:{
+    title:'개인정보처리방침',
+    body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">시행일: '+POLICY_VERSION+'</p>'
++'<p>너나들이(이하 "서비스")는 이용자의 개인정보를 중요하게 생각하며, 「개인정보 보호법」을 준수하기 위해 노력합니다. 본 처리방침은 서비스가 어떤 정보를 수집하고, 어떻게 사용·보관·파기하는지 설명합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">1. 수집하는 개인정보 항목</h4>'
++'<p><strong>회원가입 시</strong><br/>• 이메일 주소, 비밀번호(암호화 저장)<br/>• 소셜 로그인 사용 시: 제공자(카카오·구글·애플)로부터 받는 식별자, 이메일, 이름, 프로필 이미지</p>'
++'<p style="margin-top:6px"><strong>서비스 이용 시</strong><br/>• 프로필 정보: 이름, 한 줄 소개, 프로필 사진<br/>• 기록 정보: 방문 장소의 좌표, 장소명, 주소, 사진, 메모, 방문 일자<br/>• 친구 관계: 초대 코드, 친구 목록<br/>• 공유 이력: 건넨 기억 및 받은 기억의 로그</p>'
++'<p style="margin-top:6px"><strong>자동 수집</strong><br/>• 접속 IP, 브라우저 정보, 접속 일시(서비스 보안 및 통계 목적)</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">2. 수집 방법</h4>'
++'<p>이용자가 직접 입력하거나 업로드하는 방법, 소셜 로그인 제공자로부터 전달받는 방법, 서비스 이용 중 자동 생성되는 방법으로 수집합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">3. 이용 목적</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">회원 인증 및 본인 확인</li><li style="margin-bottom:3px">서비스 핵심 기능(지도 기록, 친구 초대, 기억 공유) 제공</li><li style="margin-bottom:3px">개인 통계 및 시각화 제공</li><li style="margin-bottom:3px">서비스 운영 관련 공지 및 문의 응대</li><li style="margin-bottom:3px">부정 이용 방지 및 보안</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">4. 보유 및 이용 기간</h4>'
++'<p>이용자의 개인정보는 회원 탈퇴 시까지 보유합니다. 회원 탈퇴 시 모든 정보는 지체 없이 파기됩니다. 단, 다음의 경우 일정 기간 보관됩니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">관계 법령에 따른 보존 의무가 있는 경우 해당 기간</li><li style="margin-bottom:3px">분쟁 처리 등 정당한 이유가 있는 경우 그 사유가 해소될 때까지</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">5. 제3자 제공</h4>'
++'<p>서비스는 이용자의 개인정보를 외부에 제공하지 않습니다. 단, 법령에 따른 요구가 있거나 이용자가 명시적으로 동의한 경우는 예외입니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">6. 처리 위탁</h4>'
++'<p>서비스는 안정적인 운영을 위해 일부 업무를 외부 전문 업체에 위탁합니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">데이터 저장 및 인증: Supabase Inc.</li><li style="margin-bottom:3px">지도 서비스: 카카오 (KakaoMap API)</li><li style="margin-bottom:3px">소셜 로그인 인증: 카카오, 구글, 애플</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">7. 이용자의 권리</h4>'
++'<p>이용자는 언제든지 다음 권리를 행사할 수 있습니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">개인정보 열람·수정: 마이페이지에서 직접 수정</li><li style="margin-bottom:3px">기록 삭제: 각 기록의 삭제 버튼을 통해 즉시 삭제</li><li style="margin-bottom:3px">받은 기억 보관함 삭제: 들인 기억 보관함에서 개별 삭제 가능</li><li style="margin-bottom:3px">회원 탈퇴: 개인 설정 메뉴에서 탈퇴 가능</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">8. 파기 절차 및 방법</h4>'
++'<p>회원 탈퇴 또는 보유 기간 만료 시 데이터베이스에서 즉시 삭제되며, 복구 불가능한 방식으로 파기됩니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">9. 보호 조치</h4>'
++'<p>비밀번호는 단방향 암호화하여 저장하며, 통신 구간은 HTTPS를 통해 암호화됩니다. 데이터베이스는 Row Level Security(RLS) 정책으로 이용자별 접근 권한을 분리하여 보호합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">10. 개인정보 보호책임자</h4>'
++'<p>운영자: '+POLICY_OPERATOR+'<br/>이메일: '+POLICY_CONTACT_EMAIL+'</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">11. 처리방침의 변경</h4>'
++'<p>본 처리방침이 변경되는 경우 변경 사항과 적용일을 사전에 공지합니다.</p>'
+  },
+  location:{
+    title:'위치정보 이용약관',
+    body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">시행일: '+POLICY_VERSION+'</p>'
++'<p>본 약관은 「위치정보의 보호 및 이용 등에 관한 법률」에 따라 너나들이(이하 "서비스")가 이용자의 위치정보를 어떻게 수집·이용·보호하는지 규정합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제1조 (수집하는 위치정보)</h4>'
++'<p>서비스는 다음의 위치정보를 수집합니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">이용자가 직접 지도에서 선택하거나 검색하여 등록한 장소의 좌표(위도·경도)</li><li style="margin-bottom:3px">이용자가 \'현재 위치\' 기능을 사용한 경우 일회성으로 수집되는 단말기의 좌표</li></ul>'
++'<p style="margin-top:6px;color:#C96342;font-size:11px">※ 본 서비스는 이용자가 명시적으로 요청한 경우에만 위치를 측정하며, 백그라운드에서 지속적으로 위치를 추적하지 않습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제2조 (위치정보의 이용 목적)</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">이용자의 방문 장소 및 가고자 하는 장소를 지도 위에 기록</li><li style="margin-bottom:3px">친구와 장소 기억 공유 기능 제공</li><li style="margin-bottom:3px">개인 통계 및 시각화(걸음 지도, 도시별 집계)</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제3조 (위치정보의 보유 기간)</h4>'
++'<p>이용자가 등록한 위치정보는 이용자가 직접 삭제하거나 회원 탈퇴할 때까지 보유됩니다. \'현재 위치\' 기능으로 일회성 수집된 좌표는 지도 표시 후 즉시 폐기되며, 서버에 별도로 저장되지 않습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제4조 (위치정보의 제3자 제공)</h4>'
++'<p>서비스는 이용자의 위치정보를 외부에 제공하지 않습니다. 단, 이용자가 \'기억 건네기\' 기능을 통해 특정 친구에게 명시적으로 공유한 경우, 해당 친구에게만 위치정보가 전달됩니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제5조 (이용자의 권리)</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">위치정보 수집·이용·제공에 대한 동의 철회 권리</li><li style="margin-bottom:3px">등록된 위치정보의 열람 및 삭제 요구 권리</li><li style="margin-bottom:3px">위치정보 이용 내역의 확인 요청 권리</li></ul>'
++'<p style="margin-top:6px">동의 철회 시 서비스의 핵심 기능(지도 기록·공유)을 이용할 수 없습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제6조 (위치정보 관리 책임자)</h4>'
++'<p>운영자: '+POLICY_OPERATOR+'<br/>이메일: '+POLICY_CONTACT_EMAIL+'</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제7조 (위치기반서비스의 변경 및 중단)</h4>'
++'<p>운영자는 서비스 정책 변경, 법령 개정 등의 이유로 위치기반서비스의 전부 또는 일부를 제한·중단할 수 있으며, 사전에 공지합니다.</p>'
+  },
+  opensource:{
+    title:'오픈소스 라이선스',
+    body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">너나들이는 다음의 오픈소스 라이브러리를 사용하여 만들어졌습니다.</p>'
++'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:12px;margin-bottom:10px"><div style="font-family:Georgia,serif;font-weight:bold;margin-bottom:4px;color:var(--brown)">Leaflet</div><div style="font-size:11px;color:#8B7D6B">BSD 2-Clause License<br/>© 2010-2024 Vladimir Agafonkin<br/>인터랙티브 지도 라이브러리</div></div>'
++'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:12px;margin-bottom:10px"><div style="font-family:Georgia,serif;font-weight:bold;margin-bottom:4px;color:var(--brown)">Supabase JavaScript Client</div><div style="font-size:11px;color:#8B7D6B">MIT License<br/>© Supabase Inc.<br/>백엔드 데이터베이스 및 인증 클라이언트</div></div>'
++'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:12px;margin-bottom:10px"><div style="font-family:Georgia,serif;font-weight:bold;margin-bottom:4px;color:var(--brown)">Kakao Maps API</div><div style="font-size:11px;color:#8B7D6B">Kakao Developers Terms<br/>© Kakao Corp.<br/>지도 및 장소 검색 서비스</div></div>'
++'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:12px;margin-bottom:10px"><div style="font-family:Georgia,serif;font-weight:bold;margin-bottom:4px;color:var(--brown)">South Korea Maps (GeoJSON)</div><div style="font-size:11px;color:#8B7D6B">Public Domain<br/>대한민국 행정구역 경계 데이터<br/>github.com/southkorea/southkorea-maps</div></div>'
++'<p style="font-size:11px;color:#8B7D6B;line-height:1.6;margin-top:14px">각 라이브러리의 상세 라이선스 전문은 해당 프로젝트의 공식 저장소에서 확인하실 수 있습니다.</p>'
+  },
+  contact:{
+    title:'문의하기',
+    body:'<div style="text-align:center;padding:20px 0">'
++'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:14px">너나들이를 이용해 주셔서 감사합니다.</div>'
++'<div style="font-size:12px;color:#8B7D6B;line-height:1.8;margin-bottom:20px">서비스 이용 중 문의 사항이나 의견이 있으시면<br/>아래 연락처로 보내주세요.</div>'
++'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
++'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
++'</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.37</div>'
+  }
+};
+
+function openPolicyModal(key){
+  var data=POLICY_TEXTS[key];
+  if(!data)return;
+  document.getElementById('policyTitle').textContent=data.title;
+  document.getElementById('policyBody').innerHTML=data.body;
+  document.getElementById('policyBody').scrollTop=0;
+  document.getElementById('policyModal').classList.add('on');
+}
+
 async function doWithdraw(){
   if(!currentUser||!sb)return;
   var ok1=await customConfirm('회원 탈퇴','정말 탈퇴하시겠습니까?\n모든 기록과 친구 관계가 영구 삭제됩니다.');
@@ -3228,7 +3367,7 @@ setTimeout(initAuth,100);
 
 
 // ═══════════════════════════════════
-//  온보딩 오버레이 JS  (v4 / v2.1.36)
+//  온보딩 오버레이 JS  (v4 / v2.1.37)
 // ═══════════════════════════════════
 (function(){
   var obCurrent = 0;
