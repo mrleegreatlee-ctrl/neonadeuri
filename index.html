@@ -374,7 +374,7 @@ textarea#memo{min-height:70px;resize:none}
 }
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
 <!-- ═══════════════════════════════════════════
-     너나들이 온보딩 오버레이 v4  (v2.1.37)
+     너나들이 온보딩 오버레이 v4  (v2.1.40)
 ═══════════════════════════════════════════ -->
 <div id="onboardingOverlay" style="display:none">
   <div class="ob-phone">
@@ -677,7 +677,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="giftBanner" onclick="focusLatestGift()" style="display:none;position:absolute;top:62px;left:10px;right:10px;background:linear-gradient(135deg,#D4AF37 0%,#C9A028 100%);color:#3D3929;padding:11px 14px;z-index:550;font-family:Georgia,serif;font-size:13px;border-radius:8px;box-shadow:0 3px 12px rgba(212,175,55,.35);cursor:pointer;align-items:center;gap:10px"><span style="font-size:16px;flex-shrink:0">✦</span><span id="giftBannerText" style="flex:1;font-weight:600"></span><span style="font-size:11px;opacity:.7;font-family:Helvetica,sans-serif;white-space:nowrap">보러가기 ›</span></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card"><div class="avatar" id="avatar" onclick="openAvatarModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><input type="file" id="avatarInp" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/><div class="pinfo"><input class="pname-i" style="font-family:Georgia,serif;font-size:18px;border-bottom:1px dashed var(--beige);padding:2px 0" id="pname" value="" placeholder="이름"/><textarea class="pbio" id="pbio" placeholder="한 줄 소개" rows="1"></textarea><input class="pbio" id="pemail" type="email" placeholder="이메일 주소" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);border-bottom:1px dashed var(--beige);padding:2px 0;margin-top:4px"/></div></div><div style="text-align:right;margin-bottom:16px" id="profileBtns"><button id="btnEdit" onclick="toggleEdit(true)" style="padding:6px 16px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">편집</button><button id="btnSave" onclick="toggleEdit(false)" style="padding:6px 16px;border:none;background:var(--vermillion);color:#fff;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;display:none">저장</button></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.37</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.40</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -801,12 +801,45 @@ textarea#memo{min-height:70px;resize:none}
   <button onclick="document.getElementById('passwordChangeModal').classList.remove('on')" style="width:100%;padding:10px;background:transparent;border:none;color:#8B7D6B;font-family:Georgia,serif;font-size:12px;cursor:pointer">취소</button>
 </div></div>
 <!-- 환영 모달 — 신규 이메일 가입자에게 이름 입력 안내 -->
+<!-- 프로필 편집 모달 (v2.1.40) -->
+<div class="modal" id="profileEditModal"><div class="modal-inner" style="max-width:380px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+    <h3 style="font-family:Georgia,serif;margin:0;font-size:16px">프로필 편집</h3>
+    <button onclick="closeProfileEditModal()" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:20px">
+    <div id="peAvatar" onclick="document.getElementById('avatarInp').click()" style="width:88px;height:88px;border-radius:50%;background:var(--vermillion);display:flex;align-items:center;justify-content:center;cursor:pointer;background-size:cover;background-position:center;overflow:hidden;border:2px solid var(--beige);position:relative">
+      <svg id="peAvatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:50%;height:50%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+      <div style="position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--beige);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+    </div>
+    <div style="font-size:10px;color:#8B7D6B;margin-top:6px;font-family:Georgia,serif">프로필 사진 변경</div>
+  </div>
+  <div style="margin-bottom:14px">
+    <div style="font-size:11px;color:var(--brown);margin-bottom:4px;font-family:Georgia,serif;font-weight:bold">이름</div>
+    <input id="peName" type="text" maxlength="30" placeholder="이름" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;font-family:Georgia,serif;color:var(--brown);background:#fff;outline:none"/>
+    <div style="font-size:10px;color:#A99A82;margin-top:4px;font-family:Georgia,serif;line-height:1.4">내 사람이 한눈에 알아볼 수 있는 본명을 권장합니다</div>
+  </div>
+  <div style="margin-bottom:14px">
+    <div style="font-size:11px;color:var(--brown);margin-bottom:4px;font-family:Georgia,serif;font-weight:bold">한 줄 소개</div>
+    <textarea id="peBio" rows="2" maxlength="80" placeholder="나를 짧게 소개해주세요" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;font-family:Helvetica,sans-serif;color:var(--brown);background:#fff;outline:none;resize:none"></textarea>
+  </div>
+  <div style="margin-bottom:20px">
+    <div style="font-size:11px;color:var(--brown);margin-bottom:4px;font-family:Georgia,serif;font-weight:bold">이메일</div>
+    <input id="peEmail" type="email" readonly style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;font-family:Helvetica,sans-serif;color:#8B7D6B;background:#FAFAF8;outline:none;cursor:not-allowed"/>
+    <div style="font-size:10px;color:#A99A82;margin-top:4px;font-family:Georgia,serif">이메일은 변경할 수 없습니다</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button onclick="closeProfileEditModal()" style="flex:1;padding:12px;border:1px solid var(--beige);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">취소</button>
+    <button onclick="saveProfileEdit()" style="flex:1;padding:12px;border:none;background:var(--vermillion);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">저장</button>
+  </div>
+</div></div>
 <div class="modal" id="welcomeModal"><div class="modal-inner" style="max-width:380px">
   <h3 style="font-family:Georgia,serif;margin:0 0 8px 0">너나들이에 오신 것을 환영합니다</h3>
   <div style="font-size:12px;color:var(--brown);line-height:1.7;margin-bottom:14px">
-    내 사람들이 당신을 알아볼 수 있도록<br/>
-    이름을 알려주세요.<br/>
-    <span style="color:#8B7D6B;font-size:11px">※ 실명 사용을 권장합니다</span>
+    너나들이는 가까운 사람들과 기억을 나누는 공간입니다.<br/>
+    <span style="color:var(--vermillion);font-weight:bold">내 사람이 한눈에 알아볼 수 있는 본명을 권장합니다.</span>
   </div>
   <input id="welcomeNameInput" type="text" placeholder="이름" maxlength="30" autocomplete="name" style="width:100%;padding:12px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px;font-family:Georgia,serif"/>
   <button onclick="saveWelcomeName()" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer;margin-bottom:8px">저장하기</button>
@@ -829,8 +862,9 @@ textarea#memo{min-height:70px;resize:none}
     <h3 style="font-family:Georgia,serif;margin:0">누구에게 건넬까요</h3>
     <button onclick="document.getElementById('shareReceiverModal').classList.remove('on')" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
   </div>
-  <div id="shareReceiverInfo" style="font-size:12px;color:#8B7D6B;margin-bottom:14px;text-align:center"></div>
-  <div id="shareReceiverList" style="max-height:320px;overflow-y:auto"></div>
+  <div id="shareReceiverInfo" style="font-size:12px;color:#8B7D6B;margin-bottom:10px;text-align:center"></div>
+  <div id="shareReceiverList" style="max-height:300px;overflow-y:auto;margin-bottom:12px"></div>
+  <button id="shareReceiverConfirmBtn" onclick="confirmMultiSend()" disabled style="width:100%;padding:13px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer;opacity:.4">건네기</button>
 </div></div>
 <!-- 들인 기억 상세 모달 -->
 <div class="modal" id="giftDetailModal"><div class="modal-inner" style="max-width:420px">
@@ -1002,8 +1036,91 @@ let records=[],profile={name:'',bio:'',email:'',avatarImg:'',nndCode:''};
 try{records=JSON.parse(localStorage.getItem('nnd_records')||'[]')}catch(e){}
 try{profile=Object.assign(profile,JSON.parse(localStorage.getItem('nnd_profile')||'{}'))}catch(e){}
 document.getElementById('pname').value=profile.name;document.getElementById('pbio').value=profile.bio;document.getElementById('pemail').value=profile.email||'';
+setTimeout(function(){try{syncProfileDisplay()}catch(e){}},0);
 function saveProfile(){if(!currentUser){return}profile.name=document.getElementById('pname').value;profile.bio=document.getElementById('pbio').value;profile.email=document.getElementById('pemail').value;localStorage.setItem('nnd_profile',JSON.stringify(profile));if(currentUser&&sb){sb.from('profiles').upsert({id:currentUser.id,name:profile.name,bio:profile.bio,email:profile.email,avatar_img:profile.avatarImg||''}).then(function(){})}}
 document.getElementById('pname').readOnly=true;document.getElementById('pbio').readOnly=true;document.getElementById('pemail').readOnly=true;
+
+// 프로필 카드 표시(읽기 전용) 동기화 — v2.1.39
+function syncProfileDisplay(){
+  var nameEl=document.getElementById('pnameDisplay');
+  var bioEl=document.getElementById('pbioDisplay');
+  var emailEl=document.getElementById('pemailDisplay');
+  if(nameEl){
+    if(profile.name&&profile.name.trim()){
+      nameEl.textContent=profile.name;
+      nameEl.style.color='var(--brown)';
+      nameEl.style.opacity='1';
+    }else{
+      nameEl.textContent='이름 미설정';
+      nameEl.style.color='#A99A82';
+      nameEl.style.opacity='.7';
+    }
+  }
+  if(bioEl){
+    if(profile.bio&&profile.bio.trim()){
+      bioEl.textContent=profile.bio;
+      bioEl.style.opacity='.85';
+    }else{
+      bioEl.textContent='한 줄 소개를 추가해보세요';
+      bioEl.style.opacity='.5';
+    }
+  }
+  if(emailEl)emailEl.textContent=profile.email||'';
+}
+
+// 프로필 편집 모달 열기
+function openProfileEditModal(){
+  if(!currentUser){toast('로그인이 필요합니다');return}
+  document.getElementById('peName').value=profile.name||'';
+  document.getElementById('peBio').value=profile.bio||'';
+  document.getElementById('peEmail').value=profile.email||'';
+  // 아바타 동기화
+  var peAv=document.getElementById('peAvatar');
+  var peSvg=document.getElementById('peAvatarSvg');
+  if(peAv){
+    if(profile.avatarImg){
+      peAv.style.backgroundImage='url('+profile.avatarImg+')';
+      if(peSvg)peSvg.style.display='none';
+    }else{
+      peAv.style.backgroundImage='';
+      if(peSvg)peSvg.style.display='';
+    }
+  }
+  document.getElementById('profileEditModal').classList.add('on');
+  setTimeout(function(){var i=document.getElementById('peName');if(i)i.focus()},150);
+}
+
+function closeProfileEditModal(){
+  document.getElementById('profileEditModal').classList.remove('on');
+}
+
+// 프로필 편집 저장
+async function saveProfileEdit(){
+  if(!currentUser){toast('로그인이 필요합니다');return}
+  var name=(document.getElementById('peName').value||'').trim();
+  var bio=(document.getElementById('peBio').value||'').trim();
+  if(!name){toast('이름을 입력해주세요');return}
+  profile.name=name;
+  profile.bio=bio;
+  // hidden input들도 동기화 (호환)
+  document.getElementById('pname').value=name;
+  document.getElementById('pbio').value=bio;
+  try{localStorage.setItem('nnd_profile',JSON.stringify(profile))}catch(e){}
+  if(sb){
+    try{
+      await sb.from('profiles').upsert({
+        id:currentUser.id,
+        name:profile.name,
+        bio:profile.bio,
+        email:profile.email,
+        avatar_img:profile.avatarImg||''
+      });
+    }catch(e){console.warn('saveProfileEdit',e)}
+  }
+  syncProfileDisplay();
+  closeProfileEditModal();
+  toast('저장되었습니다');
+}
 var _profileSnapshot=null;
 function toggleEdit(editing){
   // 이메일은 항상 readonly (회원가입 시 디폴트값, 수정 불가)
@@ -1016,6 +1133,9 @@ function toggleEdit(editing){
   });
   document.getElementById('btnEdit').style.display=editing?'none':'inline-block';
   document.getElementById('btnSave').style.display=editing?'inline-block':'none';
+  // 이름 도움말 hint — 편집 모드에서만 표시
+  var hint=document.getElementById('pnameHint');
+  if(hint)hint.style.display=editing?'block':'none';
   // 프로필 카드 시각 상태 변경
   var card=document.querySelector('.profile-card');
   if(card){
@@ -1081,10 +1201,117 @@ async function checkProfileBeforeLeave(){
 }
 function openAvatarModal(){const m=document.getElementById('avatarModal');const prev=document.getElementById('avatarPreview');const svg=document.getElementById('avatarPreviewSvg');if(profile.avatarImg){prev.style.backgroundImage='url('+profile.avatarImg+')';svg.style.display='none'}else{prev.style.backgroundImage='none';svg.style.display='block'}m.classList.add('on')}
 var _pendingAvatar=null;
-function uploadAvatar(e){const f=e.target.files[0];if(!f)return;compressImage(f).then(data=>{_pendingAvatar=data;document.getElementById('avatarPreview').style.backgroundImage='url('+data+')';document.getElementById('avatarPreviewSvg').style.display='none';document.getElementById('btnChangeAvatar').style.display='none';document.getElementById('btnSaveAvatar').style.display='inline-block'})}
+function uploadAvatar(e){const f=e.target.files[0];if(!f)return;compressImage(f).then(data=>{
+  // 프로필 편집 모달이 열려 있으면: 즉시 미리보기 + 자동 저장 (모달 내 별도 저장 버튼 없음)
+  var peModal=document.getElementById('profileEditModal');
+  if(peModal&&peModal.classList.contains('on')){
+    profile.avatarImg=data;
+    // 모달 미리보기
+    var peAv=document.getElementById('peAvatar');
+    var peSvg=document.getElementById('peAvatarSvg');
+    if(peAv){peAv.style.backgroundImage='url('+data+')';if(peSvg)peSvg.style.display='none'}
+    // 마이페이지 카드도 즉시 반영
+    document.getElementById('avatar').style.backgroundImage='url('+data+')';
+    if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='none';
+    saveProfile();
+    toast('프로필 사진이 변경되었습니다');
+    // input 비우기 (같은 파일 재선택 가능하도록)
+    e.target.value='';
+    return;
+  }
+  // 기존 흐름 (avatarModal 이용)
+  _pendingAvatar=data;
+  document.getElementById('avatarPreview').style.backgroundImage='url('+data+')';
+  document.getElementById('avatarPreviewSvg').style.display='none';
+  document.getElementById('btnChangeAvatar').style.display='none';
+  document.getElementById('btnSaveAvatar').style.display='inline-block';
+})}
 function saveAvatar(){if(_pendingAvatar){profile.avatarImg=_pendingAvatar;document.getElementById('avatar').style.backgroundImage='url('+_pendingAvatar+')';document.getElementById('avatarSvg').style.display='none';saveProfile();toast('프로필 사진이 저장되었습니다');_pendingAvatar=null}document.getElementById('btnChangeAvatar').style.display='inline-block';document.getElementById('btnSaveAvatar').style.display='none';document.getElementById('avatarModal').classList.remove('on')}
 function loadAvatar(){if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';document.getElementById('avatarSvg').style.display='none'}}
 loadAvatar();
+
+// ─── 자동 날씨 (v2.1.40) ─────────────────────────────────────
+// Open-Meteo Historical Forecast API — 무료, 무제한, 키 불필요
+// 간 곳 전용. 사용자가 지정한 방문 날짜 + 좌표 기준으로 그 날짜의 실제 날씨 조회
+// WMO weather code → 6종 그룹 (clear/cloudy/rain/snow/fog/wind)
+function mapWeatherCode(code){
+  if(code===0||code===1)return'clear';
+  if(code===2||code===3)return'cloudy';
+  if(code===45||code===48)return'fog';
+  if((code>=51&&code<=67)||(code>=80&&code<=82))return'rain';
+  if((code>=71&&code<=77)||code===85||code===86)return'snow';
+  if(code>=95&&code<=99)return'rain'; // 뇌우는 비로 그룹
+  return'cloudy';
+}
+
+// 아이콘 SVG (인라인) — 크기 매개변수
+function weatherIconSVG(group,size){
+  size=size||14;
+  var s=size;
+  if(group==='clear')return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="#E8A547" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4" fill="#FFD466"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+  if(group==='cloudy')return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="#8B7D6B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" fill="#E8DCC8"/></svg>';
+  if(group==='rain')return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="#5B7A9C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 13v8M8 13v8M12 15v8M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="#C5D5E5"/></svg>';
+  if(group==='snow')return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="#A8B5C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25" fill="#E5EBF3"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="8" y1="20" x2="8.01" y2="20"/><line x1="12" y1="18" x2="12.01" y2="18"/><line x1="12" y1="22" x2="12.01" y2="22"/><line x1="16" y1="16" x2="16.01" y2="16"/><line x1="16" y1="20" x2="16.01" y2="20"/></svg>';
+  if(group==='fog')return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="#A99A82" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 12h12M3 16h18M3 20h10"/></svg>';
+  return'';
+}
+
+// 한 줄 라벨
+function weatherLabel(group){
+  return{clear:'맑음',cloudy:'흐림',rain:'비',snow:'눈',fog:'안개'}[group]||'';
+}
+
+// 날짜 정규화 (YYYY-MM-DD)
+function normalizeDate(d){
+  if(!d)return'';
+  // 25.04.18 형식
+  var m=String(d).match(/^(\d{2})\.(\d{2})\.(\d{2})$/);
+  if(m)return'20'+m[1]+'-'+m[2]+'-'+m[3];
+  // 2025-04-18 형식
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d))return d;
+  // 2025.04.18 형식
+  m=String(d).match(/^(\d{4})\.(\d{2})\.(\d{2})$/);
+  if(m)return m[1]+'-'+m[2]+'-'+m[3];
+  return'';
+}
+
+// Open-Meteo API 호출 — 좌표 + 날짜 → weather 객체 반환 (실패 시 null)
+async function fetchWeather(lat,lng,dateStr){
+  try{
+    var d=normalizeDate(dateStr);
+    if(!d||!lat||!lng)return null;
+    // 미래 날짜 차단
+    var today=new Date();today.setHours(0,0,0,0);
+    if(new Date(d)>today)return null;
+    var url='https://archive-api.open-meteo.com/v1/archive'
+      +'?latitude='+encodeURIComponent(lat)
+      +'&longitude='+encodeURIComponent(lng)
+      +'&start_date='+d+'&end_date='+d
+      +'&daily=weather_code,temperature_2m_max,temperature_2m_min'
+      +'&timezone=Asia%2FSeoul';
+    var res=await fetch(url);
+    if(!res.ok)return null;
+    var j=await res.json();
+    if(!j||!j.daily||!j.daily.weather_code||!j.daily.weather_code.length)return null;
+    var code=j.daily.weather_code[0];
+    var tmax=j.daily.temperature_2m_max?j.daily.temperature_2m_max[0]:null;
+    var tmin=j.daily.temperature_2m_min?j.daily.temperature_2m_min[0]:null;
+    // null check
+    if(code==null)return null;
+    var group=mapWeatherCode(code);
+    var temp=null;
+    if(tmax!=null&&tmin!=null)temp=Math.round((tmax+tmin)/2);
+    else if(tmax!=null)temp=Math.round(tmax);
+    else if(tmin!=null)temp=Math.round(tmin);
+    return{
+      code:group,
+      tempC:temp,
+      desc:weatherLabel(group),
+      raw:code,
+      fetched_at:new Date().toISOString()
+    };
+  }catch(e){console.warn('fetchWeather',e);return null}
+}
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000)}
 function saveRecs(){
   try{
@@ -1109,7 +1336,8 @@ function syncToSupabase(){
           addr:x.addr||'',region:x.region||'',memo:x.memo||'',
           lat:x.ll[0],lng:x.ll[1],
           photos:x.photos?x.photos.filter(function(p){return p}):[],
-          record_date:x.date||'',record_ts:x.ts||0
+          record_date:x.date||'',record_ts:x.ts||0,
+          weather:x.weather||null
         };
         if(x.sbId){row.id=x.sbId;toUpdate.push({row:row,idx:idx})}
         else toInsert.push({row:row,idx:idx});
@@ -1294,13 +1522,22 @@ function plotRecord(r){
     if(window._shareMode){
       if(r.cat==='받은 곳'){toast('들인 기억은 다시 건넬 수 없습니다');return}
       if(!r.sbId){toast('아직 저장 중인 기억은 공유 불가');return}
-      toggleShareSelect(r);
+      // 공유 모드에서도 popup 미리보기 + popup 내 선택 토글 버튼
+      const isGoS=r.cat==='간 곳';
+      const photos3S=isGoS&&r.photos?r.photos.filter(p=>p).slice(0,3):[];
+      var isSelS=window._shareSelected.has(r.sbId);
+      var btnLabel=isSelS?'선택 해제':'건넬 기억으로 선택';
+      var btnBg=isSelS?'#8B7D6B':'#D4AF37';
+      var btnColor=isSelS?'#fff':'#3D3929';
+      const contentS=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;margin-bottom:2px">${r.name}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:''}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3S.length?8:8}px">${r.region||''}</div>${photos3S.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3S.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0"/>`).join('')}</div>`:''}<button onclick="closeIW();toggleShareSelect(records[${records.indexOf(r)}])" style="width:100%;padding:7px;background:${btnBg};color:${btnColor};border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer;font-weight:bold">${btnLabel}</button></div>`;
+      const iwS=new kakao.maps.InfoWindow({content:contentS,removable:true});
+      closeIW();iwS.open(map,mk);_curIW=iwS;
       return;
     }
     if(r.cat==='받은 곳'){openGiftDetail(r);return}
     const isGo=r.cat==='간 곳';
     const photos3=isGo&&r.photos?r.photos.filter(p=>p).slice(0,3):[];
-    const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;margin-bottom:2px">${r.name}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:''}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3.length?8:8}px">${r.region||''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;
+    const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;flex:1;min-width:0">${r.name}</div>${(r.cat==='간 곳'&&r.weather&&r.weather.code)?`<span style="flex-shrink:0;margin-left:6px;line-height:1" title="${r.weather.desc||''}">${weatherIconSVG(r.weather.code,15)}</span>`:''}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:''}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3.length?8:8}px">${r.region||''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;
     const iw=new kakao.maps.InfoWindow({content,removable:true});
     closeIW();iw.open(map,mk);_curIW=iw;
   });
@@ -1348,8 +1585,10 @@ function exitShareMode(){
 async function openShareReceiverModal(){
   if(!window._shareSelected||window._shareSelected.size===0){toast('건넬 기억을 먼저 선택해주세요');return}
   var n=window._shareSelected.size;
-  document.getElementById('shareReceiverInfo').textContent=n+'개의 기억을 건넬 내 사람을 선택하세요';
+  window._shareReceivers=new Set();
+  document.getElementById('shareReceiverInfo').innerHTML=n+'개의 기억을 건넬 내 사람들을 선택하세요<br/><span style="font-size:11px;color:#A99A82">(여러 명 동시 선택 가능)</span>';
   document.getElementById('shareReceiverList').innerHTML='<div style="text-align:center;padding:20px;color:#8B7D6B;font-size:12px">불러오는 중...</div>';
+  updateShareReceiverConfirmBtn();
   document.getElementById('shareReceiverModal').classList.add('on');
   try{
     var friends=await loadFriends();friends=await enrichFriendNames(friends);
@@ -1366,17 +1605,125 @@ async function openShareReceiverModal(){
       document.getElementById('shareReceiverList').innerHTML='<div style="text-align:center;padding:30px;color:#8B7D6B;font-size:13px;line-height:1.6">아직 수락된 내 사람이 없습니다.<br/>먼저 내 사람을 초대해주세요.</div>';
       return;
     }
+    window._shareReceiverPool=receivers;
     document.getElementById('shareReceiverList').innerHTML=receivers.map(function(r){
-      // sendGift에 넘길 표시명: 이름 우선, 없으면 이메일
       var passName=r.nameOnly||r.email||'';
       var safeName=passName.replace(/'/g,"\\'");
-      // 한 줄 양식: 이름이 있고 이메일과 다르면 "이름 ㅣ 이메일", 아니면 단독
       var lineText=(r.nameOnly&&r.email&&r.nameOnly!==r.email)
         ? r.nameOnly+' <span style="color:#C4B8A2">ㅣ</span> '+r.email
         : (r.nameOnly||r.email||'');
-      return '<div onclick="sendGift(\''+r.uid+'\',\''+safeName+'\')" style="display:flex;align-items:center;padding:14px 12px;border-bottom:1px solid var(--beige);cursor:pointer"><div style="flex:1;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div><span style="color:#D4AF37;font-size:18px;flex-shrink:0;margin-left:8px">›</span></div>';
+      var safeUid=r.uid;
+      return '<div onclick="toggleShareReceiver(\''+safeUid+'\',\''+safeName+'\')" data-uid="'+safeUid+'" class="share-receiver-row" style="display:flex;align-items:center;padding:13px 12px;border-bottom:1px solid var(--beige);cursor:pointer;transition:background 0.15s">'
+        +'<div class="share-receiver-check" style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--beige);margin-right:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s"></div>'
+        +'<div style="flex:1;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div>'
+      +'</div>';
     }).join('');
   }catch(e){console.warn(e);document.getElementById('shareReceiverList').innerHTML='<div style="text-align:center;padding:30px;color:#C96342;font-size:12px">불러오기 실패</div>'}
+}
+
+// 친구 다중 선택 토글
+function toggleShareReceiver(uid,name){
+  if(!window._shareReceivers)window._shareReceivers=new Set();
+  var row=document.querySelector('.share-receiver-row[data-uid="'+uid+'"]');
+  if(!row)return;
+  var check=row.querySelector('.share-receiver-check');
+  if(window._shareReceivers.has(uid)){
+    window._shareReceivers.delete(uid);
+    row.style.background='';
+    if(check){check.style.background='';check.style.borderColor='var(--beige)';check.innerHTML=''}
+  }else{
+    window._shareReceivers.add(uid);
+    // name 보존 — 나중에 sendGift 호출 시 사용
+    if(!window._shareReceiverNames)window._shareReceiverNames={};
+    window._shareReceiverNames[uid]=name;
+    row.style.background='#FFF8F3';
+    if(check){
+      check.style.background='var(--vermillion)';
+      check.style.borderColor='var(--vermillion)';
+      check.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    }
+  }
+  updateShareReceiverConfirmBtn();
+}
+
+function updateShareReceiverConfirmBtn(){
+  var btn=document.getElementById('shareReceiverConfirmBtn');
+  if(!btn)return;
+  var n=(window._shareReceivers&&window._shareReceivers.size)||0;
+  if(n>0){
+    btn.disabled=false;
+    btn.style.opacity='1';
+    btn.style.cursor='pointer';
+    btn.textContent=n+'명에게 건네기';
+  }else{
+    btn.disabled=true;
+    btn.style.opacity='.4';
+    btn.style.cursor='not-allowed';
+    btn.textContent='건네기';
+  }
+}
+
+// 다중 친구에게 일괄 전송
+async function confirmMultiSend(){
+  if(!window._shareReceivers||window._shareReceivers.size===0)return;
+  var receiverUids=Array.from(window._shareReceivers);
+  document.getElementById('shareReceiverModal').classList.remove('on');
+  toast('보내는 중...');
+  var totalOk=0,totalFail=0;
+  for(var i=0;i<receiverUids.length;i++){
+    var uid=receiverUids[i];
+    var name=(window._shareReceiverNames&&window._shareReceiverNames[uid])||'내 사람';
+    var res=await sendGiftInternal(uid,name);
+    totalOk+=res.ok;totalFail+=res.fail;
+  }
+  // 정리
+  window._shareReceivers=new Set();
+  window._shareReceiverNames={};
+  if(window._shareMode)exitShareMode();else{window._shareSelected=new Set()}
+  if(totalFail===0){
+    toast(receiverUids.length+'명에게 건넸습니다');
+  }else if(totalOk===0){
+    toast('건네기에 실패했습니다');
+  }else{
+    toast('일부만 성공: 성공 '+totalOk+'건, 실패 '+totalFail+'건');
+  }
+  updateSentBadge();
+}
+
+// 단일 수신자에게 보내는 내부 함수 — confirmMultiSend에서 루프 호출
+async function sendGiftInternal(receiverUid,receiverName){
+  if(!sb||!currentUser)return{ok:0,fail:0};
+  var pinIds=Array.from(window._shareSelected||[]);
+  if(!pinIds.length)return{ok:0,fail:0};
+  var senderName=(profile&&profile.name)||currentUser.email||'';
+  var ok=0,fail=0;
+  for(var i=0;i<pinIds.length;i++){
+    var sbId=pinIds[i];
+    var src=records.find(function(r){return r.sbId===sbId});
+    if(!src){fail++;continue}
+    try{
+      var logRes=await sb.from('share_log').insert({
+        sender_id:currentUser.id,receiver_id:receiverUid,sender_name:senderName,
+        source_record_id:sbId,pin_name:src.name,status:'active'
+      }).select().single();
+      if(logRes.error){console.warn('share_log',logRes.error);fail++;continue}
+      var logId=logRes.data.id;
+      var copyRow={
+        user_id:receiverUid,cat:'받은 곳',
+        name:src.name,title:src.title||null,addr:src.addr||null,region:src.region||null,
+        memo:src.memo||null,lat:src.ll[0],lng:src.ll[1],
+        photos:src.photos||[],record_date:src.date||null,record_ts:src.ts||Date.now(),
+        gifted_from_user_id:currentUser.id,gifted_from_name:senderName,gifted_log_id:logId
+      };
+      var recRes=await sb.from('records').insert(copyRow).select().single();
+      if(recRes.error){console.warn('records insert',recRes.error);fail++;
+        await sb.from('share_log').delete().eq('id',logId);
+        continue}
+      await sb.from('share_log').update({target_record_id:recRes.data.id}).eq('id',logId);
+      ok++;
+    }catch(e){console.warn('sendGiftInternal',e);fail++}
+  }
+  return{ok:ok,fail:fail};
 }
 
 async function sendGift(receiverUid,receiverName){
@@ -1814,7 +2161,7 @@ async function updateSentBadge(){
 }
 
 const search=document.getElementById('search'),sresults=document.getElementById('sresults');
-let tm;search.addEventListener('input',()=>{clearTimeout(tm);const q=search.value.trim();if(!q){sresults.style.display='none';return}tm=setTimeout(()=>{fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=10`,{headers:{Authorization:'KakaoAK '+KAKAO_REST}}).then(r=>r.json()).then(d=>{sresults.innerHTML='';(d.documents||[]).forEach(x=>{const el=document.createElement('div');el.innerHTML=`<div class="nm">${x.place_name}</div><div class="ad">${x.road_address_name||x.address_name||''}</div>`;el.onclick=()=>selectPlace(+x.y,+x.x,x.place_name,x.road_address_name||x.address_name||'',x.address_name||'');sresults.appendChild(el)});sresults.style.display=(d.documents&&d.documents.length)?'block':'none'}).catch(()=>{sresults.innerHTML='<div class="ad" style="padding:11px 14px">검색 실패</div>';sresults.style.display='block'})},350)});
+let tm;search.addEventListener('input',()=>{clearTimeout(tm);const q=search.value.trim();if(!q){sresults.style.display='none';return}tm=setTimeout(()=>{fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=10`,{headers:{Authorization:'KakaoAK '+KAKAO_REST}}).then(r=>r.json()).then(d=>{sresults.innerHTML='';if(!d.documents||!d.documents.length){sresults.innerHTML='<div style="padding:14px;font-size:12px;color:#6B6452;line-height:1.6;text-align:center;background:#FFF8E1;border-left:3px solid #D4AF37"><div style="font-family:Georgia,serif;color:var(--brown);margin-bottom:4px;font-weight:bold">검색 결과가 없습니다</div>이 장소가 지도에 표시되지 않을 수 있습니다.<br/>지도를 길게 눌러 위치를 직접 찍어보세요.</div>';sresults.style.display='block';return}(d.documents||[]).forEach(x=>{const el=document.createElement('div');el.innerHTML=`<div class="nm">${x.place_name}</div><div class="ad">${x.road_address_name||x.address_name||''}</div>`;el.onclick=()=>selectPlace(+x.y,+x.x,x.place_name,x.road_address_name||x.address_name||'',x.address_name||'');sresults.appendChild(el)});sresults.style.display='block'}).catch(()=>{sresults.innerHTML='<div class="ad" style="padding:11px 14px">검색 실패</div>';sresults.style.display='block'})},350)});
 function selectPlace(lat,lon,name,addr,region){
   selLL=[lat,lon];selName=name;selAddr=addr;window._region=region||'';
   if(kakaoLoaded){
@@ -1871,18 +2218,25 @@ async function saveRecord(){
     }
   }
   var dInp=document.getElementById('recDate');
-  var useDate,useTs;
+  var useDate,useTs,useDateISO;
   if(cat==='간 곳'&&dInp.value){
     var p=dInp.value.split('-');
     var dt=new Date(+p[0],+p[1]-1,+p[2],12,0,0);
     useDate=dt.toLocaleDateString('ko-KR');
     useTs=dt.getTime();
+    useDateISO=dInp.value; // YYYY-MM-DD
   }else{
     var now=new Date();
     useDate=now.toLocaleDateString('ko-KR');
     useTs=now.getTime();
+    useDateISO=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   }
   var title=document.getElementById('recTitle').value;
+  // 자동 날씨 조회 — 간 곳만, 신규/편집 모두
+  var weatherData=null;
+  if(cat==='간 곳'&&selLL&&useDateISO){
+    try{weatherData=await fetchWeather(selLL[0],selLL[1],useDateISO)}catch(e){}
+  }
   if(editingIdx>=0){
     var r=records[editingIdx];
     if(r._mk){r._mk.setMap(null);delete r._mk}
@@ -1892,11 +2246,15 @@ async function saveRecord(){
     r.title=title;r.date=useDate;r.ts=useTs;
     r.ll=selLL.slice();r.name=selName;r.addr=selAddr;
     r.region=window._region||r.region||'';
+    // 간 곳일 때만 weather 적용. 갈 곳으로 바꿨다면 weather 제거
+    if(cat==='간 곳'){if(weatherData)r.weather=weatherData}
+    else{r.weather=null}
     saveRecs();plotRecord(r);renderAll();cancelForm();return;
   }
   var newRec={cat:cat,ll:selLL.slice(),name:selName,addr:selAddr,region:window._region||'',
     photos:cat==='간 곳'?photos.slice():[],
-    memo:document.getElementById('memo').value,title:title,date:useDate,ts:useTs};
+    memo:document.getElementById('memo').value,title:title,date:useDate,ts:useTs,
+    weather:(cat==='간 곳'&&weatherData)?weatherData:null};
   records.unshift(newRec);
   saveRecs();
   if(tempMarker){tempMarker.setMap(null);tempMarker=null}
@@ -1941,7 +2299,16 @@ function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='g
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});const todayStr=new Date().toLocaleDateString('ko-KR');let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');const isToday=dt===todayStr;h+=`<div class="day${dates[dt]?' has':''}${isToday?' today':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
 function openDay(dt){const recs=records.map((r,i)=>({r,i})).filter(x=>x.r.cat==='간 곳'&&new Date(x.r.ts||Date.now()).toLocaleDateString('ko-KR')===dt).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));if(!recs.length)return;document.getElementById('modalTitle').textContent=dt;document.getElementById('modalBody').innerHTML=recs.map(x=>`<div class="modal-rec"><div class="pname">${x.r.name}</div>${x.r.title?`<div class="ptitle">${x.r.title}</div>`:''}<div class="photos">${[0,1,2].map(i=>`<img src="${x.r.photos&&x.r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''" onclick="document.getElementById('dayModal').classList.remove('on');openDetail(${x.i})"/>`).join('')}</div></div>`).join('');document.getElementById('dayModal').classList.add('on')}
 function jumpToList(idx){const r=records[idx];if(!r)return;const tab=r.cat==='간 곳'?'go':'will';switchTab(tab);document.querySelector('nav button[data-v="list"]').click();setTimeout(()=>{const cards=document.querySelectorAll(tab==='go'?'#goCards .list-card':'#willCards .list-card');const filtered=records.filter(x=>x.cat===r.cat).sort((a,b)=>(b.ts||0)-(a.ts||0));const card=cards[filtered.indexOf(r)];if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.style.transition='background .3s';card.style.background='var(--beige)';setTimeout(()=>{card.style.background='#fff'},1500)}},150)}
-function openDetail(idx){const r=records[idx];if(!r)return;var validPhotos=(r.photos||[]).filter(function(p){return p});window._lbPhotos=validPhotos;window._lbIdx=0;var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:11px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:12px;padding:3px 10px;margin-bottom:8px;font-family:Georgia,serif">${r.giftedFromName}님이 추천한 곳</div>`:'';document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden;${r.photos&&r.photos[i]?'cursor:pointer':''}" ${r.photos&&r.photos[i]?`onclick="openLightbox(${validPhotos.indexOf(r.photos[i])})"`:''}>${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div>${fromBadge}<div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:4px">${r.name}</div>${r.title?`<div style="font-size:13px;color:var(--brown);opacity:.8;margin-bottom:10px">[${r.title}]</div>`:''}<div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:14px">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px;background:transparent;border:none;border-radius:8px">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px"><button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
+function openDetail(idx){const r=records[idx];if(!r)return;var validPhotos=(r.photos||[]).filter(function(p){return p});window._lbPhotos=validPhotos;window._lbIdx=0;var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:11px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:12px;padding:3px 10px;margin-bottom:8px;font-family:Georgia,serif">${r.giftedFromName}님이 추천한 곳</div>`:'';var canShare=(r.cat==='간 곳'||r.cat==='갈 곳')&&r.sbId;var shareBtn=canShare?`<button onclick="shareFromDetail(${idx})" style="flex:1;padding:12px;border:1px solid #D4AF37;background:#FFF8E1;color:#B8860B;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer;font-weight:bold">건네기</button>`:'';var weatherBadge=(r.weather&&r.weather.code)?`<span style="margin-left:8px;line-height:1;vertical-align:middle" title="${r.weather.desc||''}">${weatherIconSVG(r.weather.code,18)}</span>`:'';document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden;${r.photos&&r.photos[i]?'cursor:pointer':''}" ${r.photos&&r.photos[i]?`onclick="openLightbox(${validPhotos.indexOf(r.photos[i])})"`:''}>${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div>${fromBadge}<div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:4px;display:flex;align-items:center;flex-wrap:wrap"><span>${r.name}</span>${weatherBadge}</div>${r.title?`<div style="font-size:13px;color:var(--brown);opacity:.8;margin-bottom:10px">[${r.title}]</div>`:''}<div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:14px">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px;background:transparent;border:none;border-radius:8px">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px">${shareBtn}<button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
+
+// 상세 화면에서 건네기 — 해당 기억 1개 선택 후 친구 선택 모달 진입
+function shareFromDetail(idx){
+  var r=records[idx];
+  if(!r||!r.sbId){toast('아직 저장 중인 기억은 공유 불가');return}
+  if(r.cat==='받은 곳'){toast('들인 기억은 다시 건넬 수 없습니다');return}
+  window._shareSelected=new Set([r.sbId]);
+  openShareReceiverModal();
+}
 function closeDetail(){document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-list').classList.add('active')}
 function updateWillMemo(idx,val){records[idx].memo=val;saveRecs()}
 function normCity(region){
@@ -1978,7 +2345,8 @@ document.getElementById('goCards').innerHTML=goGroups.length?goGroups.map(functi
   if(g.recs.length===1){
     var r=g.recs[0];var idx=records.indexOf(r);
     var fromBadge=r.giftedFromName?'<div style="display:inline-block;font-size:10px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:10px;padding:2px 8px;margin-bottom:8px;font-family:Georgia,serif">'+r.giftedFromName+'님이 추천</div>':'';
-    return '<div class="list-card">'+fromBadge+'<div class="photos" onclick="openDetail('+idx+')">'+[0,1,2].map(function(i){return '<img src="'+(r.photos&&r.photos[i]||'')+'" onerror="this.style.background=\'#E8DCC8\';this.src=\'\'"/>'}).join('')+'</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px"><div style="font-size:11px"><span style="color:var(--terra)">'+(r.region||'')+'</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">'+r.name+'</span></div></div>'+(r.title?'<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.7">['+r.title+']</div><div style="font-size:10px;color:var(--brown);opacity:.45;flex-shrink:0;margin-left:10px">'+r.date+'</div></div>':'<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">'+r.date+'</div>')+'</div>';
+    var weatherIcon=(r.weather&&r.weather.code)?'<span style="margin-left:6px;line-height:1;vertical-align:middle" title="'+(r.weather.desc||'')+'">'+weatherIconSVG(r.weather.code,15)+'</span>':'';
+    return '<div class="list-card">'+fromBadge+'<div class="photos" onclick="openDetail('+idx+')">'+[0,1,2].map(function(i){return '<img src="'+(r.photos&&r.photos[i]||'')+'" onerror="this.style.background=\'#E8DCC8\';this.src=\'\'"/>'}).join('')+'</div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px"><div style="font-size:11px"><span style="color:var(--terra)">'+(r.region||'')+'</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-family:Georgia,serif;color:var(--brown)">'+r.name+'</span>'+weatherIcon+'</div></div>'+(r.title?'<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:11px;color:var(--brown);opacity:.7">['+r.title+']</div><div style="font-size:10px;color:var(--brown);opacity:.45;flex-shrink:0;margin-left:10px">'+r.date+'</div></div>':'<div style="text-align:right;font-size:10px;color:var(--brown);opacity:.45">'+r.date+'</div>')+'</div>';
   }
   // 다중 기록 묶음 카드
   var head=g.recs[0];
@@ -2813,7 +3181,7 @@ function openSettings(){
   document.getElementById('settingsModal').classList.add('on');
 }
 
-// ─── 약관 및 정책 (v2.1.37) ────────────────────────────────
+// ─── 약관 및 정책 (v2.1.40) ────────────────────────────────
 // 초안 형태로 작성되었습니다. 정식 출시 전 법률 전문가 검토를 권장합니다.
 // 운영 정보는 [추후 기재]로 두었습니다 (운영자명, 사업자번호, 연락처 등).
 var POLICY_VERSION='2025.05.26';
@@ -2923,7 +3291,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.37</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.40</div>'
   }
 };
 
@@ -3019,12 +3387,25 @@ async function onAuthSuccess(user){
   startRealtime();
   renderUnreadDot();
   updateReceivedBadge();updateSentBadge();
-  // 신규 이메일 가입자에게 환영 모달 (이름 입력 안내)
-  // 카카오 가입자는 이미 이름이 있으므로 제외, 이름이 비어있는 이메일 가입자만
+  // 신규 가입자에게 환영 모달 (본명 권장 안내) — 1회만 표시
+  // 이메일 가입자: 이름이 비어있는 경우
+  // 소셜 가입자: 이름이 있어도 본명 권장 안내가 필요하므로 1회 표시
   try{
-    var prov=(user.app_metadata&&user.app_metadata.provider)||'email';
-    if(prov==='email'&&!profile.name){
-      setTimeout(function(){openWelcomeModal()},600);
+    var welcomeKey='nnd_welcome_shown_'+(user.id||'');
+    if(!localStorage.getItem(welcomeKey)){
+      var prov=(user.app_metadata&&user.app_metadata.provider)||'email';
+      if(prov==='email'&&!profile.name){
+        setTimeout(function(){openWelcomeModal()},600);
+        localStorage.setItem(welcomeKey,'1');
+      }else if(prov!=='email'){
+        // 소셜 가입자: 안내만, 입력 칸엔 기존 이름 선채움
+        setTimeout(function(){
+          openWelcomeModal();
+          var i=document.getElementById('welcomeNameInput');
+          if(i&&profile.name)i.value=profile.name;
+        },600);
+        localStorage.setItem(welcomeKey,'1');
+      }
     }
   }catch(e){}
 }
@@ -3070,12 +3451,81 @@ async function loadFromSupabase(){
     localStorage.setItem('nnd_profile',JSON.stringify(profile));
     document.getElementById('pname').value=profile.name;document.getElementById('pbio').value=profile.bio;document.getElementById('pemail').value=profile.email;
     if(profile.avatarImg){document.getElementById('avatar').style.backgroundImage='url('+profile.avatarImg+')';if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='none'}
+    syncProfileDisplay();
     var rRes=await sb.from('records').select('*').eq('user_id',currentUser.id).order('record_ts',{ascending:false});
     if(rRes.data){
-      records=rRes.data.map(function(row){return{sbId:row.id,cat:row.cat,name:row.name,title:row.title||'',addr:row.addr||'',region:row.region||'',memo:row.memo||'',ll:[row.lat,row.lng],photos:row.photos||[],date:row.record_date||'',ts:row.record_ts||0,giftedFromUid:row.gifted_from_user_id||null,giftedFromName:row.gifted_from_name||'',giftedLogId:row.gifted_log_id||null,isArchive:!!row.is_archive,created_at:row.created_at||''}});
+      records=rRes.data.map(function(row){return{sbId:row.id,cat:row.cat,name:row.name,title:row.title||'',addr:row.addr||'',region:row.region||'',memo:row.memo||'',ll:[row.lat,row.lng],photos:row.photos||[],date:row.record_date||'',ts:row.record_ts||0,giftedFromUid:row.gifted_from_user_id||null,giftedFromName:row.gifted_from_name||'',giftedLogId:row.gifted_log_id||null,isArchive:!!row.is_archive,weather:row.weather||null,created_at:row.created_at||''}});
       localStorage.setItem('nnd_records',JSON.stringify(records));
     }
+    // 자동 날씨 백필 — 백그라운드에서 비동기 실행 (UI 차단 안 함)
+    setTimeout(function(){backfillWeather()},2000);
   }catch(e){console.warn('loadFromSupabase failed',e)}
+}
+
+// ─── 날씨 자동 백필 (v2.1.40) ─────────────────────────────────
+// 한 세션당 최대 20건. 건당 200ms 지연. 실패 기록은 localStorage에 저장하여 재시도 안 함
+// 백그라운드 처리 + 채워지면 즉시 UI 반영
+var _weatherBackfillRunning=false;
+async function backfillWeather(){
+  if(_weatherBackfillRunning)return;
+  if(!currentUser||!sb||!records||!records.length)return;
+  _weatherBackfillRunning=true;
+
+  // 백필 대상: 간 곳 + ll 있음 + date 있음 + weather null + archive 아님 + 실패 이력 없음
+  var failed={};
+  try{failed=JSON.parse(localStorage.getItem('nnd_weather_failed')||'{}')}catch(e){}
+  var targets=records.filter(function(r){
+    if(r.cat!=='간 곳')return false;
+    if(r.isArchive)return false;
+    if(!r.ll||!r.ll[0]||!r.ll[1])return false;
+    if(!r.date)return false;
+    if(r.weather&&r.weather.code)return false;
+    if(!r.sbId)return false;
+    if(failed[r.sbId])return false;
+    // 미래 날짜 차단
+    var dn=normalizeDate(r.date);
+    if(!dn)return false;
+    var today=new Date();today.setHours(0,0,0,0);
+    if(new Date(dn)>today)return false;
+    return true;
+  });
+  if(!targets.length){_weatherBackfillRunning=false;return}
+
+  var MAX_PER_SESSION=20;
+  var batch=targets.slice(0,MAX_PER_SESSION);
+  var doneCount=0;
+  for(var i=0;i<batch.length;i++){
+    var r=batch[i];
+    if(!currentUser||!sb){break} // 도중에 로그아웃하면 중단
+    try{
+      var w=await fetchWeather(r.ll[0],r.ll[1],r.date);
+      if(w&&w.code){
+        // 로컬 + DB 동시 갱신
+        r.weather=w;
+        var upd=await sb.from('records').update({weather:w}).eq('id',r.sbId);
+        if(!upd.error){
+          doneCount++;
+          // UI 즉시 반영 (조용히): 핀 popup은 다음 클릭 때 갱신됨. 카드는 renderAll로
+          if(doneCount%5===0||doneCount===batch.length){
+            try{renderAll()}catch(e){}
+          }
+        }
+      }else{
+        // null 응답 → 좌표/날짜 문제일 가능성. 재시도 안 함
+        failed[r.sbId]=Date.now();
+      }
+    }catch(e){
+      // 네트워크 오류는 재시도 가능 — failed에 안 넣음
+      console.warn('backfillWeather item',e);
+    }
+    // 200ms 지연 (Open-Meteo rate limit 안전선)
+    await new Promise(function(res){setTimeout(res,200)});
+  }
+  // 실패 이력 저장
+  try{localStorage.setItem('nnd_weather_failed',JSON.stringify(failed))}catch(e){}
+  // 마지막 UI 갱신
+  try{renderAll();saveRecs()}catch(e){}
+  _weatherBackfillRunning=false;
 }
 
 function loadRememberedEmails(){
@@ -3367,7 +3817,7 @@ setTimeout(initAuth,100);
 
 
 // ═══════════════════════════════════
-//  온보딩 오버레이 JS  (v4 / v2.1.37)
+//  온보딩 오버레이 JS  (v4 / v2.1.40)
 // ═══════════════════════════════════
 (function(){
   var obCurrent = 0;
