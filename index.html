@@ -374,7 +374,7 @@ textarea#memo{min-height:70px;resize:none}
 }
 </style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
 <!-- ═══════════════════════════════════════════
-     너나들이 온보딩 오버레이 v4  (v2.1.54)
+     너나들이 온보딩 오버레이 v4  (v2.1.58)
 ═══════════════════════════════════════════ -->
 <div id="onboardingOverlay" style="display:none">
   <div class="ob-phone">
@@ -677,7 +677,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.54</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#B8860B"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.58</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -802,7 +802,7 @@ textarea#memo{min-height:70px;resize:none}
   <button onclick="document.getElementById('passwordChangeModal').classList.remove('on')" style="width:100%;padding:10px;background:transparent;border:none;color:#8B7D6B;font-family:Georgia,serif;font-size:12px;cursor:pointer">취소</button>
 </div></div>
 <!-- 환영 모달 — 신규 이메일 가입자에게 이름 입력 안내 -->
-<!-- 프로필 편집 모달 (v2.1.54) -->
+<!-- 프로필 편집 모달 (v2.1.58) -->
 <div class="modal" id="profileEditModal"><div class="modal-inner" style="max-width:380px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
     <h3 style="font-family:Georgia,serif;margin:0;font-size:16px">프로필 편집</h3>
@@ -836,7 +836,7 @@ textarea#memo{min-height:70px;resize:none}
     <button onclick="saveProfileEdit()" style="flex:1;padding:12px;border:none;background:var(--vermillion);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">저장</button>
   </div>
 </div></div>
-<!-- 통합 알림 모달 (v2.1.54) -->
+<!-- 통합 알림 모달 (v2.1.58) -->
 <div class="modal" id="notifModal"><div class="modal-inner" style="max-width:420px;max-height:80vh;display:flex;flex-direction:column">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0">
     <h3 style="font-family:Georgia,serif;margin:0;font-size:16px">알림</h3>
@@ -848,7 +848,7 @@ textarea#memo{min-height:70px;resize:none}
   </div>
   <div id="notifBody" style="overflow-y:auto;flex:1;min-height:200px"></div>
 </div></div>
-<!-- 시스템 공지 모달 (v2.1.54) -->
+<!-- 시스템 공지 모달 (v2.1.58) -->
 <div class="modal" id="systemNoticeModal"><div class="modal-inner" style="max-width:420px">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
     <div style="flex:1;min-width:0">
@@ -861,7 +861,7 @@ textarea#memo{min-height:70px;resize:none}
   <div id="systemNoticeBody" style="font-size:13px;color:var(--brown);line-height:1.7;padding:14px;background:var(--cream);border-radius:8px;max-height:50vh;overflow-y:auto;white-space:pre-wrap"></div>
   <button onclick="document.getElementById('systemNoticeModal').classList.remove('on')" style="width:100%;margin-top:14px;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">확인</button>
 </div></div>
-<!-- 관리자 패널 모달 (v2.1.54) -->
+<!-- 관리자 패널 모달 (v2.1.58) -->
 <div class="modal" id="adminPanel"><div class="modal-inner" style="max-width:460px;max-height:85vh;display:flex;flex-direction:column">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0">
     <h3 style="font-family:Georgia,serif;margin:0;font-size:16px">관리자 패널</h3>
@@ -903,6 +903,17 @@ textarea#memo{min-height:70px;resize:none}
         <div style="font-size:10px;color:#A99A82;margin-top:6px;line-height:1.5">발송 즉시 모든 사용자가 다음 로그인 시 알림 센터에 공지가 추가됩니다. 이미 로그인 중인 사용자도 다음 페이지 새로고침 시 표시됩니다.</div>
       </div>
     </div>
+    <!-- 사용법 가이드 발송 (v2.1.58) -->
+    <div style="margin-bottom:18px">
+      <div style="font-size:10px;color:var(--terra);font-family:Georgia,serif;margin-bottom:6px;letter-spacing:.5px">사용법 가이드 알림</div>
+      <div style="background:#fff;border:1px solid var(--beige);border-radius:8px;padding:10px">
+        <div style="display:flex;gap:6px;margin-bottom:8px">
+          <button onclick="openGuideModal()" style="flex:1;padding:9px;background:#fff;border:1px solid var(--beige);color:var(--brown);border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer">가이드 미리보기</button>
+          <button onclick="adminBroadcastGuide()" style="flex:1;padding:9px;background:#FFF8E1;border:1px solid #D4AF37;color:#B8860B;border-radius:6px;font-family:Georgia,serif;font-size:12px;cursor:pointer;font-weight:bold">전체에게 가이드 알림</button>
+        </div>
+        <div style="font-size:10px;color:#A99A82;line-height:1.5">기존 사용자도 알림 클릭으로 가이드를 다시 볼 수 있습니다. 이전에 가이드를 본 사람에게도 알림으로 한 번 더 전달됩니다.</div>
+      </div>
+    </div>
     <!-- 본인 화면 검증 (디버깅용) - 접힘 -->
     <div style="margin-bottom:18px">
       <div onclick="toggleSelfDiag()" style="font-size:10px;color:#A99A82;font-family:Georgia,serif;margin-bottom:6px;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;gap:4px"><span id="selfDiagCaret">▸</span> 본인 화면 검증 (디버깅용)</div>
@@ -929,6 +940,16 @@ textarea#memo{min-height:70px;resize:none}
       <div style="font-size:10px;color:var(--terra);font-family:Georgia,serif;margin-bottom:6px;letter-spacing:.5px">출력</div>
       <div id="adminOutput" style="background:#FAFAF8;border:1px solid var(--beige);border-radius:8px;padding:12px;font-size:11px;color:var(--brown);line-height:1.6;min-height:80px;max-height:320px;overflow-y:auto;font-family:Helvetica,sans-serif"></div>
     </div>
+  </div>
+</div></div>
+<!-- 사용법 가이드북 모달 (v2.1.58) -->
+<div class="modal" id="guideModal"><div class="modal-inner" style="max-width:440px;max-height:85vh;display:flex;flex-direction:column;padding:0;overflow:hidden">
+  <div style="padding:18px 20px 14px;border-bottom:1px solid var(--beige);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;background:#fff">
+    <h3 style="font-family:Georgia,serif;margin:0;font-size:17px;color:var(--brown)">너나들이 사용법</h3>
+    <button onclick="document.getElementById('guideModal').classList.remove('on')" style="border:none;background:transparent;font-size:24px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
+  </div>
+  <div style="overflow-y:auto;flex:1;padding:0">
+    <div id="guideBody" style="padding:24px 22px;font-family:Georgia,serif;color:var(--brown);line-height:1.75;font-size:13px"></div>
   </div>
 </div></div>
 <div class="modal" id="welcomeModal"><div class="modal-inner" style="max-width:380px">
@@ -1323,7 +1344,7 @@ function uploadAvatar(e){const f=e.target.files[0];if(!f)return;compressImage(f)
   document.getElementById('btnSaveAvatar').style.display='inline-block';
 })}
 function saveAvatar(){if(_pendingAvatar){profile.avatarImg=_pendingAvatar;document.getElementById('avatar').style.backgroundImage='url('+_pendingAvatar+')';document.getElementById('avatarSvg').style.display='none';saveProfile();toast('프로필 사진이 저장되었습니다');_pendingAvatar=null}document.getElementById('btnChangeAvatar').style.display='inline-block';document.getElementById('btnSaveAvatar').style.display='none';document.getElementById('avatarModal').classList.remove('on')}
-// ─── 통합 알림 센터 (v2.1.54) ─────────────────────────────────
+// ─── 통합 알림 센터 (v2.1.58) ─────────────────────────────────
 // localStorage 기반. uid별로 보관. 종류: gift_received / friend_accepted / gift_picked / milestone
 // 구조: [{id, type, title, body, ts, read, meta}]
 function notifKey(){
@@ -1338,7 +1359,7 @@ function setNotifs(list){
   var k=notifKey();if(!k)return;
   try{localStorage.setItem(k,JSON.stringify(list.slice(0,200)))}catch(e){}
 }
-// 알림 자동 정리 (v2.1.54) — 읽음 처리된 알림 중 30일 경과 시 삭제
+// 알림 자동 정리 (v2.1.58) — 읽음 처리된 알림 중 30일 경과 시 삭제
 // 시스템 공지(system_notice)는 영구 보존 — 사용자가 다시 볼 가능성
 function cleanupExpiredNotifs(){
   if(!currentUser)return;
@@ -1347,6 +1368,7 @@ function cleanupExpiredNotifs(){
   var THIRTY_DAYS=30*24*60*60*1000;
   var filtered=list.filter(function(n){
     if(n.type==='system_notice')return true;
+    if(n.type==='guide')return true;
     if(!n.read)return true;
     if(now-n.ts<THIRTY_DAYS)return true;
     return false;
@@ -1357,7 +1379,7 @@ function cleanupExpiredNotifs(){
     console.log('[알림] 자동 정리:',list.length-filtered.length,'건 삭제');
   }
 }
-// 개별 알림 삭제 (v2.1.54)
+// 개별 알림 삭제 (v2.1.58)
 function deleteNotif(id,evt){
   if(evt){evt.stopPropagation();evt.preventDefault()}
   var list=getNotifs();
@@ -1437,14 +1459,15 @@ function notifTimeAgo(ts){
 }
 // 아이콘 — 종류별
 function notifIcon(type){
-  var color={gift_received:'#D4AF37',friend_accepted:'#5B9C6E',gift_picked:'#5B7AB8',milestone:'#D97757',system_notice:'#8B7D6B'}[type]||'#8B7D6B';
-  var bg={gift_received:'#FFF8E1',friend_accepted:'#E8F4ED',gift_picked:'#E8EEF7',milestone:'#FFF3EC',system_notice:'#F5F1EB'}[type]||'#F5F1EB';
+  var color={gift_received:'#D4AF37',friend_accepted:'#5B9C6E',gift_picked:'#5B7AB8',milestone:'#D97757',system_notice:'#8B7D6B',guide:'#7B6CC4'}[type]||'#8B7D6B';
+  var bg={gift_received:'#FFF8E1',friend_accepted:'#E8F4ED',gift_picked:'#E8EEF7',milestone:'#FFF3EC',system_notice:'#F5F1EB',guide:'#EFECF8'}[type]||'#F5F1EB';
   var svg='';
   if(type==='gift_received')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>';
   else if(type==='friend_accepted')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>';
   else if(type==='gift_picked')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><polyline points="9 11 12 14 17 9"/></svg>';
   else if(type==='milestone')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
   else if(type==='system_notice')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.882V19.24a1.76 1.76 0 0 1-3.417.592l-2.147-6.15M18 13a3 3 0 1 0 0-6M5.436 13.683A4.001 4.001 0 0 1 7 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 0 1-1.564-.317z"/></svg>';
+  else if(type==='guide')svg='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="'+color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
   return'<div style="width:36px;height:36px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;flex-shrink:0">'+svg+'</div>';
 }
 // 알림 모달 열기
@@ -1505,6 +1528,9 @@ function handleNotifClick(id){
   }else if(n.type==='system_notice'){
     // 공지 모달 표시
     openSystemNoticeModal(n);
+  }else if(n.type==='guide'){
+    // 사용법 가이드 모달
+    openGuideModal();
   }
   // 라우팅된 모달이 dot 정리를 마친 뒤 nav dot 재갱신 (안전망)
   setTimeout(function(){updateNavMyDot()},1500);
@@ -1558,7 +1584,7 @@ function emitGiftPickedNotif(receiverName,pinName){
     {key:'gp_'+(receiverName||'')+'_'+(pinName||'')+'_'+Date.now()});
 }
 
-// 시스템 공지 (v2.1.54) — 관리자가 발송한 공지를 사용자 알림 센터에 통합
+// 시스템 공지 (v2.1.58) — 관리자가 발송한 공지를 사용자 알림 센터에 통합
 function emitSystemNoticeNotif(notice){
   if(!notice||!notice.id)return;
   addNotif('system_notice',
@@ -1581,7 +1607,16 @@ async function syncSystemNotices(){
     var newCount=0;
     notices.forEach(function(n){
       if(!seenMap[n.id]){
-        emitSystemNoticeNotif(n);
+        // category='guide' 또는 본문에 __nnd_guide__ 마커 → 가이드 알림으로 처리 (v2.1.58)
+        var isGuide=(n.category==='guide')||(/^__nnd_guide__/.test(n.body||''));
+        if(isGuide){
+          addNotif('guide',
+            n.title||'너나들이 사용법',
+            (n.body||'').replace(/^__nnd_guide__\n?/,'').slice(0,100),
+            {key:'guide_broadcast_'+n.id,noticeId:n.id});
+        }else{
+          emitSystemNoticeNotif(n);
+        }
         seenMap[n.id]=Date.now();
         newCount++;
       }
@@ -1592,7 +1627,7 @@ async function syncSystemNotices(){
   }catch(e){console.warn('syncSystemNotices',e)}
 }
 
-// ─── 수동 날씨 입력 (v2.1.54) ─────────────────────────────────
+// ─── 수동 날씨 입력 (v2.1.58) ─────────────────────────────────
 // 사용자가 신규/편집 시 4종 이모지 중 직접 선택. 간 곳 전용
 // 데이터 형식: {emoji: '☀️', label: '맑음'}
 var WEATHER_OPTIONS=[
@@ -1639,7 +1674,7 @@ function toggleWeatherChip(emoji){
 // 카테고리 토글 시 호출 (간 곳/갈 곳 전환)
 function onCatChange(){renderWeatherChips()}
 
-// 제목 표시 헬퍼 (v2.1.54) — 빈 제목은 회색 안내 텍스트로 자리만 잡음
+// 제목 표시 헬퍼 (v2.1.58) — 빈 제목은 회색 안내 텍스트로 자리만 잡음
 // size: 'sm'(11px), 'md'(12px), 'lg'(13px) 기본 'sm'
 function titleHTML(title,size){
   var fs={sm:'11px',md:'12px',lg:'13px'}[size||'sm'];
@@ -2144,6 +2179,13 @@ async function sendGift(receiverUid,receiverName){
 // ─── 받은 곳 핀 핸들러 ──────────────────────────────────────
 function openGiftDetail(r){
   if(!r)return;
+  // 받은 사람이 상세를 처음 보는 시점에 share_log status='accepted' 마킹 (v2.1.58)
+  // 발송자에게는 "받았어요"로 즉시 전환됨. 이후 갈 곳 담기/비우기와 무관
+  if(r.giftedLogId&&!r.isArchive&&sb){
+    sb.from('share_log').update({status:'accepted',accepted_at:new Date().toISOString()}).eq('id',r.giftedLogId).then(function(res){
+      if(res&&res.error)console.warn('mark gift accepted',res.error);
+    });
+  }
   var photos=(r.photos||[]).filter(function(p){return p});
   var html='';
   html+='<div style="background:#FFF8E1;border:1px solid #D4AF37;border-radius:8px;padding:12px;margin-bottom:14px">';
@@ -2469,7 +2511,7 @@ function updateReceivedBadge(){
   updateNavMyDot();
 }
 
-// nav "나" 탭 dot 갱신 (v2.1.54)
+// nav "나" 탭 dot 갱신 (v2.1.58)
 // 종 아이콘 카운트가 아니라 마이페이지 메뉴 항목들의 dot 중 하나라도 있을 때 표시
 // → 사용자가 nav 탭 dot을 보고 마이페이지 들어가면 반드시 안에 dot이 보이게 됨
 function updateNavMyDot(){
@@ -2668,7 +2710,7 @@ function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='g
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});const todayStr=new Date().toLocaleDateString('ko-KR');let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');const isToday=dt===todayStr;h+=`<div class="day${dates[dt]?' has':''}${isToday?' today':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
 function openDay(dt){const recs=records.map((r,i)=>({r,i})).filter(x=>x.r.cat==='간 곳'&&new Date(x.r.ts||Date.now()).toLocaleDateString('ko-KR')===dt).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));if(!recs.length)return;document.getElementById('modalTitle').textContent=dt;document.getElementById('modalBody').innerHTML=recs.map(x=>`<div class="modal-rec"><div class="pname">${x.r.name}</div>${x.r.title?`<div class="ptitle">${x.r.title}</div>`:`<div class="ptitle" style="color:#A99A82;opacity:.5">[ — 제목 없음 — ]</div>`}<div class="photos">${[0,1,2].map(i=>`<img src="${x.r.photos&&x.r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''" onclick="document.getElementById('dayModal').classList.remove('on');openDetail(${x.i})"/>`).join('')}</div></div>`).join('');document.getElementById('dayModal').classList.add('on')}
 function jumpToList(idx){const r=records[idx];if(!r)return;const tab=r.cat==='간 곳'?'go':'will';switchTab(tab);document.querySelector('nav button[data-v="list"]').click();setTimeout(()=>{const cards=document.querySelectorAll(tab==='go'?'#goCards .list-card':'#willCards .list-card');const filtered=records.filter(x=>x.cat===r.cat).sort((a,b)=>(b.ts||0)-(a.ts||0));const card=cards[filtered.indexOf(r)];if(card){card.scrollIntoView({behavior:'smooth',block:'center'});card.style.transition='background .3s';card.style.background='var(--beige)';setTimeout(()=>{card.style.background='#fff'},1500)}},150)}
-function openDetail(idx){const r=records[idx];if(!r)return;var validPhotos=(r.photos||[]).filter(function(p){return p});window._lbPhotos=validPhotos;window._lbIdx=0;var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:11px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:12px;padding:3px 10px;margin-bottom:8px;font-family:Georgia,serif">${r.giftedFromName}님이 추천한 곳</div>`:'';var canShare=(r.cat==='간 곳'||r.cat==='갈 곳')&&r.sbId;var shareBtn=canShare?`<button onclick="shareFromDetail(${idx})" style="flex:1;padding:12px;border:1px solid #D4AF37;background:#FFF8E1;color:#B8860B;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer;font-weight:bold">건네기</button>`:'';var weatherBadge=(r.weather&&r.weather.emoji)?`<span style="margin-left:8px;font-size:18px;line-height:1;vertical-align:middle;filter:none" title="${r.weather.label||''}">${r.weather.emoji}</span>`:'';var titleHTML=r.title?`<span style="color:var(--brown);opacity:.85">[${r.title}]</span>`:`<span style="color:#A99A82;opacity:.5">[ — 제목 없음 — ]</span>`;document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden;${r.photos&&r.photos[i]?'cursor:pointer':''}" ${r.photos&&r.photos[i]?`onclick="openLightbox(${validPhotos.indexOf(r.photos[i])})"`:''}>${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div>${fromBadge}<div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:10px">${r.name}</div><div style="font-size:13px;margin-bottom:2px">${titleHTML}${weatherBadge}</div><div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:8px;text-align:right">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px 0;background:transparent;border:none">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px">${shareBtn}<button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
+function openDetail(idx){const r=records[idx];if(!r)return;var validPhotos=(r.photos||[]).filter(function(p){return p});window._lbPhotos=validPhotos;window._lbIdx=0;var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:11px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:12px;padding:3px 10px;margin-bottom:8px;font-family:Georgia,serif">${r.giftedFromName}님이 추천한 곳</div>`:'';var canShare=(r.cat==='간 곳'||r.cat==='갈 곳')&&r.sbId;var shareBtn=canShare?`<button onclick="shareFromDetail(${idx})" style="flex:1;padding:12px;border:1px solid #D4AF37;background:#FFF8E1;color:#B8860B;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer;font-weight:bold">건네기</button>`:'';var weatherBadge=(r.weather&&r.weather.emoji)?`<span style="margin-left:8px;font-size:18px;line-height:1;vertical-align:middle;filter:none" title="${r.weather.label||''}">${r.weather.emoji}</span>`:'';var titleHTML=r.title?`<span style="color:var(--brown);opacity:.85">[${r.title}]</span>`:`<span style="color:#A99A82;opacity:.5">[ — 제목 없음 — ]</span>`;document.getElementById('detailBody').innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px">${[0,1,2,3,4,5].map(i=>`<div style="aspect-ratio:1;background:#E8DCC8;border-radius:6px;overflow:hidden;${r.photos&&r.photos[i]?'cursor:pointer':''}" ${r.photos&&r.photos[i]?`onclick="openLightbox(${validPhotos.indexOf(r.photos[i])})"`:''}>${r.photos&&r.photos[i]?`<img src="${r.photos[i]}" style="width:100%;height:100%;object-fit:cover"/>`:''}</div>`).join('')}</div>${fromBadge}<div style="font-size:11px;color:var(--terra);margin-bottom:4px">${r.addr||r.region||''}</div><div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:10px">${r.name}</div><div style="font-size:13px;margin-bottom:2px">${titleHTML}${weatherBadge}</div><div style="font-size:12px;color:var(--brown);opacity:.5;margin-bottom:8px;text-align:right">${r.date}</div><div style="font-size:13px;color:var(--brown);line-height:1.6;padding:14px 0;background:transparent;border:none;white-space:pre-wrap;word-break:break-word">${r.memo||'<span style="opacity:.4">기록 없음</span>'}</div><div style="display:flex;gap:8px;margin-top:20px">${shareBtn}<button onclick="editRecord(${idx})" style="flex:1;padding:12px;border:1px solid var(--brown);background:#fff;color:var(--brown);border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="flex:1;padding:12px;border:none;background:var(--red);color:#fff;border-radius:8px;font-family:Georgia,serif;font-size:13px;cursor:pointer">삭제</button></div>`;document.querySelectorAll('main .view').forEach(v=>v.classList.remove('active'));document.getElementById('view-detail').classList.add('active')}
 
 // 상세 화면에서 건네기 — 해당 기억 1개 선택 후 친구 선택 모달 진입
 function shareFromDetail(idx){
@@ -2717,7 +2759,7 @@ function normCity(region){
   return first;
 }
 
-// ─── 관리자 모드 (v2.1.54) ─────────────────────────────────
+// ─── 관리자 모드 (v2.1.58) ─────────────────────────────────
 // profiles.is_admin = true 인 사용자만 접근. 일반 사용자는 가드로 차단
 function isAdmin(){
   return !!(currentUser&&profile&&profile.isAdmin===true);
@@ -2840,7 +2882,7 @@ function openAdminPanel(){
   setTimeout(function(){adminLoadServiceStats()},100);
 }
 
-// ─── 운영 통계 (v2.1.54) ───────────────────────────────────
+// ─── 운영 통계 (v2.1.58) ───────────────────────────────────
 // RPC 함수 호출 → 전체 가입자·일자별 추세·최근 가입자 명단 조회
 // RPC 함수가 내부에서 is_admin 체크. 일반 사용자는 호출해도 권한 거부됨
 window.adminLoadStats=async function(){
@@ -2927,7 +2969,44 @@ window.adminBroadcastNotice=async function(title,body){
   }
 };
 
-// 전체 서비스 통계 (v2.1.54) — RPC `admin_get_service_stats`
+// 사용법 가이드 알림 발송 (v2.1.58)
+// system_notices에 category='guide' 마커로 저장 → 사용자가 받으면 가이드 모달로 라우팅
+window.adminBroadcastGuide=async function(){
+  if(!_guardAdmin())return;
+  if(!sb){_adminOut('<div style="color:var(--terra)">Supabase 연결 실패</div>');return}
+  var confirmed=await customConfirm('사용법 가이드 발송','전체 사용자에게 사용법 가이드 알림을 발송할까요?\n\n알림 클릭 시 가이드 모달이 열립니다. 이전에 가이드를 본 사용자에게도 알림이 한 번 더 전달됩니다.');
+  if(!confirmed)return;
+  try{
+    var res=await sb.rpc('admin_broadcast_notice',{
+      notice_title:'너나들이 사용법',
+      notice_body:'핵심 개념과 기본 사용법을 정리해두었어요. 알림을 눌러 가이드를 확인할 수 있습니다.',
+      notice_category:'guide'
+    });
+    if(res.error){
+      // RPC에 notice_category가 없으면 시그니처 에러. 호환 fallback (body에 마커)
+      if(/notice_category/.test(res.error.message||'')){
+        var fb=await sb.rpc('admin_broadcast_notice',{
+          notice_title:'[가이드] 너나들이 사용법',
+          notice_body:'__nnd_guide__\n핵심 개념과 기본 사용법을 정리해두었어요. 알림을 눌러 가이드를 확인할 수 있습니다.'
+        });
+        if(fb.error){
+          _adminOut('<div style="color:var(--terra);font-size:11px">가이드 발송 실패: '+fb.error.message+'</div>');
+          toast('가이드 발송 실패');return;
+        }
+        _adminOut('<div style="font-size:12px"><strong>가이드 알림 발송됨</strong> (호환 모드)<br/>ID: '+(fb.data&&fb.data.notice_id||'-')+'</div>','[관리자] 가이드 발송 (fallback)');
+        toast('가이드 알림이 발송되었습니다');return;
+      }
+      _adminOut('<div style="color:var(--terra);font-size:11px">가이드 발송 실패: '+res.error.message+'</div>');
+      toast('가이드 발송 실패');return;
+    }
+    _adminOut('<div style="font-size:12px"><strong>가이드 알림 발송됨</strong><br/>ID: '+(res.data&&res.data.notice_id||'-')+'</div>','[관리자] 가이드 발송 완료');
+    toast('가이드 알림이 발송되었습니다');
+  }catch(e){
+    _adminOut('<div style="color:var(--terra)">가이드 발송 예외: '+e.message+'</div>','[관리자] 가이드 발송 예외:'+e.message);
+  }
+};
+
+// 전체 서비스 통계 (v2.1.58) — RPC `admin_get_service_stats`
 window.adminLoadServiceStats=async function(){
   if(!_guardAdmin())return;
   if(!sb){_adminOut('<div style="color:var(--terra)">Supabase 연결 실패</div>');return}
@@ -2964,7 +3043,7 @@ function statCard(label,value,bg,color){
   return '<div style="background:'+bg+';border-radius:6px;padding:10px 12px"><div style="font-size:10px;color:#6B6452;margin-bottom:4px;font-family:Georgia,serif">'+label+'</div><div style="font-size:16px;color:'+color+';font-weight:bold;font-family:Georgia,serif">'+value+'</div></div>';
 }
 
-// 전체 사용자 "기타" 분류 분석 (v2.1.54) — RPC `admin_get_etc_regions`
+// 전체 사용자 "기타" 분류 분석 (v2.1.58) — RPC `admin_get_etc_regions`
 window.adminLoadEtcRegions=async function(){
   if(!_guardAdmin())return;
   if(!sb){_adminOut('<div style="color:var(--terra)">Supabase 연결 실패</div>');return}
@@ -3010,7 +3089,7 @@ window.adminLoadEtcRegions=async function(){
   }
 };
 
-// 본인 진단 토글 (v2.1.54)
+// 본인 진단 토글 (v2.1.58)
 function toggleSelfDiag(){
   var body=document.getElementById('selfDiagBody');
   var caret=document.getElementById('selfDiagCaret');
@@ -3027,6 +3106,108 @@ function scrollToBroadcast(){
     el.scrollIntoView({behavior:'smooth',block:'center'});
     setTimeout(function(){el.focus()},400);
   }
+}
+
+// ─── 사용법 가이드북 (v2.1.58) ────────────────────────────────
+// 회원가입 직후 자동 표시 + 마이페이지에서 언제든 재진입 가능
+// 첫 사용자에게는 시스템 공지로도 함께 전달되어 알림 센터에서 다시 볼 수 있음
+function getGuideHTML(){
+  return ''
+    +'<div style="font-size:18px;font-family:Georgia,serif;color:var(--vermillion);margin-bottom:6px;letter-spacing:.5px">너나들이</div>'
+    +'<div style="font-size:12px;color:#8B7D6B;margin-bottom:18px;font-style:italic">내 사람과 나누는, 지도 위 기억 일기</div>'
+    +'<div style="font-size:12px;color:var(--brown);line-height:1.7;margin-bottom:22px;padding:12px 14px;background:#FFF8E1;border-left:3px solid #D4AF37;border-radius:4px">'
+      +'<strong style="color:#B8860B">너나들이</strong>란, 서로 너니 나니 부르며 허물없이 지내는 사이를 뜻하는 순우리말입니다.'
+    +'</div>'
+    +'<div style="background:var(--cream);padding:14px 16px;border-radius:8px;margin-bottom:22px;font-size:12px;line-height:1.7">'
+      +'<div style="font-weight:bold;color:var(--brown);margin-bottom:4px">너나들이는</div>'
+      +'장소에 머문 기억을 사진과 글로 남기고, 내가 선택한 사람과만 가만히 나누는 일기입니다. '
+      +'좋아요도, 팔로워도, 추천 알고리즘도 없습니다.'
+    +'</div>'
+
+    +'<div style="font-size:11px;color:var(--terra);font-family:Georgia,serif;margin-bottom:10px;letter-spacing:.5px;border-bottom:1px solid var(--beige);padding-bottom:6px">너나들이 용어</div>'
+    +'<div style="display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:12px;margin-bottom:24px">'
+      +'<div style="color:var(--vermillion);font-weight:bold">간 곳</div><div>다녀온 자리에 남기는 기록. 사진·글·날짜·날씨로 한 페이지가 됩니다.</div>'
+      +'<div style="color:var(--vermillion);font-weight:bold">갈 곳</div><div>언젠가 가보고 싶은 자리. 다녀온 뒤 "다녀옴" 버튼으로 간 곳으로 옮길 수 있습니다.</div>'
+      +'<div style="color:var(--vermillion);font-weight:bold">내 사람</div><div>나의 기억을 나누고픈, 나눌 수 있는 사람.</div>'
+      +'<div style="color:var(--vermillion);font-weight:bold">건넨 기억</div><div>내가 내 사람에게 보낸 기억.</div>'
+      +'<div style="color:var(--vermillion);font-weight:bold">들인 기억</div><div>내가 내 사람으로부터 받은 기억.</div>'
+    +'</div>'
+
+    +'<div style="font-size:11px;color:var(--terra);font-family:Georgia,serif;margin-bottom:10px;letter-spacing:.5px;border-bottom:1px solid var(--beige);padding-bottom:6px">기록하기</div>'
+    +'<ol style="padding-left:18px;margin:0 0 24px 0;font-size:12px;line-height:1.9">'
+      +'<li>지도 위 <strong>장소를 검색</strong>하거나 마음에 드는 핀을 직접 찍습니다.</li>'
+      +'<li>"간 곳"인지 "갈 곳"인지 고릅니다.</li>'
+      +'<li>간 곳이면 사진 (최대 6장)과 메모, 그날의 날씨 등을 남겨둡니다.</li>'
+      +'<li>저장하면 지도와 리스트에 핀이 등장합니다.</li>'
+    +'</ol>'
+
+    +'<div style="font-size:11px;color:var(--terra);font-family:Georgia,serif;margin-bottom:10px;letter-spacing:.5px;border-bottom:1px solid var(--beige);padding-bottom:6px">내 사람과 나누기</div>'
+    +'<ol style="padding-left:18px;margin:0 0 24px 0;font-size:12px;line-height:1.9">'
+      +'<li>마이페이지 → <strong>내 사람 초대</strong>에서 이메일이나 카카오톡, 메세지로 초대를 보냅니다.</li>'
+      +'<li>상대가 초대링크를 통해 가입하면 자동으로 "내 사람" 관계가 맺어집니다.</li>'
+      +'<li>나누고 싶은 기억을 지도나 리스트 상세 화면에서 선택해 <strong>"건네기"</strong>를 눌러 내 사람에게 공유합니다.</li>'
+      +'<li>받은 사람은 "들인 기억" 메뉴에서 확인하고, "갈 곳에 담기"로 자기 지도에 핀을 옮길 수 있습니다.</li>'
+    +'</ol>'
+
+    +'<div style="font-size:11px;color:var(--terra);font-family:Georgia,serif;margin-bottom:10px;letter-spacing:.5px;border-bottom:1px solid var(--beige);padding-bottom:6px">마이페이지 메뉴</div>'
+    +'<div style="display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:12px;margin-bottom:24px">'
+      +'<div style="color:var(--brown);font-weight:bold">내 사람 초대</div><div>새 사람을 초대하거나 기 사용자간 코드로 추가</div>'
+      +'<div style="color:var(--brown);font-weight:bold">내 사람들</div><div>현재 연결된 내사람 목록과 요청 관리</div>'
+      +'<div style="color:var(--brown);font-weight:bold">건넨 기억</div><div>내가 보낸 기억</div>'
+      +'<div style="color:var(--brown);font-weight:bold">들인 기억</div><div>내가 받은 기억</div>'
+      +'<div style="color:var(--brown);font-weight:bold">개인 설정</div><div>이름·소개·프로필 사진 변경</div>'
+    +'</div>'
+
+    +'<div style="background:#FFF8E1;border:1px solid #D4AF37;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.7;color:var(--brown);margin-bottom:8px">'
+      +'<div style="color:#B8860B;font-weight:bold;margin-bottom:4px;font-family:Georgia,serif">한 줄 안내</div>'
+      +'기록은 편지, 공유는 선물, 지도는 자서전입니다. 천천히 채워 가십시오.'
+    +'</div>';
+}
+
+function openGuideModal(){
+  document.getElementById('guideBody').innerHTML=getGuideHTML();
+  document.getElementById('guideModal').classList.add('on');
+  // 첫 사용자 표시 플래그 저장
+  if(currentUser){
+    try{localStorage.setItem('nnd_guide_seen_'+currentUser.id,'1')}catch(e){}
+  }
+}
+
+// 첫 사용자에게 자동 표시 — 회원가입 직후 첫 로그인 1회만
+function maybeShowGuideForNewUser(){
+  if(!currentUser)return;
+  try{
+    var seenKey='nnd_guide_seen_'+currentUser.id;
+    if(localStorage.getItem(seenKey))return; // 이미 본 사용자는 건너뜀
+    // welcomeModal과 약관 모달이 닫힌 뒤에 가이드 표시 (충돌 방지)
+    setTimeout(function(){
+      var wm=document.getElementById('welcomeModal');
+      var pm=document.getElementById('policyModal');
+      var wmOpen=wm&&wm.classList.contains('on');
+      var pmOpen=pm&&pm.classList.contains('on');
+      if(wmOpen||pmOpen){
+        // 아직 열려있으면 한 번 더 대기
+        setTimeout(maybeShowGuideForNewUser,2500);
+        return;
+      }
+      openGuideModal();
+    },1500);
+  }catch(e){console.warn('maybeShowGuideForNewUser',e)}
+}
+
+// 가이드 알림을 알림 센터에 1회만 발행 (영구 보존)
+// 사용자가 자동 표시를 닫더라도 나중에 알림에서 다시 볼 수 있게
+function emitGuideNotifOnce(){
+  if(!currentUser)return;
+  try{
+    var key='nnd_guide_notif_'+currentUser.id;
+    if(localStorage.getItem(key))return;
+    addNotif('guide',
+      '너나들이 사용법',
+      '핵심 개념과 기본 사용법을 정리해두었어요. 언제든 다시 볼 수 있습니다.',
+      {key:'guide_'+currentUser.id});
+    localStorage.setItem(key,'1');
+  }catch(e){console.warn('emitGuideNotifOnce',e)}
 }
 
 function editRecord(idx){var r=records[idx];if(!r)return;editingIdx=idx;selLL=[].concat(r.ll);selName=r.name;selAddr=r.addr||'';window._region=r.region||'';
@@ -3089,7 +3270,7 @@ document.getElementById('goCards').innerHTML=goGroups.length?goGroups.map(functi
   html+='</div>';
   return html;
 }).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
-document.getElementById('willCards').innerHTML=wiRecs.length?wiRecs.map(r=>{const idx=records.indexOf(r);var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:10px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:10px;padding:2px 8px;margin-bottom:6px;font-family:Georgia,serif">${r.giftedFromName}님이 추천</div>`:'';return `<div class="list-card will-card">${fromBadge}<div style="font-size:12px;margin-bottom:5px"><span style="font-family:Georgia,serif;font-weight:bold;color:var(--brown)">${r.name}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-size:10px;color:var(--terra)">${r.addr||r.region||''}</span></div>${r.title?`<div style="font-size:11px;color:var(--brown);opacity:.7;margin-bottom:5px">[${r.title}]</div>`:`<div style="font-size:11px;color:#A99A82;opacity:.5;margin-bottom:5px">[ — 제목 없음 — ]</div>`}<div style="padding:7px;background:var(--cream);border:1px solid var(--beige);border-radius:6px;font-size:12px;color:var(--brown);min-height:36px;line-height:1.4">${r.memo||'<span style="opacity:.4">메모 없음</span>'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="date" style="font-size:10px;opacity:.6">${r.date}</span><div style="display:flex;gap:4px"><button onclick="editRecord(${idx})" style="background:#fff;color:var(--brown);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="background:#fff;color:var(--terra);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">삭제</button><button onclick="startConvert(${idx})" style="background:var(--vermillion);color:#fff;border:none;border-radius:5px;padding:5px 10px;font-family:Georgia,serif;font-size:11px;cursor:pointer">다녀옴</button></div></div></div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
+document.getElementById('willCards').innerHTML=wiRecs.length?wiRecs.map(r=>{const idx=records.indexOf(r);var fromBadge=r.giftedFromName?`<div style="display:inline-block;font-size:10px;color:#B8860B;background:#FFF8E1;border:1px solid #D4AF37;border-radius:10px;padding:2px 8px;margin-bottom:6px;font-family:Georgia,serif">${r.giftedFromName}님이 추천</div>`:'';return `<div class="list-card will-card">${fromBadge}<div style="font-size:12px;margin-bottom:5px"><span style="font-family:Georgia,serif;font-weight:bold;color:var(--brown)">${r.name}</span><span style="color:var(--beige);margin:0 5px">·</span><span style="font-size:10px;color:var(--terra)">${r.addr||r.region||''}</span></div>${r.title?`<div style="font-size:11px;color:var(--brown);opacity:.7;margin-bottom:5px">[${r.title}]</div>`:`<div style="font-size:11px;color:#A99A82;opacity:.5;margin-bottom:5px">[ — 제목 없음 — ]</div>`}<div style="padding:7px;background:var(--cream);border:1px solid var(--beige);border-radius:6px;font-size:12px;color:var(--brown);min-height:36px;line-height:1.4;white-space:pre-wrap;word-break:break-word">${r.memo||'<span style="opacity:.4">메모 없음</span>'}</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"><span class="date" style="font-size:10px;opacity:.6">${r.date}</span><div style="display:flex;gap:4px"><button onclick="editRecord(${idx})" style="background:#fff;color:var(--brown);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">수정</button><button onclick="deleteRecord(${idx})" style="background:#fff;color:var(--terra);border:1px solid var(--beige);border-radius:5px;padding:5px 8px;font-family:Georgia,serif;font-size:10px;cursor:pointer">삭제</button><button onclick="startConvert(${idx})" style="background:var(--vermillion);color:#fff;border:none;border-radius:5px;padding:5px 10px;font-family:Georgia,serif;font-size:11px;cursor:pointer">다녀옴</button></div></div></div>`}).join(''):'<div style="text-align:center;opacity:.5;padding:30px">기록이 없습니다</div>';
 document.getElementById('sAll').textContent=records.filter(function(r){return r.cat!=='받은 곳'}).length;document.getElementById('sGo').textContent=goRecs.length;document.getElementById('sWill').textContent=wiRecs.length;
 var goByCity={},wiByCity={};goRecs.forEach(r=>{var city=normCity(r.region);goByCity[city]=(goByCity[city]||0)+1});wiRecs.forEach(r=>{var city=normCity(r.region);wiByCity[city]=(wiByCity[city]||0)+1});
 var goList=Object.entries(goByCity).sort((a,b)=>b[1]-a[1]);var wiList=Object.entries(wiByCity).sort((a,b)=>b[1]-a[1]);
@@ -3294,7 +3475,7 @@ async function confirmNewPassword(){
         await reconcileFriendInvites();
         await consumePendingInvite();
         renderAll();records.forEach(plotRecord);
-        updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge();updateNotifBadge();refreshAdminUI();syncSystemNotices();cleanupExpiredNotifs();
+        updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge();updateNotifBadge();refreshAdminUI();syncSystemNotices();cleanupExpiredNotifs();emitGuideNotifOnce();maybeShowGuideForNewUser();syncMissedFriendAcceptedNotifs();
       }
     }catch(e){console.warn('post-recovery init',e)}
   }catch(e){console.warn(e);toast('변경 중 오류')}
@@ -3443,6 +3624,39 @@ async function reconcileFriendInvites(){
   }catch(e){console.warn('reconcileFriendInvites',e)}
 }
 
+// 오프라인 동안 새로 수락된 친구 알림 발행 (v2.1.58)
+// Realtime을 못 받은 경우 — 로그인 시 last_seen 이후 accepted_at 기준으로 비교
+async function syncMissedFriendAcceptedNotifs(){
+  if(!currentUser||!sb)return;
+  try{
+    var seenKey='nnd_seen_friend_accepted_'+currentUser.id;
+    var lastSeen=null;
+    try{lastSeen=localStorage.getItem(seenKey)}catch(e){}
+    // 첫 로그인 직후엔 last_seen 없음 → 이번부터 기록만 하고 알림은 발행 안 함
+    if(!lastSeen){
+      try{localStorage.setItem(seenKey,new Date().toISOString())}catch(e){}
+      return;
+    }
+    // 내가 발송한 초대 중 lastSeen 이후 수락된 것 조회
+    // friends 테이블: user_id=내, status='accepted', accepted_at > lastSeen
+    var res=await sb.from('friends')
+      .select('id,friend_name,friend_email,friend_user_id,accepted_at,updated_at')
+      .eq('user_id',currentUser.id)
+      .eq('status','accepted')
+      .gt('updated_at',lastSeen);
+    if(res.error){console.warn('syncMissedFriendAccepted',res.error);return}
+    var rows=res.data||[];
+    if(rows.length){
+      rows.forEach(function(r){
+        var name=r.friend_name||r.friend_email||'';
+        if(name)emitFriendAcceptedNotif(name);
+      });
+    }
+    // 마지막 본 시점 갱신
+    try{localStorage.setItem(seenKey,new Date().toISOString())}catch(e){}
+  }catch(e){console.warn('syncMissedFriendAcceptedNotifs',e)}
+}
+
 // 보류된 초대 코드 처리 — 로그인/가입 직후 호출
 async function consumePendingInvite(){
   if(!currentUser||!sb)return;
@@ -3539,24 +3753,22 @@ async function loadFriends(){
 async function enrichFriendNames(friends){
   if(!friends||!friends.length||!sb)return friends;
   try{
-    // 보강이 필요한 user_id 모으기 (받는 쪽이면 user_id의 정보, 보낸 쪽이면 friend_user_id의 정보)
+    // 보강이 필요한 user_id 모으기 — 이름·이메일 또는 avatar_img가 없는 경우 모두 조회
     var missingIds=[];
     friends.forEach(function(f){
       if(f._dir==='received'){
-        // 보낸 사람의 이름·이메일 부족 시 user_id로 조회
-        if(!f.inviter_name||!f.inviter_email){if(f.user_id)missingIds.push(f.user_id)}
+        if(!f.inviter_name||!f.inviter_email||f.inviter_avatar==null){if(f.user_id)missingIds.push(f.user_id)}
       }else{
-        // 받는 사람의 이름·이메일 부족 시 friend_user_id로 조회
-        if((!f.friend_name||!f.friend_email)&&f.friend_user_id){missingIds.push(f.friend_user_id)}
+        if(((!f.friend_name||!f.friend_email)&&f.friend_user_id)||(f.friend_avatar==null&&f.friend_user_id)){missingIds.push(f.friend_user_id)}
       }
     });
     if(!missingIds.length)return friends;
     // 중복 제거 후 단일 쿼리
     var uniqIds=Array.from(new Set(missingIds));
-    var pRes=await sb.from('profiles').select('id,name,email').in('id',uniqIds);
+    var pRes=await sb.from('profiles').select('id,name,email,avatar_img').in('id',uniqIds);
     if(!pRes||!pRes.data)return friends;
     var map={};
-    pRes.data.forEach(function(p){map[p.id]={name:p.name||'',email:p.email||''}});
+    pRes.data.forEach(function(p){map[p.id]={name:p.name||'',email:p.email||'',avatar:p.avatar_img||''}});
     // 매핑
     friends.forEach(function(f){
       if(f._dir==='received'){
@@ -3564,12 +3776,14 @@ async function enrichFriendNames(friends){
         if(info){
           if(!f.inviter_name)f.inviter_name=info.name;
           if(!f.inviter_email)f.inviter_email=info.email;
+          f.inviter_avatar=info.avatar||'';
         }
       }else{
         var info=map[f.friend_user_id];
         if(info){
           if(!f.friend_name)f.friend_name=info.name;
           if(!f.friend_email)f.friend_email=info.email;
+          f.friend_avatar=info.avatar||'';
         }
       }
     });
@@ -3582,7 +3796,7 @@ function isFresh(ts){
   return Date.now()-t<24*60*60*1000;
 }
 
-// 친구 "본 시점" 시스템 (v2.1.54) — C안: 사용자가 한 번 보면 일반 상태로 전환
+// 친구 "본 시점" 시스템 (v2.1.58) — C안: 사용자가 한 번 보면 일반 상태로 전환
 function seenFriendsKey(){
   if(!currentUser)return null;
   return 'nnd_seen_friends_'+currentUser.id;
@@ -3752,24 +3966,31 @@ async function openFriendsList(){
         statusBadge='<span style="font-size:10px;color:var(--terra);background:#FFF0EB;padding:2px 8px;border-radius:10px">대기중</span>';
       }
       // 표시 이름·이메일: 받은 쪽은 보낸 사람 정보, 보낸 쪽은 받는 사람 정보
-      var displayName,subEmail;
+      var displayName,subEmail,avatarSrc;
       if(f._dir==='received'){
         displayName=f.inviter_name||'';
         subEmail=f.inviter_email||'';
-        // 이름이 비어 있으면 이메일을 이름 자리에 표시 (단 같은 줄에 같은 값 중복 방지)
+        avatarSrc=f.inviter_avatar||'';
         if(!displayName)displayName=subEmail;
       }else{
         displayName=f.friend_name||'';
         subEmail=f.friend_email||'';
+        avatarSrc=f.friend_avatar||'';
         if(!displayName)displayName=subEmail;
       }
       // 이름과 이메일이 같으면 이메일만 표시 (중복 방지)
       var lineText=(displayName&&subEmail&&displayName!==subEmail)
         ? displayName+' <span style="color:#C4B8A2">ㅣ</span> '+subEmail
         : (displayName||subEmail);
-      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:6px">'
+      // 프로필 사진 또는 이니셜 fallback
+      var initial=(displayName||subEmail||'?').trim().charAt(0).toUpperCase();
+      var avatarHTML=avatarSrc
+        ? '<div style="width:32px;height:32px;border-radius:50%;background-image:url('+avatarSrc+');background-size:cover;background-position:center;background-color:var(--cream);flex-shrink:0"></div>'
+        : '<div style="width:32px;height:32px;border-radius:50%;background:var(--cream);border:1px solid var(--beige);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:13px;color:var(--brown);flex-shrink:0">'+initial+'</div>';
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#fff;border:1px solid var(--beige);border-radius:8px;margin-bottom:6px;gap:10px">'
+        +avatarHTML
         +'<div style="flex:1;min-width:0;font-family:Georgia,serif;font-size:13px;color:var(--brown);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+lineText+'</div>'
-        +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:8px">'
+        +'<div style="display:flex;align-items:center;gap:8px;flex-shrink:0">'
           +statusBadge
           +'<button onclick="removeFriend(\''+f.id+'\')" style="border:none;background:transparent;color:var(--terra);font-size:18px;cursor:pointer;padding:0 4px;line-height:1">×</button>'
         +'</div></div>';
@@ -3866,8 +4087,10 @@ function clearMapMarkers(){
 }
 function updateLoginUI(){
   var lc=document.getElementById('loginBtnCard'),si=document.getElementById('settingsItem'),bar=document.getElementById('loginStatusBar');
+  var gi=document.getElementById('guideItem');
   if(lc)lc.style.display=currentUser?'none':'block';
   if(si)si.style.display=currentUser?'flex':'none';
+  if(gi)gi.style.display=currentUser?'flex':'none';
   if(bar){
     bar.textContent=currentUser?('로그인: '+(currentUser.email||'')):'비로그인 상태 — 기록이 저장되지 않습니다';
     bar.style.color=currentUser?'#4AADA8':'var(--terra)';
@@ -3927,7 +4150,7 @@ function openSettings(){
   document.getElementById('settingsModal').classList.add('on');
 }
 
-// ─── 약관 및 정책 (v2.1.54) ────────────────────────────────
+// ─── 약관 및 정책 (v2.1.58) ────────────────────────────────
 // 초안 형태로 작성되었습니다. 정식 출시 전 법률 전문가 검토를 권장합니다.
 // 운영 정보는 [추후 기재]로 두었습니다 (운영자명, 사업자번호, 연락처 등).
 var POLICY_VERSION='2025.05.26';
@@ -4037,7 +4260,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.54</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.58</div>'
   }
 };
 
@@ -4071,7 +4294,7 @@ async function doWithdraw(){
     clearMapMarkers();
     records=[];profile={name:'',bio:'',email:'',avatarImg:'',nndCode:'',isAdmin:false};
     localStorage.removeItem('nnd_records');localStorage.removeItem('nnd_profile');localStorage.removeItem('nnd_unread_notif');
-    try{localStorage.removeItem('nnd_notifs_'+uid);localStorage.removeItem('nnd_seen_friends_'+uid);localStorage.removeItem('nnd_seen_notices_'+uid)}catch(e){}
+    try{localStorage.removeItem('nnd_notifs_'+uid);localStorage.removeItem('nnd_seen_friends_'+uid);localStorage.removeItem('nnd_seen_notices_'+uid);localStorage.removeItem('nnd_guide_seen_'+uid);localStorage.removeItem('nnd_guide_notif_'+uid)}catch(e){}
     document.getElementById('pname').value='';document.getElementById('pbio').value='';document.getElementById('pemail').value='';
     document.getElementById('avatar').style.backgroundImage='';
     if(document.getElementById('avatarSvg'))document.getElementById('avatarSvg').style.display='block';
@@ -4081,6 +4304,7 @@ async function doWithdraw(){
     document.getElementById('notifModal').classList.remove('on');
     document.getElementById('adminPanel').classList.remove('on');
     document.getElementById('systemNoticeModal').classList.remove('on');
+    document.getElementById('guideModal').classList.remove('on');
     refreshAdminUI();
     document.getElementById('authModal').classList.add('on');
     toast('탈퇴가 완료되었습니다');
@@ -4110,6 +4334,7 @@ async function doLogout(){
   document.getElementById('notifModal').classList.remove('on');
   document.getElementById('adminPanel').classList.remove('on');
   document.getElementById('systemNoticeModal').classList.remove('on');
+  document.getElementById('guideModal').classList.remove('on');
   refreshAdminUI();
   document.getElementById('authModal').classList.add('on');
   loadRememberedEmails();
@@ -4538,7 +4763,7 @@ async function initAuth(){
         openNewPasswordModal();
       }else if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;closeAuthModal();clearMapMarkers();
-        loadFromSupabase().then(function(){return reconcileFriendInvites()}).then(function(){return consumePendingInvite()}).then(function(){renderAll();records.forEach(plotRecord);updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge();updateNotifBadge();refreshAdminUI();syncSystemNotices();cleanupExpiredNotifs()});
+        loadFromSupabase().then(function(){return reconcileFriendInvites()}).then(function(){return consumePendingInvite()}).then(function(){renderAll();records.forEach(plotRecord);updateLoginUI();startRealtime();renderUnreadDot();updateReceivedBadge();updateSentBadge();updateNotifBadge();refreshAdminUI();syncSystemNotices();cleanupExpiredNotifs();emitGuideNotifOnce();maybeShowGuideForNewUser();syncMissedFriendAcceptedNotifs()});
       }else if(event==='SIGNED_OUT'){
         stopRealtime();
         if(window._shareMode){try{exitShareMode()}catch(e){}}
@@ -4552,7 +4777,7 @@ setTimeout(initAuth,100);
 
 
 // ═══════════════════════════════════
-//  온보딩 오버레이 JS  (v4 / v2.1.54)
+//  온보딩 오버레이 JS  (v4 / v2.1.58)
 // ═══════════════════════════════════
 (function(){
   var obCurrent = 0;
