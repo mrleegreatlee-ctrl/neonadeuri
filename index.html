@@ -702,7 +702,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#B8860B"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.66</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#B8860B"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.67</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -782,6 +782,7 @@ textarea#memo{min-height:70px;resize:none}
     <div class="item" onclick="openPolicyModal('terms')">이용약관<span class="arrow">›</span></div>
     <div class="item" onclick="openPolicyModal('privacy')">개인정보처리방침<span class="arrow">›</span></div>
     <div class="item" onclick="openPolicyModal('location')">위치정보 이용약관<span class="arrow">›</span></div>
+    <div class="item" onclick="openPolicyModal('refund')">결제 및 환불 정책<span class="arrow">›</span></div>
     <div class="item" onclick="openPolicyModal('opensource')">오픈소스 라이선스<span class="arrow">›</span></div>
     <div class="item" onclick="openPolicyModal('contact')">문의하기<span class="arrow">›</span></div>
   </div>
@@ -1056,6 +1057,39 @@ textarea#memo{min-height:70px;resize:none}
   </div>
   <div id="receivedListBody"></div>
 </div></div>
+<!-- 약관 동의 팝업 (v2.1.67) — 가입 전 약관 동의 -->
+<div class="modal" id="termsAgreementModal" style="z-index:2700">
+  <div class="modal-inner" style="max-width:380px">
+    <div style="text-align:center;margin-bottom:18px">
+      <div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:6px">너나들이 시작 전</div>
+      <div style="font-size:12px;color:#8B7D6B">약관 동의가 필요합니다</div>
+    </div>
+    <div style="background:var(--cream);border:1px solid var(--beige);border-radius:10px;padding:14px;margin-bottom:16px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding-bottom:10px;border-bottom:1px solid var(--beige);margin-bottom:10px">
+        <input type="checkbox" id="termsAgreeAll" onchange="toggleAgreeAll()" style="width:18px;height:18px;cursor:pointer;accent-color:var(--vermillion);flex-shrink:0"/>
+        <span style="font-family:Georgia,serif;font-size:14px;color:var(--brown);font-weight:bold">모두 동의합니다</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0">
+        <input type="checkbox" class="termsItem" id="termsAgreeTerms" onchange="updateAgreeAll()" style="width:16px;height:16px;cursor:pointer;accent-color:var(--vermillion);flex-shrink:0"/>
+        <span style="flex:1;font-size:12px;color:var(--brown)"><span style="color:var(--vermillion);font-weight:bold">(필수)</span> 이용약관</span>
+        <button onclick="openPolicyModal('terms')" style="background:transparent;border:none;color:#8B7D6B;font-size:12px;cursor:pointer;padding:0 2px">보기 ›</button>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0">
+        <input type="checkbox" class="termsItem" id="termsAgreePrivacy" onchange="updateAgreeAll()" style="width:16px;height:16px;cursor:pointer;accent-color:var(--vermillion);flex-shrink:0"/>
+        <span style="flex:1;font-size:12px;color:var(--brown)"><span style="color:var(--vermillion);font-weight:bold">(필수)</span> 개인정보처리방침</span>
+        <button onclick="openPolicyModal('privacy')" style="background:transparent;border:none;color:#8B7D6B;font-size:12px;cursor:pointer;padding:0 2px">보기 ›</button>
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0">
+        <input type="checkbox" class="termsItem" id="termsAgreeLocation" onchange="updateAgreeAll()" style="width:16px;height:16px;cursor:pointer;accent-color:var(--vermillion);flex-shrink:0"/>
+        <span style="flex:1;font-size:12px;color:var(--brown)"><span style="color:var(--vermillion);font-weight:bold">(필수)</span> 위치정보 이용약관</span>
+        <button onclick="openPolicyModal('location')" style="background:transparent;border:none;color:#8B7D6B;font-size:12px;cursor:pointer;padding:0 2px">보기 ›</button>
+      </label>
+    </div>
+    <button id="termsConfirmBtn" onclick="confirmTermsAgreement()" disabled style="width:100%;padding:13px;background:#D4C8B0;color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:not-allowed;margin-bottom:8px;transition:background .3s cubic-bezier(.4,0,.2,1)">동의하고 가입하기</button>
+    <button onclick="closeTermsAgreement()" style="width:100%;padding:11px;background:transparent;color:#8B7D6B;border:none;font-family:Georgia,serif;font-size:12px;cursor:pointer">돌아가기</button>
+  </div>
+</div>
+
 <!-- 로그인/회원가입 모달 -->
 <div class="modal" id="authModal">
   <div class="modal-inner" style="max-width:380px">
@@ -4286,12 +4320,105 @@ async function doLogin(){
   if(res.error){showAuthError('로그인 실패: '+res.error.message);return}
   onAuthSuccess(res.data.user);
 }
+// v2.1.67 — 약관 동의 팝업 경유 가입 흐름
+// 가입 의도를 저장하고 약관 팝업을 띄움. 동의 후에 실제 가입 진행.
+var _pendingSignupContext=null; // {type:'email'|'kakao', email, password}
+
 async function doSignup(){
   hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
   var email=document.getElementById('authEmail').value.trim();
   var pw=document.getElementById('authPassword').value;
   if(!email||!pw){showAuthError('이메일과 비밀번호를 입력해주세요');return}
   if(pw.length<6){showAuthError('비밀번호는 6자 이상이어야 합니다');return}
+  // 약관 동의 팝업 표시
+  _pendingSignupContext={type:'email',email:email,password:pw};
+  openTermsAgreement();
+}
+
+async function doKakaoLogin(){
+  hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
+  // 카카오 인증 전에 약관 동의 필요
+  _pendingSignupContext={type:'kakao'};
+  openTermsAgreement();
+}
+
+// 약관 동의 팝업 열기 (v2.1.67)
+function openTermsAgreement(){
+  // 체크박스 초기화
+  document.getElementById('termsAgreeAll').checked=false;
+  document.getElementById('termsAgreeTerms').checked=false;
+  document.getElementById('termsAgreePrivacy').checked=false;
+  document.getElementById('termsAgreeLocation').checked=false;
+  updateTermsConfirmBtn();
+  // 버튼 라벨 컨텍스트별 조정
+  var btn=document.getElementById('termsConfirmBtn');
+  if(_pendingSignupContext&&_pendingSignupContext.type==='kakao'){
+    btn.textContent='동의하고 카카오로 시작';
+  }else{
+    btn.textContent='동의하고 가입하기';
+  }
+  document.getElementById('termsAgreementModal').classList.add('on');
+}
+
+function closeTermsAgreement(){
+  _pendingSignupContext=null;
+  document.getElementById('termsAgreementModal').classList.remove('on');
+}
+
+// 모두 동의 토글 (v2.1.67)
+function toggleAgreeAll(){
+  var all=document.getElementById('termsAgreeAll').checked;
+  document.querySelectorAll('.termsItem').forEach(function(cb){cb.checked=all});
+  updateTermsConfirmBtn();
+}
+
+// 개별 항목 변경 시 모두 동의 상태 + 버튼 상태 갱신 (v2.1.67)
+function updateAgreeAll(){
+  var items=document.querySelectorAll('.termsItem');
+  var allChecked=Array.from(items).every(function(cb){return cb.checked});
+  document.getElementById('termsAgreeAll').checked=allChecked;
+  updateTermsConfirmBtn();
+}
+
+// 가입 버튼 활성/비활성 (v2.1.67)
+function updateTermsConfirmBtn(){
+  var items=document.querySelectorAll('.termsItem');
+  var allChecked=Array.from(items).every(function(cb){return cb.checked});
+  var btn=document.getElementById('termsConfirmBtn');
+  if(allChecked){
+    btn.disabled=false;
+    btn.style.background='var(--vermillion)';
+    btn.style.cursor='pointer';
+  }else{
+    btn.disabled=true;
+    btn.style.background='#D4C8B0';
+    btn.style.cursor='not-allowed';
+  }
+}
+
+// 약관 동의 후 실제 가입 진행 (v2.1.67)
+async function confirmTermsAgreement(){
+  if(!_pendingSignupContext)return;
+  var ctx=_pendingSignupContext;
+  document.getElementById('termsAgreementModal').classList.remove('on');
+  // 동의 시점을 localStorage에도 임시 저장 (DB 저장은 가입 성공 후)
+  try{
+    var agreedAt=new Date().toISOString();
+    localStorage.setItem('nnd_pending_terms_agreed_at',agreedAt);
+    localStorage.setItem('nnd_pending_terms_version',POLICY_VERSION);
+  }catch(e){}
+  if(ctx.type==='email'){
+    await _doActualSignup(ctx.email,ctx.password);
+  }else if(ctx.type==='kakao'){
+    var res=await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:'https://mrleegreatlee-ctrl.github.io/neonadeuri/'}});
+    if(res.error){showAuthError('카카오 로그인 실패: '+res.error.message)}
+  }
+  _pendingSignupContext=null;
+}
+
+// 실제 이메일 가입 (약관 동의 후 호출, v2.1.67)
+async function _doActualSignup(email,pw){
+  hideAuthError();
   var btn=document.getElementById('authSubmitBtn');btn.textContent='가입 중...';btn.disabled=true;
   var res=await sb.auth.signUp({email:email,password:pw});
   btn.textContent='회원가입';btn.disabled=false;
@@ -4299,10 +4426,21 @@ async function doSignup(){
   if(res.data.session){onAuthSuccess(res.data.user);return}
   showAuthError('가입 확인 이메일을 발송했습니다. 받은 편지함을 확인해주세요.');
 }
-async function doKakaoLogin(){
-  hideAuthError();if(!sb){showAuthError('Supabase 연결 실패');return}
-  var res=await sb.auth.signInWithOAuth({provider:'kakao',options:{redirectTo:'https://mrleegreatlee-ctrl.github.io/neonadeuri/'}});
-  if(res.error){showAuthError('카카오 로그인 실패: '+res.error.message)}
+
+// 가입 직후 약관 동의 시점을 DB에 기록 (v2.1.67)
+async function recordTermsAgreementInDB(){
+  if(!currentUser||!sb)return;
+  try{
+    var agreedAt=localStorage.getItem('nnd_pending_terms_agreed_at');
+    var version=localStorage.getItem('nnd_pending_terms_version');
+    if(!agreedAt)return; // 옛 사용자는 건너뜀
+    await sb.from('profiles').update({
+      terms_agreed_at:agreedAt,
+      terms_version:version||POLICY_VERSION
+    }).eq('id',currentUser.id);
+    localStorage.removeItem('nnd_pending_terms_agreed_at');
+    localStorage.removeItem('nnd_pending_terms_version');
+  }catch(e){console.warn('recordTermsAgreementInDB',e)}
 }
 function openSettings(){
   if(!currentUser){toast('로그인 후 이용할 수 있습니다');return}
@@ -4329,9 +4467,10 @@ function openSettings(){
 // ─── 약관 및 정책 (v2.1.59) ────────────────────────────────
 // 초안 형태로 작성되었습니다. 정식 출시 전 법률 전문가 검토를 권장합니다.
 // 운영 정보는 [추후 기재]로 두었습니다 (운영자명, 사업자번호, 연락처 등).
-var POLICY_VERSION='2025.05.26';
-var POLICY_CONTACT_EMAIL='[추후 기재]';
-var POLICY_OPERATOR='[추후 기재]';
+var POLICY_VERSION='2026.06.15';
+var POLICY_CONTACT_EMAIL='mrleegreatlee@gmail.com';
+var POLICY_OPERATOR='Great.Lee';
+var POLICY_OPERATOR_NOTE='베타 운영 단계의 1인 개발 서비스입니다. 향후 사업자 등록 후 정식 명칭으로 업데이트됩니다.';
 
 var POLICY_TEXTS={
   terms:{
@@ -4382,9 +4521,10 @@ var POLICY_TEXTS={
 +'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">관계 법령에 따른 보존 의무가 있는 경우 해당 기간</li><li style="margin-bottom:3px">분쟁 처리 등 정당한 이유가 있는 경우 그 사유가 해소될 때까지</li></ul>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">5. 제3자 제공</h4>'
 +'<p>서비스는 이용자의 개인정보를 외부에 제공하지 않습니다. 단, 법령에 따른 요구가 있거나 이용자가 명시적으로 동의한 경우는 예외입니다.</p>'
-+'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">6. 처리 위탁</h4>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">6. 처리 위탁 및 국외 이전</h4>'
 +'<p>서비스는 안정적인 운영을 위해 일부 업무를 외부 전문 업체에 위탁합니다.</p>'
-+'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">데이터 저장 및 인증: Supabase Inc.</li><li style="margin-bottom:3px">지도 서비스: 카카오 (KakaoMap API)</li><li style="margin-bottom:3px">소셜 로그인 인증: 카카오, 구글, 애플</li></ul>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>데이터 저장 및 인증:</strong> Supabase Inc. (서버 위치: 미국)</li><li style="margin-bottom:3px"><strong>지도 서비스:</strong> 카카오 (KakaoMap API, 대한민국)</li><li style="margin-bottom:3px"><strong>소셜 로그인 인증:</strong> 카카오, 구글, 애플</li></ul>'
++'<p style="margin-top:6px;background:#FFF8E1;border-left:3px solid #D4AF37;padding:8px 10px;font-size:11px;color:#6B5D4A">※ 회원가입 시 위 처리 위탁 및 국외 이전(미국 Supabase)에 동의한 것으로 간주됩니다. 동의를 철회하시려면 회원 탈퇴를 통해 모든 데이터를 삭제하실 수 있습니다.</p>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">7. 이용자의 권리</h4>'
 +'<p>이용자는 언제든지 다음 권리를 행사할 수 있습니다.</p>'
 +'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">개인정보 열람·수정: 마이페이지에서 직접 수정</li><li style="margin-bottom:3px">기록 삭제: 각 기록의 삭제 버튼을 통해 즉시 삭제</li><li style="margin-bottom:3px">받은 기억 보관함 삭제: 들인 기억 보관함에서 개별 삭제 가능</li><li style="margin-bottom:3px">회원 탈퇴: 개인 설정 메뉴에서 탈퇴 가능</li></ul>'
@@ -4392,9 +4532,13 @@ var POLICY_TEXTS={
 +'<p>회원 탈퇴 또는 보유 기간 만료 시 데이터베이스에서 즉시 삭제되며, 복구 불가능한 방식으로 파기됩니다.</p>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">9. 보호 조치</h4>'
 +'<p>비밀번호는 단방향 암호화하여 저장하며, 통신 구간은 HTTPS를 통해 암호화됩니다. 데이터베이스는 Row Level Security(RLS) 정책으로 이용자별 접근 권한을 분리하여 보호합니다.</p>'
-+'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">10. 개인정보 보호책임자</h4>'
-+'<p>운영자: '+POLICY_OPERATOR+'<br/>이메일: '+POLICY_CONTACT_EMAIL+'</p>'
-+'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">11. 처리방침의 변경</h4>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">10. 개인정보 보호책임자 및 청소년 보호 책임자</h4>'
++'<p><strong>개인정보 보호책임자</strong><br/>운영자: '+POLICY_OPERATOR+'<br/>이메일: '+POLICY_CONTACT_EMAIL+'</p>'
++'<p style="margin-top:6px"><strong>청소년 보호 책임자</strong><br/>운영자: '+POLICY_OPERATOR+'<br/>이메일: '+POLICY_CONTACT_EMAIL+'<br/>역할: 청소년 이용자 보호, 유해 콘텐츠 신고 접수 및 처리</p>'
++'<p style="margin-top:6px;font-size:11px;color:#8B7D6B">'+POLICY_OPERATOR_NOTE+'</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">11. 사진 및 콘텐츠 저장 방식</h4>'
++'<p>이용자가 업로드한 사진은 압축(긴 변 900픽셀, JPEG 60% 품질) 후 Supabase 데이터베이스에 안전하게 저장됩니다. 별도의 외부 사진 호스팅 서비스에 저장되지 않습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">12. 처리방침의 변경</h4>'
 +'<p>본 처리방침이 변경되는 경우 변경 사항과 적용일을 사전에 공지합니다.</p>'
   },
   location:{
@@ -4419,6 +4563,30 @@ var POLICY_TEXTS={
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제7조 (위치기반서비스의 변경 및 중단)</h4>'
 +'<p>운영자는 서비스 정책 변경, 법령 개정 등의 이유로 위치기반서비스의 전부 또는 일부를 제한·중단할 수 있으며, 사전에 공지합니다.</p>'
   },
+  refund:{
+    title:'결제 및 환불 정책',
+    body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">시행일: '+POLICY_VERSION+'</p>'
++'<p style="background:#FFF8E1;border-left:3px solid #D4AF37;padding:10px 12px;font-size:12px;color:#6B5D4A;margin-bottom:14px">※ 현재 너나들이는 베타 운영 중이며 결제 기능은 활성화되어 있지 않습니다. 본 정책은 향후 유료 서비스(지도책 단건 판매 및 프리미엄 구독) 도입 시점에 적용됩니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제1조 (목적)</h4>'
++'<p>본 정책은 너나들이가 제공하는 유료 콘텐츠(지도책 PDF·인쇄본) 및 프리미엄 구독에 관한 결제 조건과 환불 기준을 규정합니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제2조 (유료 콘텐츠의 종류)</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>지도책 PDF:</strong> 이용자의 기록을 PDF로 제작한 디지털 콘텐츠</li><li style="margin-bottom:3px"><strong>지도책 인쇄본:</strong> PDF를 인쇄소를 통해 제작한 실물 책자</li><li style="margin-bottom:3px"><strong>프리미엄 구독:</strong> 무제한 기록·고급 검색·자서전 무제한 출력 등 부가 기능을 제공하는 정기 구독</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제3조 (결제 수단)</h4>'
++'<p>웹에서 외부 결제 수단(신용카드, 체크카드, 간편결제 등)을 통해 결제할 수 있습니다. 정식 모바일 앱 출시 시 별도 결제 정책이 적용될 수 있습니다.</p>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제4조 (환불 정책 - 지도책 PDF)</h4>'
++'<p>디지털 콘텐츠의 특성상 다음 기준이 적용됩니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>제작 착수 전:</strong> 결제 후 7일 이내, 다운로드 전이면 전액 환불</li><li style="margin-bottom:3px"><strong>제작 완료 후 다운로드한 경우:</strong> 환불 불가 (전자상거래법 제17조 제2항 제5호)</li><li style="margin-bottom:3px"><strong>기술적 결함이 있는 경우:</strong> 운영자가 확인 후 재제작 또는 전액 환불</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제5조 (환불 정책 - 지도책 인쇄본)</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>제작 착수 전:</strong> 주문 후 24시간 이내 + 인쇄 진행 전이면 전액 환불</li><li style="margin-bottom:3px"><strong>제작 진행 중:</strong> 맞춤 제작 상품 특성상 환불 불가 (전자상거래법 제17조 제2항 제2호)</li><li style="margin-bottom:3px"><strong>배송 중 파손·오류 인쇄:</strong> 수령일로부터 7일 이내 사진과 함께 신고 시 무상 재제작 또는 전액 환불</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제6조 (환불 정책 - 프리미엄 구독)</h4>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>월간 구독:</strong> 결제 후 7일 이내 + 유료 기능 미사용 시 전액 환불. 사용 시작 후에는 당월 환불 불가, 다음 결제 주기부터 자동 갱신 해지</li><li style="margin-bottom:3px"><strong>연간 구독:</strong> 결제 후 7일 이내 전액 환불. 그 이후는 사용한 개월 수를 월간 요금으로 환산하여 차감 후 잔여 금액 환불</li><li style="margin-bottom:3px"><strong>자동 갱신 해지:</strong> 다음 결제일 24시간 전까지 \'마이페이지 > 구독 관리\'에서 해지 가능</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제7조 (환불 신청 방법)</h4>'
++'<p>환불 신청은 '+POLICY_CONTACT_EMAIL+'로 다음 정보를 보내주시면 영업일 기준 3일 내 처리됩니다.</p>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px">가입 이메일</li><li style="margin-bottom:3px">결제 일시 및 결제 수단</li><li style="margin-bottom:3px">환불 사유</li></ul>'
++'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제8조 (분쟁 해결)</h4>'
++'<p>본 정책으로 해결되지 않는 분쟁은 「전자상거래 등에서의 소비자보호에 관한 법률」 및 「콘텐츠산업 진흥법」을 따르며, 한국소비자원 또는 전자거래분쟁조정위원회의 조정을 신청할 수 있습니다.</p>'
++'<p style="margin-top:20px;padding-top:14px;border-top:1px solid var(--beige);color:#8B7D6B;font-size:11px">운영자: '+POLICY_OPERATOR+'<br/>문의: '+POLICY_CONTACT_EMAIL+'</p>'
+  },
   opensource:{
     title:'오픈소스 라이선스',
     body:'<p style="color:#8B7D6B;font-size:11px;margin-bottom:14px">너나들이는 다음의 오픈소스 라이브러리를 사용하여 만들어졌습니다.</p>'
@@ -4436,7 +4604,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.66</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.67</div>'
   }
 };
 
@@ -4538,6 +4706,8 @@ async function onAuthSuccess(user){
   localStorage.removeItem('nnd_profile');localStorage.removeItem('nnd_records');
   profile={name:'',bio:'',email:'',avatarImg:'',nndCode:'',isAdmin:false};records=[];
   await loadFromSupabase();
+  // v2.1.67 — 가입 직전 동의한 약관 시점을 DB에 기록
+  recordTermsAgreementInDB();
   // v2.1.52: 카카오 가입자의 name이 비어있으면 카카오 메타데이터에서 자동 채움
   // + 모든 사용자의 last_login_at 갱신
   try{
