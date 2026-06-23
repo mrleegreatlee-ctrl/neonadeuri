@@ -702,7 +702,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#D4AF37;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#B8860B"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.68</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#E63946;display:inline-block"></span>갈 곳</div></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#B8860B"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.69</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -788,7 +788,7 @@ textarea#memo{min-height:70px;resize:none}
   </div>
 </div></div>
 <!-- 약관·정책 모달 -->
-<div class="modal" id="policyModal"><div class="modal-inner" style="max-width:480px;max-height:85vh;display:flex;flex-direction:column">
+<div class="modal" id="policyModal" style="z-index:2800"><div class="modal-inner" style="max-width:480px;max-height:85vh;display:flex;flex-direction:column">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0">
     <h3 id="policyTitle" style="font-family:Georgia,serif;margin:0;font-size:16px">약관</h3>
     <button onclick="document.getElementById('policyModal').classList.remove('on')" style="border:none;background:transparent;font-size:22px;color:#8B7D6B;cursor:pointer;padding:0 2px;line-height:1">×</button>
@@ -988,6 +988,11 @@ textarea#memo{min-height:70px;resize:none}
   <div style="font-family:Georgia,serif;font-size:32px;color:#C96342;letter-spacing:1px;margin-bottom:14px;opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.4,0,.2,1) .4s,transform .9s cubic-bezier(.4,0,.2,1) .4s" id="welcomeT1">너나들이</div>
   <div style="font-family:Georgia,serif;font-size:16px;color:#8B7D6B;font-style:italic;margin-bottom:36px;opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.4,0,.2,1) .75s,transform .9s cubic-bezier(.4,0,.2,1) .75s" id="welcomeT2">가입을 환영합니다</div>
   <div style="font-size:13px;color:#A99A82;line-height:1.7;max-width:300px;opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.4,0,.2,1) 1.1s,transform .9s cubic-bezier(.4,0,.2,1) 1.1s" id="welcomeT3">잠시 후 가이드북이<br>안내될 예정입니다</div>
+  <div style="margin-top:28px;display:flex;gap:7px;opacity:0;transition:opacity .9s cubic-bezier(.4,0,.2,1) 1.5s" id="welcomeDots">
+    <span style="width:7px;height:7px;border-radius:50%;background:#C96342;display:inline-block;animation:nnd-dot-blink 1.5s ease-in-out infinite"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:#C96342;display:inline-block;animation:nnd-dot-blink 1.5s ease-in-out .25s infinite"></span>
+    <span style="width:7px;height:7px;border-radius:50%;background:#C96342;display:inline-block;animation:nnd-dot-blink 1.5s ease-in-out .5s infinite"></span>
+  </div>
 </div>
 
 <!-- 사용법 가이드북 모달 (v2.1.59) -->
@@ -1057,6 +1062,21 @@ textarea#memo{min-height:70px;resize:none}
   </div>
   <div id="receivedListBody"></div>
 </div></div>
+<!-- 로딩 인디케이터 (v2.1.69) — 2초 이상 작업 시 표시 -->
+<div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(61,57,41,.35);z-index:4000;align-items:center;justify-content:center;opacity:0;transition:opacity .4s cubic-bezier(.4,0,.2,1);pointer-events:auto;flex-direction:column">
+  <div style="background:var(--cream);border-radius:14px;padding:24px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 4px 24px rgba(0,0,0,.12)">
+    <div style="display:flex;gap:8px">
+      <span class="nnd-dot" style="width:9px;height:9px;border-radius:50%;background:#C96342;display:inline-block;opacity:.35;animation:nnd-dot-blink 1.5s ease-in-out infinite"></span>
+      <span class="nnd-dot" style="width:9px;height:9px;border-radius:50%;background:#C96342;display:inline-block;opacity:.35;animation:nnd-dot-blink 1.5s ease-in-out .25s infinite"></span>
+      <span class="nnd-dot" style="width:9px;height:9px;border-radius:50%;background:#C96342;display:inline-block;opacity:.35;animation:nnd-dot-blink 1.5s ease-in-out .5s infinite"></span>
+    </div>
+    <div id="loadingLabel" style="font-family:Georgia,serif;font-size:12px;color:#8B7D6B;letter-spacing:.3px">잠시만요</div>
+  </div>
+</div>
+<style>
+@keyframes nnd-dot-blink{0%,100%{opacity:.25;transform:scale(.85)}40%{opacity:1;transform:scale(1)}}
+</style>
+
 <!-- 약관 동의 팝업 (v2.1.67) — 가입 전 약관 동의 -->
 <div class="modal" id="termsAgreementModal" style="z-index:2700">
   <div class="modal-inner" style="max-width:380px">
@@ -1064,7 +1084,7 @@ textarea#memo{min-height:70px;resize:none}
       <div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:6px">너나들이 시작 전</div>
       <div style="font-size:12px;color:#8B7D6B">약관 동의가 필요합니다</div>
     </div>
-    <div style="background:var(--cream);border:1px solid var(--beige);border-radius:10px;padding:14px;margin-bottom:16px">
+    <div style="background:var(--cream);border:1px solid var(--beige);border-radius:10px;padding:14px;margin-bottom:22px">
       <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding-bottom:10px;border-bottom:1px solid var(--beige);margin-bottom:10px">
         <input type="checkbox" id="termsAgreeAll" onchange="toggleAgreeAll()" style="width:18px;height:18px;cursor:pointer;accent-color:var(--vermillion);flex-shrink:0"/>
         <span style="font-family:Georgia,serif;font-size:14px;color:var(--brown);font-weight:bold">모두 동의합니다</span>
@@ -1713,24 +1733,10 @@ async function syncSystemNotices(){
     var newCount=0;
     notices.forEach(function(n){
       if(!seenMap[n.id]){
-        // category='guide' 또는 본문에 __nnd_guide__ 마커 → 가이드 알림 (v2.1.59)
+        // v2.1.69 — 가이드 공지는 알림 발행 안 함 (emitGuideNotifOnce가 1회만 처리)
+        // 일반 공지만 알림 발행. seenMap에는 기록하여 다음 로그인 시 중복 방지.
         var isGuide=(n.category==='guide')||(/^__nnd_guide__/.test(n.body||''));
-        if(isGuide){
-          // v2.1.65 — 가이드 공지는 기존 사용자 환기용으로만 발행
-          // 신규 가입자(emitGuideNotifOnce가 처리)에게 중복 전달 방지
-          // 가이드 자동 알림을 받지 않았다면 = 신규 가입자 → 자동 발행 제외
-          var guideNotifKey='nnd_guide_notif_'+currentUser.id;
-          var hasReceivedAutoGuide=false;
-          try{hasReceivedAutoGuide=!!localStorage.getItem(guideNotifKey)}catch(e){}
-          if(hasReceivedAutoGuide){
-            // 기존 사용자 — 가이드 공지 발행 (환기)
-            addNotif('guide',
-              n.title||'너나들이 사용법',
-              (n.body||'').replace(/^__nnd_guide__\n?/,'').slice(0,100),
-              {key:'guide_broadcast_'+n.id,noticeId:n.id});
-          }
-          // 신규 가입자든 기존 사용자든 seenMap에 기록 (다음 로그인 시 다시 안 받음)
-        }else{
+        if(!isGuide){
           emitSystemNoticeNotif(n);
         }
         seenMap[n.id]=Date.now();
@@ -1802,6 +1808,37 @@ function titleHTML(title,size){
 
 
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000)}
+
+// v2.1.69 — 로딩 인디케이터 (2초 이상 작업 시 표시)
+// 사용: var hide=showLoadingAfter('가입 처리 중'); ... await 작업; hide();
+// 작업이 2초 이내 끝나면 인디케이터 표시 안 함 (깜박임 방지)
+var _loadingTimers={};
+var _loadingCounter=0;
+function showLoadingAfter(label,delay){
+  delay=(typeof delay==='number')?delay:2000;
+  var id=++_loadingCounter;
+  var hidden=false;
+  _loadingTimers[id]=setTimeout(function(){
+    if(hidden)return;
+    var ov=document.getElementById('loadingOverlay');
+    var lab=document.getElementById('loadingLabel');
+    if(lab)lab.textContent=label||'잠시만요';
+    if(!ov)return;
+    ov.style.display='flex';
+    requestAnimationFrame(function(){requestAnimationFrame(function(){ov.style.opacity='1'})});
+  },delay);
+  return function hide(){
+    hidden=true;
+    clearTimeout(_loadingTimers[id]);delete _loadingTimers[id];
+    var ov=document.getElementById('loadingOverlay');
+    if(!ov)return;
+    // 다른 로딩이 활성화되어 있으면 그대로 둠
+    var hasOther=Object.keys(_loadingTimers).length>0;
+    if(hasOther)return;
+    ov.style.opacity='0';
+    setTimeout(function(){if(ov.style.opacity==='0')ov.style.display='none'},400);
+  };
+}
 function saveRecs(){
   try{
     var clean=records.map(function(x){var o=Object.assign({},x);delete o._mk;return o});
@@ -3325,7 +3362,7 @@ function getGuideHTML(){
 
     +'<div style="background:#FFF8E1;border:1px solid #D4AF37;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.7;color:var(--brown);margin-bottom:8px">'
       +'<div style="color:#B8860B;font-weight:bold;margin-bottom:4px;font-family:Georgia,serif">한 줄 안내</div>'
-      +'기록은 편지, 공유는 선물, 지도는 자서전입니다. 천천히 채워 가십시오.'
+      +'기록은 편지, 공유는 선물, 지도는 흔적입니다. 천천히 채워 가십시오.'
     +'</div>';
 }
 
@@ -3374,7 +3411,9 @@ function showWelcomePageThenGuide(){
       var t1=document.getElementById('welcomeT1');
       var t2=document.getElementById('welcomeT2');
       var t3=document.getElementById('welcomeT3');
+      var td=document.getElementById('welcomeDots');
       [t1,t2,t3].forEach(function(el){if(el){el.style.opacity='1';el.style.transform='translateY(0)'}});
+      if(td)td.style.opacity='1';
     });
   });
   // 3.5초 유지 후 fade out → 0.3초 여유 → 가이드북 진입
@@ -3386,7 +3425,9 @@ function showWelcomePageThenGuide(){
       var t1=document.getElementById('welcomeT1');
       var t2=document.getElementById('welcomeT2');
       var t3=document.getElementById('welcomeT3');
+      var td=document.getElementById('welcomeDots');
       [t1,t2,t3].forEach(function(el){if(el){el.style.opacity='0';el.style.transform='translateY(14px)'}});
+      if(td)td.style.opacity='0';
       // 환영 사라진 후 0.3초 여유 두고 가이드북 진입
       setTimeout(function(){openGuideModal()},300);
     },900);
@@ -4420,7 +4461,9 @@ async function confirmTermsAgreement(){
 async function _doActualSignup(email,pw){
   hideAuthError();
   var btn=document.getElementById('authSubmitBtn');btn.textContent='가입 중...';btn.disabled=true;
+  var hide=showLoadingAfter('가입을 준비하는 중');
   var res=await sb.auth.signUp({email:email,password:pw});
+  hide();
   btn.textContent='회원가입';btn.disabled=false;
   if(res.error){showAuthError('회원가입 실패: '+res.error.message);return}
   if(res.data.session){onAuthSuccess(res.data.user);return}
@@ -4570,7 +4613,7 @@ var POLICY_TEXTS={
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제1조 (목적)</h4>'
 +'<p>본 정책은 너나들이가 제공하는 유료 콘텐츠(지도책 PDF·인쇄본) 및 프리미엄 구독에 관한 결제 조건과 환불 기준을 규정합니다.</p>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제2조 (유료 콘텐츠의 종류)</h4>'
-+'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>지도책 PDF:</strong> 이용자의 기록을 PDF로 제작한 디지털 콘텐츠</li><li style="margin-bottom:3px"><strong>지도책 인쇄본:</strong> PDF를 인쇄소를 통해 제작한 실물 책자</li><li style="margin-bottom:3px"><strong>프리미엄 구독:</strong> 무제한 기록·고급 검색·자서전 무제한 출력 등 부가 기능을 제공하는 정기 구독</li></ul>'
++'<ul style="margin:6px 0 6px 18px;padding:0"><li style="margin-bottom:3px"><strong>지도책 PDF:</strong> 이용자의 기록을 PDF로 제작한 디지털 콘텐츠</li><li style="margin-bottom:3px"><strong>지도책 인쇄본:</strong> PDF를 인쇄소를 통해 제작한 실물 책자</li><li style="margin-bottom:3px"><strong>프리미엄 구독:</strong> 무제한 기록·고급 검색·흔적 무제한 출력 등 부가 기능을 제공하는 정기 구독</li></ul>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제3조 (결제 수단)</h4>'
 +'<p>웹에서 외부 결제 수단(신용카드, 체크카드, 간편결제 등)을 통해 결제할 수 있습니다. 정식 모바일 앱 출시 시 별도 결제 정책이 적용될 수 있습니다.</p>'
 +'<h4 style="font-family:Georgia,serif;margin:14px 0 6px;font-size:13px">제4조 (환불 정책 - 지도책 PDF)</h4>'
@@ -4604,7 +4647,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.68</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.69</div>'
   }
 };
 
@@ -4625,9 +4668,10 @@ async function doWithdraw(){
   if(!ok2)return;
   try{
     var uid=currentUser.id;
+    var hide=showLoadingAfter('탈퇴를 처리하는 중');
     // v2.1.68 — Edge Function 'delete-account' 호출로 auth.users까지 완전 삭제
-    // 클라이언트는 admin API를 직접 호출할 수 없으므로 서버 함수에 위임
     var fnRes=await sb.functions.invoke('delete-account');
+    hide();
     if(fnRes.error){
       console.warn('delete-account function error',fnRes.error);
       toast('탈퇴 처리 실패: '+(fnRes.error.message||'서버 오류'));
@@ -4802,6 +4846,7 @@ async function loadFromSupabase(){
   if(!currentUser||!sb)return;
   // 이전 계정/세션의 잔존 데이터 누출 차단: profile 강제 초기화
   profile={name:'',bio:'',email:'',avatarImg:'',nndCode:'',isAdmin:false};
+  var hideLoad=showLoadingAfter('데이터를 불러오는 중');
   try{
     var pRes=await sb.from('profiles').select('*').eq('id',currentUser.id).maybeSingle();
     if(pRes.data){
@@ -4822,6 +4867,7 @@ async function loadFromSupabase(){
       localStorage.setItem('nnd_records',JSON.stringify(records));
     }
   }catch(e){console.warn('loadFromSupabase failed',e)}
+  finally{hideLoad()}
 }
 
 function loadRememberedEmails(){
