@@ -2070,76 +2070,6 @@ function updateCurrentLocation(userTriggered){
   },{enableHighAccuracy:true,timeout:10000,maximumAge:0});
 }
 updateCurrentLocation(false);
-
-// ─── 롱프레스로 지도에서 위치 직접 지정 (v2.1.78) ────────────────────────
-(function(){
-  if(!kakaoLoaded)return;
-  var _lpTimer=null;
-  var _lpMoved=false;
-  var _lpStartX=0,_lpStartY=0;
-  var THRESHOLD=10; // px — 이 이상 움직이면 드래그로 판단
-  var DELAY=500;    // ms — 롱프레스 인식 시간
-
-  function _cancelLP(){
-    if(_lpTimer){clearTimeout(_lpTimer);_lpTimer=null;}
-  }
-
-  function _onStart(mouseEvent){
-    // 공유 모드 중이거나 시트 열려있으면 무시
-    if(window._shareMode)return;
-    if(document.getElementById('sheet').classList.contains('on'))return;
-    _lpMoved=false;
-    var latlng=mouseEvent.latLng;
-    // 터치 시작 픽셀 저장 (이동 판별용)
-    var px=mouseEvent.point;
-    _lpStartX=px?px.x:0;_lpStartY=px?px.y:0;
-    _lpTimer=setTimeout(function(){
-      if(_lpMoved)return;
-      _doLongPress(latlng);
-    },DELAY);
-  }
-
-  function _onMove(mouseEvent){
-    if(!_lpTimer)return;
-    var px=mouseEvent.point;
-    if(!px)return;
-    var dx=Math.abs(px.x-_lpStartX),dy=Math.abs(px.y-_lpStartY);
-    if(dx>THRESHOLD||dy>THRESHOLD){_lpMoved=true;_cancelLP();}
-  }
-
-  kakao.maps.event.addListener(map,'mousedown',_onStart);
-  kakao.maps.event.addListener(map,'touchstart',_onStart);
-  kakao.maps.event.addListener(map,'mousemove',_onMove);
-  kakao.maps.event.addListener(map,'touchmove',_onMove);
-  kakao.maps.event.addListener(map,'mouseup',_cancelLP);
-  kakao.maps.event.addListener(map,'touchend',_cancelLP);
-
-  function _doLongPress(latlng){
-    var lat=latlng.getLat(),lon=latlng.getLng();
-    toast('위치를 확인하는 중...');
-    // 카카오 좌표 → 주소 변환 (coord2Address)
-    var geocoder=new kakao.maps.services.Geocoder();
-    geocoder.coord2Address(lon,lat,function(result,status){
-      if(status!==kakao.maps.services.Status.OK){
-        // 역지오코딩 실패 시 좌표값으로 대체
-        selectPlace(lat,lon,'직접 찍은 위치','','');
-        return;
-      }
-      var r=result[0];
-      var road=r.road_address?r.road_address.address_name:'';
-      var jibun=r.address?r.address.address_name:'';
-      var addr=road||jibun||'';
-      // 지번 주소에서 시·도 + 시·군·구 추출해 region으로 사용
-      var region='';
-      if(r.address){
-        var a=r.address;
-        region=(a.region_1depth_name||'')+(a.region_2depth_name?' '+a.region_2depth_name:'');
-      }
-      var name=road||jibun||'직접 찍은 위치';
-      selectPlace(lat,lon,name,addr,region);
-    });
-  }
-})();
 function mkImg(c){const s=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="${encodeURIComponent(c)}" stroke="white" stroke-width="2"/></svg>`;return new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+s,new kakao.maps.Size(20,20),{offset:new kakao.maps.Point(10,10)})}
 function mkSelImg(c){const s=`<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><circle cx="14" cy="14" r="11" fill="${encodeURIComponent(c)}" stroke="${encodeURIComponent('#D4AF37')}" stroke-width="3.5"/></svg>`;return new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+s,new kakao.maps.Size(28,28),{offset:new kakao.maps.Point(14,14)})}
 function mkGoldImg(){const s=`<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="11" cy="11" r="9" fill="${encodeURIComponent('#D4AF37')}" stroke="white" stroke-width="2"/><path d="M7.5 11h7M11 7.5v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>`;return new kakao.maps.MarkerImage('data:image/svg+xml;charset=utf-8,'+s,new kakao.maps.Size(22,22),{offset:new kakao.maps.Point(11,11)})}
@@ -2879,6 +2809,81 @@ function relocateRecord(){
     toast('새 위치를 검색해서 선택해주세요');
   },200);
 }
+
+// ── 지도 롱프레스(모바일) / 우클릭(데스크톱)으로 위치 직접 선택 (v2.1.78) ──
+// 좌표를 역지오코딩해 기존 selectPlace 흐름에 그대로 태운다. (간 곳/갈 곳 분류는 시트 토글에서)
+function pickByLongPress(lat,lng){
+  if(window._shareMode)return; // 공유 모드에서는 무시
+  if(document.getElementById('sheet').classList.contains('on'))return; // 폼 시트 열려 있으면 무시
+  toast('위치를 확인하는 중입니다');
+  function done(name,addr,region){
+    selectPlace(lat,lng,name||'선택한 위치',addr||'',region||'');
+  }
+  var fallbackRegion=lat.toFixed(5)+', '+lng.toFixed(5);
+  if(kakaoLoaded&&kakao.maps.services&&kakao.maps.services.Geocoder){
+    try{
+      var geocoder=new kakao.maps.services.Geocoder();
+      geocoder.coord2Address(lng,lat,function(result,status){
+        if(status===kakao.maps.services.Status.OK&&result&&result[0]){
+          var road=result[0].road_address,addr=result[0].address;
+          var nm=(road&&road.address_name)||(addr&&addr.address_name)||'선택한 위치';
+          var addrStr=(road&&road.address_name)||(addr&&addr.address_name)||'';
+          var region=(addr&&addr.address_name)||addrStr||fallbackRegion;
+          done(nm,addrStr,region);
+        }else{
+          done('선택한 위치','',fallbackRegion);
+        }
+      });
+    }catch(e){
+      done('선택한 위치','',fallbackRegion);
+    }
+  }else{
+    done('선택한 위치','',fallbackRegion);
+  }
+}
+(function setupLongPress(){
+  if(!kakaoLoaded)return;
+  var mapEl=document.getElementById('map');
+  if(!mapEl||!map||typeof map.getProjection!=='function')return;
+  var lpTimer=null,lpStart=null,moved=false;
+  var LP_MS=600,MOVE_TOL=12;
+  function clearLP(){if(lpTimer){clearTimeout(lpTimer);lpTimer=null}}
+  function guarded(){return window._shareMode||document.getElementById('sheet').classList.contains('on')}
+  mapEl.addEventListener('touchstart',function(e){
+    if(guarded())return;
+    if(e.touches.length!==1){clearLP();lpStart=null;return} // 멀티터치(줌)는 무시
+    var t=e.touches[0],rect=mapEl.getBoundingClientRect();
+    lpStart={x:t.clientX,y:t.clientY,ox:t.clientX-rect.left,oy:t.clientY-rect.top};
+    moved=false;clearLP();
+    lpTimer=setTimeout(function(){
+      lpTimer=null;
+      if(moved||!lpStart)return;
+      if(navigator.vibrate){try{navigator.vibrate(30)}catch(_e){}}
+      try{
+        var proj=map.getProjection();
+        var pt=new kakao.maps.Point(lpStart.ox,lpStart.oy);
+        var ll=proj.coordsFromContainerPoint(pt);
+        pickByLongPress(ll.getLat(),ll.getLng());
+      }catch(_e){}
+    },LP_MS);
+  },{passive:true});
+  mapEl.addEventListener('touchmove',function(e){
+    if(!lpStart||!e.touches.length)return;
+    var t=e.touches[0];
+    if(Math.abs(t.clientX-lpStart.x)>MOVE_TOL||Math.abs(t.clientY-lpStart.y)>MOVE_TOL){moved=true;clearLP()}
+  },{passive:true});
+  mapEl.addEventListener('touchend',function(){clearLP();lpStart=null},{passive:true});
+  mapEl.addEventListener('touchcancel',function(){clearLP();lpStart=null},{passive:true});
+  // 데스크톱: 우클릭으로 동일 동작
+  try{
+    kakao.maps.event.addListener(map,'rightclick',function(mouseEvent){
+      if(guarded())return;
+      var ll=mouseEvent.latLng;
+      pickByLongPress(ll.getLat(),ll.getLng());
+    });
+  }catch(_e){}
+})();
+
 function setCat(c){cat=c;document.getElementById('catGo').className=c==='간 곳'?'on-go':'';document.getElementById('catWill').className=c==='갈 곳'?'on-will':'';document.getElementById('photoBox').classList.toggle('hide',c==='갈 곳');const dBox=document.getElementById('dateBox');var wBox=document.getElementById('weatherBox');if(c==='갈 곳'){dBox.style.display='none';if(wBox)wBox.style.display='none'}else{dBox.style.display='block';if(wBox)wBox.style.display='block';document.getElementById('recDate').max=todayStr()}document.getElementById('memo').placeholder=c==='갈 곳'?'가고 싶은 이유':'한 줄 기록';document.getElementById('recTitle').placeholder=c==='갈 곳'?'제목 (선택)':'제목';if(tempMarker&&selLL)tempMarker.setImage(c==='간 곳'?goImg:willImg);renderWeatherChips()}
 function startConvert(idx){const r=records[idx];editingIdx=idx;selLL=[...r.ll];selName=r.name;selAddr=r.addr||'';window._region=r.region||'';if(tempMarker)tempMarker.setMap(null);if(kakaoLoaded){map.setCenter(new kakao.maps.LatLng(selLL[0],selLL[1]));map.setLevel(3)}document.getElementById('sPlace').textContent=selName+' (전환)';cat='간 곳';document.getElementById('catGo').className='on-go';document.getElementById('catWill').className='';document.getElementById('catGo').disabled=true;document.getElementById('catWill').disabled=true;document.getElementById('photoBox').classList.remove('hide');document.getElementById('memo').placeholder='한 줄 기록';document.getElementById('memo').value='';document.getElementById('recTitle').value=r.title||'';document.getElementById('dateBox').style.display='block';var wBox=document.getElementById('weatherBox');if(wBox)wBox.style.display='block';document.getElementById('recDate').max=todayStr();document.getElementById('recDate').value=todayStr();resetPhotoSlots();window._selectedWeather='';renderWeatherChips();document.querySelector('nav button[data-v="map"]').click();document.getElementById('sheet').classList.add('on')}
 async function saveRecord(){
