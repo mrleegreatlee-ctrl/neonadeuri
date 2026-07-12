@@ -1,0 +1,17 @@
+{
+  "name": "너나들이 — 내 사람과 나누는 지도 위 기억 일기",
+  "short_name": "너나들이",
+  "description": "내 사람과 나누는, 지도 위 기억 일기",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "ko",
+  "background_color": "#F5F1EB",
+  "theme_color": "#C96342",
+  "icons": [
+    { "src": "pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
