@@ -87,8 +87,13 @@ main{flex:1;position:relative;overflow:hidden}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .stat{box-shadow:var(--shadow-warm);background:#fff;border:1px solid var(--beige);border-radius:8px;padding:12px;text-align:center}
 .stat .num{font-family:Georgia,serif;font-size:20px;color:var(--vermillion)}.stat .lbl{font-size:10px;opacity:.7;margin-top:3px}
-.menu-card{box-shadow:var(--shadow-warm);background:#fff;border:1px solid var(--beige);border-radius:8px;overflow:hidden;margin-bottom:18px}
-.menu-card .item{padding:14px 16px;border-bottom:1px solid var(--beige);font-size:13px;cursor:pointer;display:flex;justify-content:space-between}
+.menu-card{box-shadow:var(--shadow-warm);background:#fff;border:1px solid var(--beige);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.menu-card .item{padding:12px 16px;border-bottom:1px solid var(--cream);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.menu-card .item:last-child{border-bottom:none}
+.mi-lead{display:flex;align-items:center;gap:11px}
+.mi-lead svg{width:17px;height:17px;flex-shrink:0;color:var(--terra);opacity:.9}
+.grp-card .grp-item{display:flex;align-items:center;justify-content:space-between;padding:11px 4px;border-top:1px solid var(--beige);font-size:13px;font-family:Georgia,serif;color:var(--brown);cursor:pointer}
+.grp-card .grp-item:active{background:rgba(201,99,66,.04)}
 .menu-card .item:last-child{border-bottom:none}.menu-card .arrow{color:var(--terra)}
 .notif-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 6px;background:#E63946;color:#fff;border-radius:9px;font-size:11px;font-weight:bold;margin-left:auto;margin-right:8px;line-height:1;font-family:Helvetica,sans-serif}
 .version{text-align:center;font-size:10px;opacity:.4;font-family:Georgia,serif}
@@ -397,7 +402,24 @@ textarea#memo{min-height:70px;resize:none}
 @media (max-width:420px) {
   #onboardingOverlay .ob-phone { width:100vw; height:100dvh; border-radius:0; }
 }
-.warm-thumb{filter:sepia(.06) saturate(.95)}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
+.warm-thumb{filter:sepia(.06) saturate(.95)}
+/* v2.1.87 흔적 책 — 넘기는 물성 */
+.hj-book{position:relative;width:100%;max-width:300px;aspect-ratio:1/1.47;perspective:1700px;margin:0 auto}
+.hj-edge{position:absolute;inset:0;border-radius:1px 4px 4px 1px;background:#E4DEC8;box-shadow:1px 0 0 #DBD4BB,3px 0 0 #E4DEC8,5px 1px 0 #DBD4BB,7px 2px 10px rgba(61,57,41,.13)}
+.hj-page{position:absolute;inset:0;background:#F2EEDD;background-image:radial-gradient(circle at 50% 50%,rgba(255,255,255,.35),transparent 70%);border-radius:1px 3px 3px 1px;box-shadow:0 3px 14px rgba(61,57,41,.13),inset 7px 0 14px -12px rgba(61,57,41,.16);transform-origin:left center;transform-style:preserve-3d;transition:transform .72s cubic-bezier(.36,.1,.28,1),box-shadow .72s;overflow:hidden;display:flex;flex-direction:column;padding:16px 13px 15px 19px;cursor:pointer}
+.hj-page.turned{transform:rotateY(-172deg);box-shadow:0 1px 4px rgba(61,57,41,.05)}
+.hj-page.hj-flip{box-shadow:0 12px 30px rgba(61,57,41,.28),inset 8px 0 14px -12px rgba(61,57,41,.20);filter:brightness(.97)}
+.hj-page[data-p="0"]{background:#FFFFFF;background-image:none;box-shadow:0 3px 14px rgba(61,57,41,.10)}
+.hj-page[data-p="0"]::before{opacity:.35}
+.hj-page.hj-flip::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(61,57,41,.10) 70%,rgba(61,57,41,.02));pointer-events:none;z-index:3}
+.hj-page::before{content:'';position:absolute;left:0;top:0;bottom:0;width:16px;background:linear-gradient(90deg,rgba(120,100,50,.13),rgba(120,100,50,.02) 65%,transparent);pointer-events:none;z-index:2}
+.hj-inner{flex:1;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hj-mark{background:linear-gradient(180deg,transparent 12%,#FFE94D 12%,#FFE94D 92%,transparent 92%);padding:1px 4px;color:#3D3929;box-decoration-break:clone;-webkit-box-decoration-break:clone;border-radius:2px}
+.hj-folio{padding-top:8px;font-family:Georgia,serif;font-size:8px;color:#9C8F76;text-align:center;flex-shrink:0}
+.hj-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px}
+.hj-nav button{background:none;border:1px solid var(--beige);width:34px;height:34px;border-radius:50%;color:var(--terra);cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;padding:0}
+.hj-nav button:disabled{opacity:.28;cursor:default}
+.hj-count{font-family:Georgia,serif;font-size:11px;color:var(--text-tertiary);min-width:56px;text-align:center}</style><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/></head><body>
 <!-- ═══════════════════════════════════════════
      너나들이 온보딩 오버레이 v4  (v2.1.59)
 ═══════════════════════════════════════════ -->
@@ -702,7 +724,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#C9A961;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"></div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-size:14px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openHeunjeok()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)"><span id="hjYear">2026</span>년의 흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">사진 0장 · 다녀온 곳 0곳</span></div></div><div class="menu-card"><div class="item" onclick="openInvite()">내 사람 초대<span class="arrow">›</span></div><div class="item" onclick="openFriendsList()">내 사람들<span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openSentShares()">건넨 기억<span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openReceivedList()">들인 기억<span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></div><div class="item" onclick="openGuideModal()" id="guideItem" style="color:#9C7E3C"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span class="arrow">›</span></div><div class="item" onclick="openSettings()" id="settingsItem">개인 설정<span class="arrow">›</span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.84</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-family:Georgia,serif;font-size:15px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openHeunjeok()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)">흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">간 곳 0곳 · 사진 0장</span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">트라이브 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Tribe</span></div><div class="grp-item" onclick="openFriendsList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.5 14.6c2.7.1 5 2.2 5 5.4"/></svg>내 사람들</span><span style="display:flex;align-items:center;gap:6px"><span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openInvite()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>내 사람 초대</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">레코드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Records</span></div><div class="grp-item" onclick="openSentShares()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>건넨 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openReceivedList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></svg>들인 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">가이드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Guide</span></div><div class="grp-item" onclick="openGuideModal()" id="guideItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div><div class="grp-item" onclick="openSettings()" id="settingsItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>개인 설정</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-top:12px;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.1.97</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -792,7 +814,7 @@ textarea#memo{min-height:70px;resize:none}
   </div>
 </div></div>
 <!-- 흔적 소개 모달 (v2.1.84) — 조용한 가시화. 판매 문구·가격·주문 CTA 없음 -->
-<div class="modal" id="heunjeokModal"><div class="modal-inner" style="max-width:420px">
+<div class="modal" id="heunjeokModal"><div class="modal-inner" style="max-width:420px;display:flex;flex-direction:column">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
     <h3 style="font-family:Georgia,serif;margin:0">흔적</h3>
     <button aria-label="닫기" onclick="document.getElementById('heunjeokModal').classList.remove('on')" style="background:none;border:none;font-size:22px;color:var(--text-tertiary);cursor:pointer;padding:11px;margin:-11px;line-height:1">×</button>
@@ -2986,51 +3008,173 @@ function goToMapFromMilestone(){
 function switchTab(t){curTab=t;document.getElementById('tabGo').className=t==='go'?'on':'';document.getElementById('tabWill').className=t==='will'?'on':'';document.getElementById('goSection').style.display=t==='go'?'block':'none';document.getElementById('willSection').style.display=t==='will'?'block':'none'}
 function renderCal(){const y=calDate.getFullYear(),m=calDate.getMonth();const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();const dates={};records.filter(r=>r.cat==='간 곳').forEach(r=>{const k=new Date(r.ts||Date.now()).toLocaleDateString('ko-KR');dates[k]=(dates[k]||[]).concat(r)});const todayStr=new Date().toLocaleDateString('ko-KR');let h=`<div class="cal-head"><button onclick="calDate=new Date(${y},${m-1},1);renderCal()">‹</button><span>${y}년 ${m+1}월</span><button onclick="calDate=new Date(${y},${m+1},1);renderCal()">›</button></div><div class="cal-grid">`;['일','월','화','수','목','금','토'].forEach(d=>h+=`<div class="dow">${d}</div>`);for(let i=0;i<first;i++)h+='<div class="day empty"></div>';for(let d=1;d<=last;d++){const dt=new Date(y,m,d).toLocaleDateString('ko-KR');const isToday=dt===todayStr;h+=`<div class="day${dates[dt]?' has':''}${isToday?' today':''}" onclick="openDay('${dt}')">${d}</div>`}h+='</div>';document.getElementById('calBox').innerHTML=h}
 function openDay(dt){const recs=records.map((r,i)=>({r,i})).filter(x=>x.r.cat==='간 곳'&&new Date(x.r.ts||Date.now()).toLocaleDateString('ko-KR')===dt).sort((a,b)=>(b.r.ts||0)-(a.r.ts||0));if(!recs.length)return;document.getElementById('modalTitle').textContent=dt;document.getElementById('modalBody').innerHTML=recs.map(x=>`<div class="modal-rec"><div class="pname">${x.r.name}</div>${x.r.title?`<div class="ptitle">${x.r.title}</div>`:`<div class="ptitle" style="color:#A99A82;opacity:.5">[ — 제목 없음 — ]</div>`}<div class="photos">${[0,1,2].map(i=>`<img src="${x.r.photos&&x.r.photos[i]||''}" onerror="this.style.background='#E8DCC8';this.src=''" onclick="document.getElementById('dayModal').classList.remove('on');openDetail(${x.i})"/>`).join('')}</div></div>`).join('');document.getElementById('dayModal').classList.add('on')}
+function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
 function renderHeunjeok(){
   var card=document.getElementById('heunjeokCard');if(!card)return;
   var yr=new Date().getFullYear();
   // 올해 내가 남긴 기억 (들인 기억 제외 — 흔적은 본인 기록의 책)
   var mine=records.filter(function(r){
-    if(r.cat==='받은 곳'||r.from_name)return false;
+    if(r.cat!=='간 곳')return false;      // 흔적은 '간 곳'만 — 갈 곳(희망)·받은 곳(들인 기억) 제외
+    if(r.from_name)return false;
     var t=r.ts?new Date(r.ts):(r.date?new Date(r.date):null);
     return t&&t.getFullYear()===yr;
   });
   var photos=0,places={};
   mine.forEach(function(r){
     if(r.photos&&r.photos.length)photos+=r.photos.length;
-    var k=r.city||r.place||r.addr;if(k)places[k]=1;
+    var k=normCity(r.region);if(k&&k!=='기타')places[k]=1;   // 마이페이지 도시 집계와 동일 기준
   });
   var n=mine.length,placeCnt=Object.keys(places).length;
   var yEl=document.getElementById('hjYear');if(yEl)yEl.textContent=yr;
   var cEl=document.getElementById('hjCount');if(cEl)cEl.textContent=n;
-  var sEl=document.getElementById('hjSub');if(sEl)sEl.textContent='사진 '+photos+'장 · 다녀온 곳 '+placeCnt+'곳';
+  var sEl=document.getElementById('hjSub');if(sEl)sEl.textContent='간 곳 '+n+'곳 · 사진 '+photos+'장';
   // 한 권의 분량을 30개 기억으로 상정한 진행 표시 (조용한 축적의 시각화)
   var bar=document.getElementById('hjBar');
   if(bar)setTimeout(function(){bar.style.width=Math.min(100,Math.round(n/30*100))+'%'},80);
+  window._hjMine=mine;
   window._hjStats={year:yr,n:n,photos:photos,places:placeCnt};
 }
 
 function openHeunjeok(){
-  var s=window._hjStats||{year:new Date().getFullYear(),n:0,photos:0,places:0};
+  var st=window._hjStats||{year:new Date().getFullYear(),n:0,photos:0,places:0};
   var m=document.getElementById('heunjeokModal');
   var body=document.getElementById('heunjeokBody');
   if(!m||!body)return;
+
+  var mem=(window._hjMine||[]).slice().sort(function(a,b){return (a.ts||0)-(b.ts||0)});
+  function fd(d){return d?String(d).replace(/-/g,'. ')+'.':''}
+
+  // 장소·날짜 머리 (사진 우선 레이아웃 여부에 따라 여백 조정)
+  function head(r,small){
+    var fs=small?'11px':'12px';
+    return '<div style="font-family:Georgia,serif;font-size:'+fs+';color:var(--brown);line-height:1.45">'+esc(r.name||r.addr||'')+'</div>'
+      +'<div style="font-family:Georgia,serif;font-size:8px;color:var(--accent-strong);margin-top:2px">'+esc(r.region||'')+(r.date?' · '+esc(fd(r.date)):'')+'</div>'
+      +'<div style="width:20px;height:1px;background:#D8CDB6;margin:8px 0 9px"></div>';
+  }
+  // 일기 전문 — 페이지에 맞춰 축소, 넘치면 줄임
+  function text(r,fs){
+    var t=(r.memo||'').trim();if(!t)return '';
+    return '<div style="font-family:Georgia,serif;font-size:'+fs+';color:var(--brown);line-height:1.75;white-space:pre-wrap;overflow:hidden">'+esc(t)+'</div>';
+  }
+  // 사진 그리드 — 장수별 열 수 자동 (전부 표시, 한 페이지 안)
+  function grid(ps,cols,ar){
+    if(!ps.length)return '';
+    var F='filter:sepia(.06) saturate(.95);display:block;border-radius:1px;width:100%;aspect-ratio:'+(ar||'1')+';object-fit:cover';
+    return '<div style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:3px">'+ps.map(function(p){return '<img src="'+p+'" alt="" style="'+F+'"/>'}).join('')+'</div>';
+  }
+  function colsFor(nph){
+    if(nph<=1)return 1; if(nph<=2)return 2; if(nph<=4)return 2;
+    if(nph<=6)return 3; if(nph<=8)return 4; return 3;
+  }
+
+  // 에세이 조판 — 위계 차별화(제목·장소·본문), 사진 최대 3장 잘림없이, 본문 축소.
+  function page(r,idx){
+    var ps=(r.photos||[]).slice(0,3);   // 대표 최대 3장
+    var nph=ps.length;
+    var t=(r.memo||'').trim();
+    var mode=idx%3;
+    // 사진 잘림 방지: object-fit:contain + 배경, 원본 비율 보존
+    var IMGC='display:block;width:100%;object-fit:contain;background:#EAE4D2;border-radius:1px;filter:sepia(.05) saturate(.96)';
+    function title(){ // 제목 = 장소명 (간 곳 상세 위계: 14px 브라운 볼드)
+      return '<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);font-weight:bold;line-height:1.4">'+esc(r.name||r.addr||'')+'</div>';
+    }
+    function place(){ // 장소 = 지역·날짜 (9px 골드)
+      return '<div style="font-family:Georgia,serif;font-size:9px;color:var(--accent-strong);letter-spacing:.4px;margin-top:4px">'+esc(r.region||'')+(r.date?'  ·  '+esc(fd(r.date)):'')+'</div>';
+    }
+    function rule(){ return '<div style="width:20px;height:1px;background:#D6CDB4;margin:11px 0 12px"></div>'; }
+    function diary(){ // 본문 = 축소(9.5px) 브라운 일반
+      if(!t)return '';
+      return '<div style="font-family:Georgia,serif;font-size:9.5px;color:var(--brown);line-height:2;white-space:pre-wrap;letter-spacing:.2px">'+esc(t)+'</div>';
+    }
+    function photoBlock(maxH){
+      if(!nph)return '';
+      var mh=maxH||150;
+      if(nph===1)return '<img src="'+ps[0]+'" alt="" style="'+IMGC+';max-height:'+mh+'px"/>';
+      if(nph===2)return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">'+ps.map(function(x){return '<img src="'+x+'" alt="" style="'+IMGC+';max-height:'+mh+'px"/>'}).join('')+'</div>';
+      // 3장: 위 1장 + 아래 2장
+      return '<img src="'+ps[0]+'" alt="" style="'+IMGC+';max-height:'+Math.round(mh*0.75)+'px;margin-bottom:5px"/>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">'+ps.slice(1).map(function(x){return '<img src="'+x+'" alt="" style="'+IMGC+';max-height:'+Math.round(mh*0.62)+'px"/>'}).join('')+'</div>';
+    }
+    var inner;
+    if(mode===0){ // 글 위 · 사진 아래
+      inner=title()+place()+rule()+'<div style="margin-bottom:auto">'+diary()+'</div>'+(nph?'<div style="margin-top:14px">'+photoBlock(150)+'</div>':'');
+    } else if(mode===1){ // 사진 위 · 글 아래
+      inner=(nph?'<div style="margin-bottom:14px">'+photoBlock(160)+'</div>':'')+title()+place()+rule()+diary();
+    } else { // 글 중심 · 사진 하단 띠
+      inner=title()+place()+rule()+diary()+(nph?'<div style="margin-top:14px">'+photoBlock(130)+'</div>':'');
+    }
+    return '<div class="hj-inner" style="justify-content:flex-start;padding-top:7%">'+inner+'</div><div class="hj-folio">'+(idx+1)+'</div>';
+  }
+
+  var pages=[];
+  // 표지 — 흰 바탕 + 라인 일러스트(지도 핀에서 길이 뻗어나가는 형태) + 명조 제목. 음영 없음.
+  var owner=(window.profile&&profile.name)?profile.name:'';
+  var illust='<svg viewBox="0 0 120 120" width="76" height="76" fill="none" stroke="#C96342" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+    +'<path d="M20 96 C40 96 34 60 56 60 C74 60 70 40 88 40" stroke="#C9A961" stroke-width="1.3" stroke-dasharray="1 5"/>'
+    +'<path d="M88 22 c-9 0-16 7-16 16 0 12 16 24 16 24 s16-12 16-24 c0-9-7-16-16-16z"/>'
+    +'<circle cx="88" cy="38" r="5.5" fill="#fff"/>'
+    +'<circle cx="20" cy="96" r="3" fill="#C96342" stroke="none"/>'
+    +'</svg>';
+  pages.push('<div class="hj-inner hj-cover" style="display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:13% 0 12%">'
+    +''
+    +'<div style="display:flex;flex-direction:column;align-items:center;gap:20px">'
+    +illust
+    +'<div style="font-family:Georgia,serif;font-size:21px;color:var(--brown);line-height:1.6;letter-spacing:1px">그해에<br/>그곳에 나</div>'
+    +'</div>'
+    +'<div style="font-family:Georgia,serif;font-size:10px;color:#9C8F76;letter-spacing:.5px">'+(owner?esc(owner)+'의 흔적':'흔적')+'</div>'
+    +'</div><div class="hj-folio">넘겨보세요</div>');
+  // 기억 페이지
+  if(mem.length){ mem.forEach(function(r,i){pages.push(page(r,i))}); }
+  else { pages.push('<div class="hj-inner" style="display:flex;align-items:center;justify-content:center;text-align:center;font-family:Georgia,serif;font-size:11px;color:var(--text-tertiary);line-height:2">간 곳을 기록하면<br/>이곳에 첫 페이지가<br/>조판됩니다</div><div class="hj-folio"></div>'); }
+  // 마지막 — 형광펜
+  pages.push('<div class="hj-inner" style="display:flex;align-items:center;justify-content:center;text-align:center">'
+    +'<div style="font-family:Georgia,serif;font-size:11px;color:var(--brown);line-height:2.3"><span class="hj-mark">일정량의 기억들이 쌓이면 그 흔적들을<br/>한 권의 책으로 묶을 수 있습니다.</span><br/><br/><span class="hj-mark">"흔적" 서비스는 준비 중입니다.</span></div>'
+    +'</div><div style="position:absolute;right:14px;bottom:12px"><button id="hjToCover" style="background:none;border:1px solid #C9A961;color:#9C7E3C;font-family:Georgia,serif;font-size:10px;padding:5px 10px;border-radius:var(--r-full);cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg>표지로</button></div>');
+
+  var bookHtml='<div class="hj-book" id="hjBook"><div class="hj-edge"></div>';
+  for(var i=pages.length-1;i>=0;i--){bookHtml+='<div class="hj-page" data-p="'+i+'" style="z-index:'+(pages.length-i)+'">'+pages[i]+'</div>';}
+  bookHtml+='</div><div class="hj-nav"><button id="hjPrev" aria-label="이전 장">\u2039</button><span class="hj-count" id="hjCnt"></span><button id="hjNext" aria-label="다음 장">\u203a</button></div>';
+
+  // 상단: 안내 문구(책 위로 이동) + 통계(간 곳/사진만)
   body.innerHTML=
-    '<div style="text-align:center;padding:6px 0 18px">'
-    +'<div style="font-family:Georgia,serif;font-size:13px;color:var(--terra);letter-spacing:.5px;margin-bottom:6px">'+s.year+'년의 흔적</div>'
-    +'<div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);line-height:1.8">지금까지 <b style="color:var(--terra)">'+s.n+'</b>개의 기억이<br/>한 권의 책이 되어가고 있습니다</div>'
+    '<div style="text-align:center;padding:2px 0 12px">'
+    +'<div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);line-height:1.7">지금까지 <b style="color:var(--terra)">'+st.n+'</b>개의 기억이<br/>한 권의 책이 되어가고 있습니다</div>'
     +'</div>'
-    +'<div style="display:flex;gap:10px;margin-bottom:20px">'
-    +'<div class="stat" style="flex:1"><div class="num" style="font-size:20px">'+s.n+'</div><div class="lbl">기억</div></div>'
-    +'<div class="stat" style="flex:1"><div class="num" style="font-size:20px">'+s.photos+'</div><div class="lbl">사진</div></div>'
-    +'<div class="stat" style="flex:1"><div class="num" style="font-size:20px">'+s.places+'</div><div class="lbl">다녀온 곳</div></div>'
+    +'<div style="display:flex;gap:8px;margin-bottom:14px;justify-content:center">'
+    +'<div class="stat" style="flex:0 0 96px;padding:8px 6px"><div class="num" style="font-size:15px">'+st.n+'</div><div class="lbl" style="font-size:10px">간 곳</div></div>'
+    +'<div class="stat" style="flex:0 0 96px;padding:8px 6px"><div class="num" style="font-size:15px">'+st.photos+'</div><div class="lbl" style="font-size:10px">사진</div></div>'
     +'</div>'
-    +'<div style="background:#F7F1E3;border-left:3px solid #C9A961;padding:14px 14px;border-radius:6px;font-family:Georgia,serif;font-size:12px;color:var(--brown);line-height:1.9">'
-    +'기록은 편지, 건넴은 선물,<br/>이 지도는 언젠가 한 권의 흔적이 됩니다.'
-    +'</div>'
-    +'<div style="margin-top:16px;font-size:11px;color:var(--text-tertiary);font-family:Georgia,serif;line-height:1.8;text-align:center">'
-    +'한 해가 저물면 이 기억들을 한 권으로 묶어드립니다.<br/>흔적은 준비 중입니다.'
-    +'</div>';
+    +'<div style="font-size:13px;color:var(--brown);font-family:Georgia,serif;text-align:center;margin-bottom:12px">흔적 미리 보기</div>'
+    +bookHtml;
+
+  var cur=0,total=pages.length;
+  function sync(){
+    body.querySelectorAll('.hj-page').forEach(function(el){
+      var wasT=el.classList.contains('turned');var isT=(+el.getAttribute('data-p'))<cur;
+      if(wasT!==isT){el.classList.add('hj-flip');setTimeout(function(){el.classList.remove('hj-flip')},720);}
+      el.classList.toggle('turned',isT);
+    });
+    document.getElementById('hjCnt').textContent=(cur+1)+' / '+total;
+    document.getElementById('hjPrev').disabled=(cur===0);
+    document.getElementById('hjNext').disabled=(cur>=total-1);
+  }
+  function hjSound(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;var ctx=window._hjAudio||(window._hjAudio=new C());var t=ctx.currentTime;
+    var buf=ctx.createBuffer(1,ctx.sampleRate*0.16,ctx.sampleRate),d=buf.getChannelData(0);
+    for(var i=0;i<d.length;i++){var e=1-i/d.length;d[i]=(Math.random()*2-1)*e*e*0.5}
+    var src=ctx.createBufferSource();src.buffer=buf;
+    var bp=ctx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2600;bp.Q.value=0.7;
+    var g=ctx.createGain();g.gain.setValueAtTime(0.09,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.16);
+    src.connect(bp);bp.connect(g);g.connect(ctx.destination);src.start(t)}catch(e){}}
+  function go(n){if(n<0||n>=total)return;cur=n;hjSound();sync()}
+  document.getElementById('hjNext').onclick=function(e){e.stopPropagation();go(cur+1)};
+  document.getElementById('hjPrev').onclick=function(e){e.stopPropagation();go(cur-1)};
+  body.querySelectorAll('.hj-page').forEach(function(el){el.addEventListener('click',function(){if((+el.getAttribute('data-p'))===cur)go(cur+1)})});
+  var sx=0,sy=0,sw=false,bk=document.getElementById('hjBook');
+  bk.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;sw=true},{passive:true});
+  bk.addEventListener('touchend',function(e){if(!sw)return;sw=false;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)*1.4)go(dx<0?cur+1:cur-1)},{passive:true});
+  var toCover=document.getElementById('hjToCover');
+  if(toCover)toCover.onclick=function(e){e.stopPropagation();go(0)};
+  sync();
   m.classList.add('on');
 }
 
@@ -4821,7 +4965,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.84</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.1.97</div>'
   }
 };
 
