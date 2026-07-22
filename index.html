@@ -737,7 +737,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#C9A961;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-family:Georgia,serif;font-size:15px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openHeunjeok()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)">흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">간 곳 0곳 · 사진 0장</span></div><button onclick="event.stopPropagation();openCoverPhotos()" style="flex-shrink:0;background:none;border:1px solid var(--beige);color:#9C7E3C;font-family:Georgia,serif;font-size:10px;padding:5px 10px;border-radius:var(--r-full);cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-2-2-4 4"/></svg>대표사진</button></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">트라이브 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Tribe</span></div><div class="grp-item" onclick="openFriendsList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.5 14.6c2.7.1 5 2.2 5 5.4"/></svg>내 사람들</span><span style="display:flex;align-items:center;gap:6px"><span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openInvite()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>내 사람 초대</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">레코드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Records</span></div><div class="grp-item" onclick="openSentShares()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>건넨 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openReceivedList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></svg>들인 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">가이드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Guide</span></div><div class="grp-item" onclick="openGuideModal()" id="guideItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div><div class="grp-item" onclick="openSettings()" id="settingsItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>개인 설정</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-top:12px;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.3.4</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-family:Georgia,serif;font-size:15px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openHeunjeok()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)">흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">간 곳 0곳 · 사진 0장</span></div><button onclick="event.stopPropagation();openCoverPhotos()" style="flex-shrink:0;background:none;border:1px solid var(--beige);color:#9C7E3C;font-family:Georgia,serif;font-size:10px;padding:5px 10px;border-radius:var(--r-full);cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-4 4-2-2-4 4"/></svg>대표사진</button></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">트라이브 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Tribe</span></div><div class="grp-item" onclick="openFriendsList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.5 14.6c2.7.1 5 2.2 5 5.4"/></svg>내 사람들</span><span style="display:flex;align-items:center;gap:6px"><span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openInvite()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>내 사람 초대</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">레코드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Records</span></div><div class="grp-item" onclick="openSentShares()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>건넨 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openReceivedList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></svg>들인 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">가이드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Guide</span></div><div class="grp-item" onclick="openGuideModal()" id="guideItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div><div class="grp-item" onclick="openSettings()" id="settingsItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>개인 설정</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-top:12px;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.3.9</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -809,7 +809,7 @@ textarea#memo{min-height:70px;resize:none}
   <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">계정 관리</div>
   <div class="menu-card" style="margin-bottom:18px">
     <div class="item" id="menuPasswordChange" onclick="document.getElementById('settingsModal').classList.remove('on');openPasswordChangeModal()">비밀번호 변경<span class="arrow">›</span></div>
-    <div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doLogout()">로그아웃<span class="arrow">›</span></div>
+    <div class="item" onclick="openLockSetting()">앱 잠금<span style="display:flex;align-items:center;gap:6px"><span id="lockStateTxt" style="font-size:11px;color:var(--text-tertiary)"></span><span class="arrow">›</span></span></div><div class="item" onclick="document.getElementById('settingsModal').classList.remove('on');doLogout()">로그아웃<span class="arrow">›</span></div>
   </div>
   <div style="font-size:11px;color:var(--terra);margin-bottom:8px;font-family:Georgia,serif">약관 및 정책</div>
   <div class="menu-card">
@@ -826,6 +826,23 @@ textarea#memo{min-height:70px;resize:none}
     <span onclick="document.getElementById('settingsModal').classList.remove('on');doWithdraw()" style="font-size:11px;color:var(--text-tertiary);cursor:pointer;text-decoration:underline;text-underline-offset:3px">회원 탈퇴</span>
   </div>
 </div></div>
+<!-- 앱 잠금 설정 모달 (v2.3.9) -->
+<div class="modal" id="lockSettingModal"><div class="modal-inner" style="max-width:400px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <h3 style="font-family:Georgia,serif;margin:0;font-size:15px">앱 잠금</h3>
+    <button aria-label="닫기" onclick="document.getElementById('lockSettingModal').classList.remove('on')" style="background:none;border:none;font-size:22px;color:var(--text-tertiary);cursor:pointer;padding:11px;margin:-11px;line-height:1">×</button>
+  </div>
+  <div style="font-size:11px;color:var(--text-tertiary);font-family:Georgia,serif;line-height:1.8;margin-bottom:14px">앱을 열 때 PIN을 확인합니다.<br/>기기를 잠시 두고 자리를 비워도 기억은 지켜집니다.</div>
+  <div id="lockSetBody"></div>
+</div></div>
+<!-- 앱 잠금 화면 (v2.3.9) -->
+<div id="appLock" style="display:none;position:fixed;inset:0;z-index:9000;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;padding:24px">
+  <div style="font-family:Georgia,serif;font-size:20px;color:var(--brown);margin-bottom:6px">너나들이</div>
+  <div id="lockMsg" style="font-family:Georgia,serif;font-size:12px;color:var(--text-tertiary);margin-bottom:26px">PIN을 입력해주세요</div>
+  <div id="lockDots" style="display:flex;gap:12px;margin-bottom:28px"></div>
+  <div id="lockPad" style="display:grid;grid-template-columns:repeat(3,68px);gap:14px;justify-content:center"></div>
+  <button id="lockBio" onclick="lockBioAuth()" style="display:none;margin-top:22px;background:none;border:1px solid var(--beige);color:var(--terra);font-family:Georgia,serif;font-size:12px;padding:9px 16px;border-radius:999px;cursor:pointer">Face ID로 열기</button>
+</div>
 <!-- 대표사진 관리 모달 (v2.2.2) — 표지1 + 계절4 + 마지막1 -->
 <div class="modal" id="coverPhotoModal"><div class="modal-inner" style="max-width:420px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -867,7 +884,7 @@ textarea#memo{min-height:70px;resize:none}
 <div class="modal" id="newPasswordModal"><div class="modal-inner" style="max-width:380px">
   <h3 style="font-family:Georgia,serif;margin:0 0 8px 0">새 비밀번호 설정</h3>
   <div style="font-size:12px;color:var(--brown);line-height:1.6;margin-bottom:14px">새로 사용하실 비밀번호를 입력해주세요.</div>
-  <input id="newPwd1" type="password" placeholder="새 비밀번호 (6자 이상)" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:8px"/>
+  <input id="newPwd1" type="password" placeholder="새 비밀번호 (8자 이상, 영문+숫자)" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:8px"/>
   <input id="newPwd2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px"/>
   <button onclick="confirmNewPassword()" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer">변경 완료</button>
 </div></div>
@@ -879,7 +896,7 @@ textarea#memo{min-height:70px;resize:none}
   </div>
   <div style="font-size:12px;color:var(--brown);line-height:1.6;margin-bottom:14px">본인 확인을 위해 현재 비밀번호를 입력해주세요.</div>
   <input id="chgPwdCur" type="password" placeholder="현재 비밀번호" autocomplete="current-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px"/>
-  <input id="chgPwd1" type="password" placeholder="새 비밀번호 (6자 이상)" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:8px"/>
+  <input id="chgPwd1" type="password" placeholder="새 비밀번호 (8자 이상, 영문+숫자)" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:8px"/>
   <input id="chgPwd2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:13px;outline:none;background:#fff;color:var(--brown);margin-bottom:14px"/>
   <button onclick="confirmPasswordChange()" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer;margin-bottom:8px">변경 완료</button>
   <button onclick="document.getElementById('passwordChangeModal').classList.remove('on')" style="width:100%;padding:10px;background:transparent;border:none;color:#8B7D6B;font-family:Georgia,serif;font-size:12px;cursor:pointer">취소</button>
@@ -1197,7 +1214,7 @@ textarea#memo{min-height:70px;resize:none}
       <div id="emailSuggestions" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid var(--beige);border-radius:8px;box-shadow:0 4px 12px rgba(61,57,41,.08);max-height:180px;overflow-y:auto;z-index:10"></div>
     </div>
     <label style="font-size:11px;color:var(--terra);display:block;margin-bottom:4px">비밀번호</label>
-    <input id="authPassword" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="current-password" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('authSubmitBtn').click()}" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:10px"/>
+    <input id="authPassword" type="password" placeholder="비밀번호 (8자 이상, 영문+숫자)" autocomplete="current-password" onkeydown="if(event.key==='Enter'){event.preventDefault();document.getElementById('authSubmitBtn').click()}" style="width:100%;padding:11px;border:1px solid var(--beige);border-radius:8px;font-size:14px;outline:none;margin-bottom:10px"/>
     <label style="display:flex;align-items:center;gap:6px;margin-bottom:14px;cursor:pointer;font-size:12px;color:#8B7D6B">
       <input type="checkbox" id="authRememberEmail" style="width:14px;height:14px;cursor:pointer;accent-color:var(--vermillion)"/>
       <span>이메일 저장</span>
@@ -1876,6 +1893,44 @@ function titleHTML(title,size){
 }
 
 
+/* v2.3.9 — 비밀번호 정책: 8자 이상, 영문+숫자 필수 */
+function pwCheck(pw){
+  pw=String(pw||'');
+  if(pw.length<8)return '비밀번호는 8자 이상이어야 합니다';
+  if(!/[A-Za-z]/.test(pw))return '영문을 포함해야 합니다';
+  if(!/[0-9]/.test(pw))return '숫자를 포함해야 합니다';
+  return '';
+}
+function pwStrength(pw){
+  pw=String(pw||'');
+  if(!pw)return {lv:0,txt:'',color:'#8B7D6B',pct:0};
+  var sc=0;
+  if(pw.length>=8)sc++;
+  if(pw.length>=12)sc++;
+  if(/[A-Za-z]/.test(pw)&&/[0-9]/.test(pw))sc++;
+  if(/[^A-Za-z0-9]/.test(pw))sc++;
+  if(/^(.)\1+$/.test(pw)||/^(012|123|234|345|456|567|678|789|abc|qwe)/i.test(pw))sc=Math.min(sc,1);
+  if(sc<=1)return {lv:1,txt:'약함',color:'#E63946',pct:33};
+  if(sc===2)return {lv:2,txt:'보통',color:'#C9A961',pct:66};
+  return {lv:3,txt:'강함',color:'#5B9C6E',pct:100};
+}
+function bindPwMeter(inputId){
+  var el=document.getElementById(inputId);if(!el||el._pwBound)return;el._pwBound=1;
+  var box=document.createElement('div');
+  box.style.cssText='margin-top:6px;display:none';
+  box.innerHTML='<div style="height:3px;background:var(--beige);border-radius:999px;overflow:hidden"><div class="pwbar" style="height:100%;width:0;background:#E63946;transition:width .25s,background .25s"></div></div><div class="pwtxt" style="font-size:10px;color:#8B7D6B;margin-top:4px;font-family:Georgia,serif"></div>';
+  el.parentNode.insertBefore(box, el.nextSibling);
+  el.addEventListener('input',function(){
+    var st=pwStrength(el.value);
+    if(!el.value){box.style.display='none';return}
+    box.style.display='block';
+    box.querySelector('.pwbar').style.width=st.pct+'%';
+    box.querySelector('.pwbar').style.background=st.color;
+    var msg=pwCheck(el.value);
+    box.querySelector('.pwtxt').textContent=msg?msg:('안전도 '+st.txt);
+    box.querySelector('.pwtxt').style.color=msg?'#E63946':st.color;
+  });
+}
 function toast(m){const t=document.getElementById('toastBox');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3200)}
 
 // v2.1.70 — 가이드북 닫기 + 코치마크 트리거 (신규 사용자 1회)
@@ -2183,7 +2238,7 @@ function plotRecord(r){
     if(r.cat==='받은 곳'){openGiftDetail(r);return}
     const isGo=r.cat==='간 곳';
     const photos3=isGo&&r.photos?r.photos.filter(p=>p).slice(0,3):[];
-    const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929;flex:1;min-width:0">${r.name}</div>${(r.cat==='간 곳'&&r.weather&&r.weather.emoji)?`<span style="flex-shrink:0;margin-left:6px;font-size:13px;line-height:1" title="${r.weather.label||''}">${r.weather.emoji}</span>`:''}</div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:`<div style="font-size:11px;color:#A99A82;opacity:.5;margin-bottom:3px">[ — 제목 없음 — ]</div>`}<div style="font-size:10px;color:#C96342;margin-bottom:${photos3.length?8:8}px">${r.region||''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0;filter:sepia(.06) saturate(.95)"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;
+    const content=`<div style="padding:12px;font-family:Helvetica,sans-serif;width:220px"><div style="margin-bottom:2px;padding-right:22px"><div style="font-family:Georgia,serif;font-size:13px;color:#3D3929">${r.name}</div></div>${r.title?`<div style="font-size:11px;color:#3D3929;opacity:.7;margin-bottom:3px">[${r.title}]</div>`:`<div style="font-size:11px;color:#A99A82;opacity:.5;margin-bottom:3px">[ — 제목 없음 — ]</div>`}<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:8px"><div style="font-size:10px;color:#C96342;flex:1;min-width:0">${r.region||''}</div>${(r.cat==='간 곳'&&r.weather&&r.weather.emoji)?`<span style="flex-shrink:0;font-size:14px;line-height:1" title="${r.weather.label||''}">${r.weather.emoji}</span>`:''}</div>${photos3.length?`<div style="display:flex;gap:4px;margin-bottom:10px">${photos3.map(p=>`<img src="${p}" style="flex:1;aspect-ratio:1;object-fit:cover;border-radius:4px;min-width:0;filter:sepia(.06) saturate(.95)"/>`).join('')}</div>`:''}<button onclick="closeIW();jumpToList(${records.indexOf(r)})" style="width:100%;padding:7px;background:#D97757;color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:11px;cursor:pointer">리스트에서 보기</button></div>`;
     const iw=new kakao.maps.InfoWindow({content,removable:true});
     closeIW();iw.open(map,mk);_curIW=iw;
   });
@@ -2465,8 +2520,10 @@ function openGiftDetail(r){
   html+='<div style="font-size:11px;color:#9C7E3C;font-family:Georgia,serif;font-weight:bold">'+(r.giftedFromName||'내 사람')+'님이 건넨 기억</div>';
   html+='</div>';
   if(photos.length){
+    // 간 곳과 동일하게 탭하면 라이트박스로 확대 (v2.3.7)
+    window._lbPhotos=photos.slice();
     html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px">';
-    html+=photos.map(function(p){return '<img src="'+p+'" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;filter:sepia(.06) saturate(.95)"/>'}).join('');
+    html+=photos.map(function(p,i){return '<img src="'+p+'" onclick="openLightbox('+i+')" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;filter:sepia(.06) saturate(.95);cursor:pointer"/>'}).join('');
     html+='</div>';
   }
   html+='<div style="font-family:Georgia,serif;font-size:16px;color:var(--brown);margin-bottom:4px">'+r.name+'</div>';
@@ -4248,7 +4305,7 @@ async function confirmNewPassword(){
   var p1=document.getElementById('newPwd1').value;
   var p2=document.getElementById('newPwd2').value;
   if(!p1||!p2){toast('비밀번호를 입력해주세요');return}
-  if(p1.length<6){toast('비밀번호는 6자 이상이어야 합니다');return}
+  var _e=pwCheck(p1);if(_e){toast(_e);return}
   if(p1!==p2){toast('두 비밀번호가 일치하지 않습니다');return}
   try{
     var res=await sb.auth.updateUser({password:p1});
@@ -4298,7 +4355,7 @@ async function confirmPasswordChange(){
   var p2=document.getElementById('chgPwd2').value;
   if(!cur){toast('현재 비밀번호를 입력해주세요');return}
   if(!p1||!p2){toast('새 비밀번호를 입력해주세요');return}
-  if(p1.length<6){toast('새 비밀번호는 6자 이상이어야 합니다');return}
+  var _e=pwCheck(p1);if(_e){toast(_e);return}
   if(p1!==p2){toast('새 비밀번호가 일치하지 않습니다');return}
   if(cur===p1){toast('현재 비밀번호와 동일합니다');return}
   try{
@@ -4964,7 +5021,7 @@ async function doSignup(){
   var email=document.getElementById('authEmail').value.trim();
   var pw=document.getElementById('authPassword').value;
   if(!email||!pw){showAuthError('이메일과 비밀번호를 입력해주세요');return}
-  if(pw.length<6){showAuthError('비밀번호는 6자 이상이어야 합니다');return}
+  var _e=pwCheck(pw);if(_e){showAuthError(_e);return}
   // 약관 동의 팝업 표시
   _pendingSignupContext={type:'email',email:email,password:pw};
   openTermsAgreement();
@@ -5245,7 +5302,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.3.4</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.3.9</div>'
   }
 };
 
@@ -5879,6 +5936,232 @@ setTimeout(initAuth,100);
     }catch(e){
       document.getElementById('onboardingOverlay').style.display = 'flex';
     }
+  });
+})();
+
+function openLockSetting(){
+  var m=document.getElementById('lockSettingModal'), b=document.getElementById('lockSetBody');
+  if(!m||!b)return;
+  renderLockSet(); m.classList.add('on');
+}
+function renderLockSet(){
+  var b=document.getElementById('lockSetBody');if(!b)return;
+  var on=window.lockEnabled&&window.lockEnabled();
+  if(!on){
+    b.innerHTML='<div style="font-size:11px;color:var(--terra);font-family:Georgia,serif;margin-bottom:6px">PIN 설정 (숫자 4~6자리)</div>'
+      +'<input id="lockPin1" type="password" inputmode="numeric" maxlength="6" placeholder="PIN 입력" class="form-input" style="margin-bottom:8px"/>'
+      +'<input id="lockPin2" type="password" inputmode="numeric" maxlength="6" placeholder="PIN 확인" class="form-input" style="margin-bottom:14px"/>'
+      +'<button class="btn-primary" style="width:100%;padding:12px;background:var(--vermillion);color:#fff;border:none;border-radius:8px;font-family:Georgia,serif;font-size:14px;cursor:pointer" onclick="saveLockPin()">앱 잠금 켜기</button>';
+  }else{
+    var bio=window.lockBioOn&&window.lockBioOn();
+    b.innerHTML='<div style="background:#fff;border:1px solid var(--beige);border-radius:8px;padding:14px;margin-bottom:12px">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center">'
+      +'<div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown)">Face ID / 지문</div>'
+      +'<div style="font-size:10px;color:var(--text-tertiary);margin-top:3px">'+(bio?'사용 중':'PIN 대신 빠르게 열 수 있습니다')+'</div></div>'
+      +'<button onclick="'+(bio?'turnBioOff()':'turnBioOn()')+'" style="background:none;border:1px solid var(--beige);color:'+(bio?'var(--text-tertiary)':'var(--terra)')+';font-family:Georgia,serif;font-size:11px;padding:7px 12px;border-radius:999px;cursor:pointer">'+(bio?'해제':'등록')+'</button>'
+      +'</div></div>'
+      +'<button style="width:100%;padding:12px;background:none;border:1px solid var(--beige);border-radius:8px;font-family:Georgia,serif;font-size:13px;color:var(--text-tertiary);cursor:pointer" onclick="turnLockOff()">앱 잠금 끄기</button>';
+  }
+}
+async function saveLockPin(){
+  var a=(document.getElementById('lockPin1')||{}).value||'';
+  var c=(document.getElementById('lockPin2')||{}).value||'';
+  if(!/^[0-9]{4,6}$/.test(a)){toast('PIN은 숫자 4~6자리입니다');return}
+  if(a!==c){toast('PIN이 일치하지 않습니다');return}
+  var ok=await window.lockSetPin(a);
+  if(ok){toast('앱 잠금이 켜졌습니다');renderLockSet();updateLockStateTxt();}
+}
+async function turnBioOn(){
+  var ok=await window.lockBioRegister();
+  toast(ok?'Face ID가 등록되었습니다':'이 기기에서는 사용할 수 없습니다');
+  renderLockSet();
+}
+function turnBioOff(){ window.lockBioOff(); toast('Face ID를 해제했습니다'); renderLockSet(); }
+function turnLockOff(){ window.lockDisable(); toast('앱 잠금을 껐습니다'); renderLockSet(); updateLockStateTxt(); }
+function updateLockStateTxt(){
+  var el=document.getElementById('lockStateTxt');
+  if(el)el.textContent=(window.lockEnabled&&window.lockEnabled())?'켜짐':'꺼짐';
+}
+document.addEventListener('DOMContentLoaded',function(){setTimeout(updateLockStateTxt,300)});
+
+/* v2.3.9 — PIN 앱 잠금 + Face ID(생체 인증) */
+(function(){
+  var K_PIN='nnd_lock_pin', K_ON='nnd_lock_on', K_BIO='nnd_lock_bio', K_CRED='nnd_lock_cred', K_BG='nnd_lock_bgAt';
+  var buf='', unlocked=false;
+  function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function rm(k){try{localStorage.removeItem(k)}catch(e){}}
+  async function sha(t){
+    try{
+      var d=new TextEncoder().encode('nnd:'+t);
+      var h=await crypto.subtle.digest('SHA-256',d);
+      return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+    }catch(e){ return 'p:'+t; }
+  }
+  window.lockEnabled=function(){return g(K_ON)==='1'&&!!g(K_PIN)};
+  function dots(){
+    var el=document.getElementById('lockDots');if(!el)return;
+    var h='';for(var i=0;i<6;i++){h+='<span style="width:9px;height:9px;border-radius:50%;background:'+(i<buf.length?'var(--terra)':'var(--beige)')+'"></span>';}
+    el.innerHTML=h;
+  }
+  function pad(){
+    var el=document.getElementById('lockPad');if(!el||el._built)return;el._built=1;
+    var keys=['1','2','3','4','5','6','7','8','9','','0','←'];
+    el.innerHTML=keys.map(function(k){
+      if(!k)return '<div></div>';
+      return '<button data-k="'+k+'" style="width:68px;height:56px;border:none;background:#fff;border-radius:10px;font-family:Georgia,serif;font-size:19px;color:var(--brown);cursor:pointer;box-shadow:var(--shadow-warm)">'+k+'</button>';
+    }).join('');
+    el.addEventListener('click',function(e){
+      var b=e.target.closest('button[data-k]');if(!b)return;
+      var k=b.getAttribute('data-k');
+      if(k==='←'){buf=buf.slice(0,-1);dots();return}
+      if(buf.length>=6)return;
+      buf+=k;dots();
+      if(buf.length>=4)verify();
+    });
+  }
+  async function verify(){
+    var want=g(K_PIN); if(!want)return;
+    var got=await sha(buf);
+    if(got===want){ hideLock(); }
+    else if(buf.length>=6){
+      var m=document.getElementById('lockMsg');
+      if(m){m.textContent='PIN이 일치하지 않습니다';m.style.color='#E63946';}
+      buf='';dots();
+      setTimeout(function(){if(m){m.textContent='PIN을 입력해주세요';m.style.color='';}},1600);
+    }
+  }
+  function showLock(){
+    if(!window.lockEnabled())return;
+    var el=document.getElementById('appLock');if(!el)return;
+    buf='';unlocked=false;pad();dots();
+    el.style.display='flex';
+    var bio=document.getElementById('lockBio');
+    if(bio)bio.style.display=(g(K_BIO)==='1'&&g(K_CRED))?'block':'none';
+    if(g(K_BIO)==='1'&&g(K_CRED))setTimeout(function(){lockBioAuth()},350);
+  }
+  function hideLock(){
+    unlocked=true;buf='';
+    var el=document.getElementById('appLock');if(el)el.style.display='none';
+  }
+  window.lockShow=showLock;
+  // 생체 인증 (WebAuthn 플랫폼 인증기)
+  window.lockBioAuth=async function(){
+    var id=g(K_CRED); if(!id)return;
+    try{
+      var raw=Uint8Array.from(atob(id),function(c){return c.charCodeAt(0)});
+      await navigator.credentials.get({publicKey:{
+        challenge:crypto.getRandomValues(new Uint8Array(32)),
+        allowCredentials:[{type:'public-key',id:raw}],
+        userVerification:'required', timeout:60000
+      }});
+      hideLock();
+    }catch(e){ /* 실패 시 PIN 입력 유지 */ }
+  };
+  window.lockBioRegister=async function(){
+    try{
+      var uid=crypto.getRandomValues(new Uint8Array(16));
+      var cred=await navigator.credentials.create({publicKey:{
+        challenge:crypto.getRandomValues(new Uint8Array(32)),
+        rp:{name:'너나들이'},
+        user:{id:uid,name:(typeof profile!=='undefined'&&profile.email)||'user',displayName:'너나들이'},
+        pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+        authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required'},
+        timeout:60000, attestation:'none'
+      }});
+      var idb=new Uint8Array(cred.rawId);
+      sv(K_CRED, btoa(String.fromCharCode.apply(null,idb)));
+      sv(K_BIO,'1');
+      return true;
+    }catch(e){ return false; }
+  };
+  window.lockSetPin=async function(pin){
+    if(!/^[0-9]{4,6}$/.test(pin))return false;
+    sv(K_PIN, await sha(pin)); sv(K_ON,'1'); return true;
+  };
+  window.lockDisable=function(){ rm(K_PIN);rm(K_ON);rm(K_BIO);rm(K_CRED); };
+  window.lockBioOn=function(){return g(K_BIO)==='1'&&!!g(K_CRED)};
+  window.lockBioOff=function(){rm(K_BIO);rm(K_CRED)};
+  // 앱 진입 / 복귀 시 잠금
+  document.addEventListener('DOMContentLoaded',function(){ setTimeout(showLock,80); });
+  setTimeout(function(){ if(!unlocked)showLock(); },400);
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){ sv(K_BG,String(Date.now())); }
+    else {
+      var t=parseInt(g(K_BG)||'0',10);
+      if(t&&Date.now()-t>60000)showLock();   // 1분 이상 백그라운드면 재잠금
+    }
+  });
+})();
+
+/* 비밀번호 강도 표시 연결 */
+(function(){
+  function bindAll(){ ['authPassword','newPwd1','chgPwd1'].forEach(function(id){try{bindPwMeter(id)}catch(e){}}); }
+  document.addEventListener('DOMContentLoaded',bindAll);
+  setTimeout(bindAll,600);
+  document.addEventListener('click',function(){setTimeout(bindAll,220)},true);
+})();
+
+/* v2.3.8 — 안드로이드 뒤로가기 (표준 동작)
+   1) 모달·시트·사진확대가 열려 있으면 그것부터 닫는다
+   2) 지도 탭이 아니면 이전 탭(없으면 지도)으로 돌아간다
+   3) 지도 탭에서 아무것도 없으면 "한 번 더 누르면 종료" 안내 후, 2초 내 재입력 시 종료 */
+(function(){
+  var tabHist=[];      // 방문한 탭 순서
+  var lastBackAt=0;
+  function buf(){ try{history.pushState({nnd:1},'')}catch(e){} }
+  function overlays(){
+    var list=[];
+    var q=document.querySelectorAll('.modal.on, .sheet.on');
+    for(var i=0;i<q.length;i++)list.push(q[i]);
+    var lb=document.getElementById('photoLightbox');
+    if(lb&&lb.style.display&&lb.style.display!=='none')list.push(lb);
+    return list;
+  }
+  function curTab(){
+    var a=document.querySelector('nav button.active');
+    return a?a.getAttribute('data-v'):'map';
+  }
+  function goTab(v){
+    var b=document.querySelector('nav button[data-v="'+v+'"]');
+    if(b)b.click();
+  }
+  // 진입 즉시 버퍼 확보 (load 이벤트를 기다리지 않음)
+  buf();
+  // 탭을 옮길 때마다 기록을 남겨 뒤로가기로 되짚을 수 있게 함
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    while(t&&t!==document.body){
+      if(t.tagName==='BUTTON'&&t.parentNode&&t.parentNode.tagName==='NAV'&&t.getAttribute('data-v')){
+        var prev=curTab(), next=t.getAttribute('data-v');
+        if(prev!==next){ tabHist.push(prev); buf(); }
+        return;
+      }
+      t=t.parentNode;
+    }
+  },true);
+
+  window.addEventListener('popstate',function(){
+    // 1) 열린 오버레이부터 닫기
+    var ovs=overlays();
+    if(ovs.length){
+      var top=ovs[ovs.length-1];
+      if(top.id==='photoLightbox')top.style.display='none';
+      else top.classList.remove('on');
+      buf(); return;
+    }
+    // 2) 이전 탭으로
+    if(tabHist.length){
+      var prev=tabHist.pop();
+      if(prev&&prev!==curTab()){ goTab(prev); buf(); return; }
+    }
+    if(curTab()!=='map'){ goTab('map'); buf(); return; }
+    // 3) 지도 탭: 두 번 눌러야 종료
+    var now=Date.now();
+    if(now-lastBackAt<2000){ return; }   // 2초 내 재입력 → 실제 종료
+    lastBackAt=now;
+    try{ if(typeof toast==='function')toast('한 번 더 누르면 종료됩니다'); }catch(e){}
+    buf();
   });
 })();
 </script><script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(e){console.warn('SW 등록 실패',e)})})}</script></body></html>
