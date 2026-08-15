@@ -737,7 +737,7 @@ textarea#memo{min-height:70px;resize:none}
 <section class="view active" id="view-map"><div id="map"></div><div class="search-wrap" id="searchWrap"><div class="search-box"><input id="search" placeholder="장소·건물·상호 검색"/></div><div class="sresults" id="sresults"></div></div><div id="shareBar" style="display:none;position:absolute;top:0;left:0;right:0;background:#C9A961;color:#3D3929;padding:14px 16px;z-index:600;font-family:Georgia,serif;font-size:13px;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(61,57,41,.18)"><span style="font-size:16px;color:#3D3929;opacity:.7">★</span><span id="shareBarText" style="flex:1">건넬 기억 선택 (0개)</span><button id="shareNextBtn" onclick="openShareReceiverModal()" disabled style="padding:7px 14px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-family:Georgia,serif;font-size:12px;cursor:pointer;opacity:.5">다음</button><button onclick="exitShareMode()" aria-label="취소" style="width:30px;height:30px;background:rgba(61,57,41,.85);color:#fff;border:none;border-radius:5px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button></div><button id="locBtn" onclick="updateCurrentLocation(true)" title="현재 위치" aria-label="현재 위치로 이동" style="position:absolute;bottom:90px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/></svg></button><button id="shareBtn" onclick="enterShareMode()" title="기억 건네기" aria-label="기억 건네기 모드" style="position:absolute;bottom:148px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg></button><button id="notifBtn" onclick="openNotifModal()" title="알림" aria-label="알림" style="position:absolute;bottom:206px;right:14px;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--beige);box-shadow:0 2px 10px rgba(61,57,41,.22);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:500"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#3D3929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span id="notifBadge" style="display:none;position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;background:#E63946;color:#fff;border-radius:9px;font-size:10px;font-weight:bold;line-height:18px;text-align:center;border:1.5px solid #fff;font-family:Helvetica,sans-serif">0</span></button></section>
 <section class="view" id="view-list"><div class="list-view"><div class="tabs"><button class="on" id="tabGo" onclick="switchTab('go')">간 곳</button><button id="tabWill" onclick="switchTab('will')">갈 곳</button></div><div id="milestoneBox" style="display:none"></div><div id="goSection"><div class="cal" id="calBox"></div><div id="goCards"></div></div><div id="willSection" style="display:none"><div id="willCards"></div></div></div></section>
 <section class="view" id="view-detail"><div class="detail-view"><button class="detail-back" onclick="closeDetail()">‹ 리스트로</button><div id="detailBody"></div></div></section>
-<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-family:Georgia,serif;font-size:15px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openBookList()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)">흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">간 곳 0곳 · 사진 0장</span></div><div style="font-size:10px;color:#9C7E3C;font-family:Georgia,serif">내 흔적 보기 ›</div></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">트라이브 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Tribe</span></div><div class="grp-item" onclick="openFriendsList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.5 14.6c2.7.1 5 2.2 5 5.4"/></svg>내 사람들</span><span style="display:flex;align-items:center;gap:6px"><span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openInvite()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>내 사람 초대</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">레코드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Records</span></div><div class="grp-item" onclick="openSentShares()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>건넨 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openReceivedList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></svg>들인 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">가이드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Guide</span></div><div class="grp-item" onclick="openGuideModal()" id="guideItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div><div class="grp-item" onclick="openSettings()" id="settingsItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>개인 설정</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-top:12px;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.7.0</div></div></section>
+<section class="view" id="view-my"><div class="my-view"><div class="profile-card" id="profileCard"><div class="avatar" id="avatar" onclick="openProfileEditModal()" style="background-size:cover;background-position:center;overflow:hidden"><svg id="avatarSvg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" style="width:60%;height:60%"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div><div class="pinfo" onclick="openProfileEditModal()" style="cursor:pointer"><div id="pnameDisplay" style="font-family:Georgia,serif;font-size:18px;color:var(--brown);margin-bottom:3px;line-height:1.3;min-height:24px">이름 미설정</div><div id="pbioDisplay" style="font-family:Helvetica,sans-serif;font-size:11px;color:var(--terra);margin-bottom:3px;line-height:1.4;min-height:15px;opacity:.85"></div><div id="pemailDisplay" style="font-family:Helvetica,sans-serif;font-size:10px;color:#8B7D6B;opacity:.75"></div></div><button onclick="openProfileEditModal()" title="프로필 편집" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--beige);background:#fff;color:var(--terra);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button></div><!-- 기존 인플레이스 입력은 hidden 유지 (호환용) --><div style="display:none"><input id="pname" value=""/><textarea id="pbio"></textarea><input id="pemail"/><div id="pnameHint"></div><button id="btnEdit"></button><button id="btnSave"></button><input type="file" id="avatarInp" accept="image/*" onchange="uploadAvatar(event)"/></div><div class="stats" style="align-items:stretch"><div class="stat" style="position:relative"><div class="num" id="sAll">0</div><div class="lbl">전체</div><canvas id="donutChart" width="120" height="120" style="margin:8px auto 0;display:block"></canvas><div id="donutLegend" style="margin-top:6px;font-size:9px;display:flex;flex-direction:column;align-items:flex-start;gap:2px"></div></div><div class="stat"><div class="num" id="sGo">0</div><div class="lbl">간 곳</div></div><div class="stat"><div class="num" id="sWill">0</div><div class="lbl">갈 곳</div></div></div><div style="font-size:10px;color:#A99A82;text-align:center;margin-top:6px;margin-bottom:14px;font-family:Georgia,serif;line-height:1.5">* 공유 받은 곳은 들인 기억으로 별도 집계됩니다</div><div style="margin-bottom:18px;background:#fff;border:1px solid var(--beige);border-radius:10px;padding:16px"><div style="font-family:Georgia,serif;font-size:15px;margin-bottom:12px;color:var(--brown)">내 걸음</div><div id="miniLeaflet" style="width:100%;height:240px;border-radius:8px;background:var(--cream)"></div><div style="display:flex;gap:16px;justify-content:center;margin-top:10px;font-size:10px"><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#2C4A6E;display:inline-block"></span>간 곳</div><div style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#B5472A;display:inline-block"></span>갈 곳</div></div></div><div class="profile-card" id="heunjeokCard" onclick="openBookList()" style="cursor:pointer;margin-bottom:18px;display:block"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown)">흔적</div><span class="arrow" style="color:var(--terra)">›</span></div><div style="font-family:Georgia,serif;font-size:13px;color:var(--brown);margin-bottom:12px"><span id="hjCount" style="color:var(--terra);font-weight:bold">0</span>개의 기억이 쌓이는 중</div><div style="height:4px;border-radius:var(--r-full);background:var(--beige);overflow:hidden;margin-bottom:10px"><div id="hjBar" style="height:100%;width:0%;background:linear-gradient(90deg,#C9A961,var(--terra));border-radius:var(--r-full);transition:width .8s cubic-bezier(.4,0,.2,1)"></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif"><span id="hjSub">간 곳 0곳 · 사진 0장</span></div><div style="font-size:10px;color:#9C7E3C;font-family:Georgia,serif">내 흔적 보기 ›</div></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">트라이브 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Tribe</span></div><div class="grp-item" onclick="openFriendsList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.6 5.5-5.6s5.5 2.3 5.5 5.6"/><circle cx="17.5" cy="9" r="2.6"/><path d="M15.5 14.6c2.7.1 5 2.2 5 5.4"/></svg>내 사람들</span><span style="display:flex;align-items:center;gap:6px"><span id="friendsBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openInvite()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c0-3.3 2.5-5.7 5.5-5.7s5.5 2.4 5.5 5.7"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>내 사람 초대</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">레코드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Records</span></div><div class="grp-item" onclick="openSentShares()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>건넨 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="sentBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div><div class="grp-item" onclick="openReceivedList()"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M11 6l-6 6 6 6"/></svg>들인 기억</span><span style="display:flex;align-items:center;gap:6px"><span id="receivedBadge" class="notif-badge" style="display:none"></span><span class="arrow">›</span></span></div></div><div class="profile-card grp-card" style="display:block;margin-bottom:14px"><div style="font-family:Georgia,serif;font-size:15px;color:var(--brown);margin-bottom:12px">가이드 <span style="font-size:10px;color:var(--text-tertiary);letter-spacing:.5px">Guide</span></div><div class="grp-item" onclick="openGuideModal()" id="guideItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>너나들이 가이드북</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div><div class="grp-item" onclick="openSettings()" id="settingsItem"><span class="mi-lead" style="font-family:Georgia,serif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>개인 설정</span><span style="display:flex;align-items:center;gap:6px"><span class="arrow">›</span></span></div></div><div id="adminSection" style="display:none;margin-top:18px"><div style="font-size:10px;color:var(--terra);margin-bottom:6px;font-family:Georgia,serif;letter-spacing:.5px;padding-left:2px">운영 도구</div><div class="menu-card"><div class="item" onclick="openAdminPanel()" style="color:var(--vermillion)"><span style="display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>관리자</span><span class="arrow">›</span></div></div></div><div class="menu-card" id="loginBtnCard" style="display:none"><div class="item" onclick="document.getElementById('authModal').classList.add('on');loadRememberedEmails()" style="color:var(--vermillion);font-weight:bold">로그인 / 회원가입<span class="arrow">›</span></div></div><div id="loginStatusBar" style="text-align:center;font-size:10px;color:#8B7D6B;margin-top:12px;margin-bottom:16px;padding:6px;background:#fff;border:1px solid var(--beige);border-radius:6px"></div><div class="version" style="margin-top:16px">너나들이 v2.7.2</div></div></section>
 </main>
 <nav><button class="active" data-v="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></button><button data-v="list"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></button><button data-v="my" style="position:relative"><span id="navMyDot" style="display:none;position:absolute;top:8px;right:calc(50% - 14px);width:8px;height:8px;border-radius:50%;background:#E63946;border:1.5px solid #fff"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></button></nav>
 </div>
@@ -748,7 +748,7 @@ textarea#memo{min-height:70px;resize:none}
 <div class="photo-slots" id="photoBox"><div class="photo-slot" id="ps0" data-idx="0" onclick="onSlotClick(0)"><span>+</span></div><div class="photo-slot" id="ps1" data-idx="1" onclick="onSlotClick(1)"><span>+</span></div><div class="photo-slot" id="ps2" data-idx="2" onclick="onSlotClick(2)"><span>+</span></div><div class="photo-slot" id="ps3" data-idx="3" onclick="onSlotClick(3)"><span>+</span></div><div class="photo-slot" id="ps4" data-idx="4" onclick="onSlotClick(4)"><span>+</span></div><div class="photo-slot" id="ps5" data-idx="5" onclick="onSlotClick(5)"><span>+</span></div></div>
 <input type="file" id="photoInp" accept="image/*" multiple style="display:none" onchange="pickPhotos(event)"/>
 <input type="text" id="recTitle" class="form-input" maxlength="40" oninput="updateCharCount()" placeholder="제목"/>
-<textarea id="memo" class="form-input" maxlength="350" oninput="updateCharCount()" placeholder="한 줄 기록" style="min-height:70px;resize:none"></textarea><div id="charCount" style="text-align:right;font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif;margin-top:4px">0 / 350</div>
+<textarea id="memo" class="form-input" maxlength="370" oninput="updateCharCount()" placeholder="한 줄 기록" style="min-height:70px;resize:none"></textarea><div id="charCount" style="text-align:right;font-size:10px;color:var(--text-tertiary);font-family:Georgia,serif;margin-top:4px">0 / 370</div>
 <div class="btn-row"><button class="btn btn-ghost" onclick="cancelForm()">취소</button><button class="btn btn-primary" onclick="saveRecord()">저장</button></div>
 </div>
 <div class="modal" id="dayModal"><div class="modal-inner"><h3 id="modalTitle"></h3><div id="modalBody"></div><button class="btn btn-primary" style="margin-top:10px;width:100%" onclick="document.getElementById('dayModal').classList.remove('on')">닫기</button></div></div>
@@ -3190,8 +3190,8 @@ function updateCharCount(){
   var m=document.getElementById('memo'), el=document.getElementById('charCount');
   if(!m||!el)return;
   var n=(m.value||'').length;
-  el.textContent=n+' / 350';
-  el.style.color=(n>=350)?'var(--vermillion)':'var(--text-tertiary)';
+  el.textContent=n+' / 370';
+  el.style.color=(n>=370)?'var(--vermillion)':'var(--text-tertiary)';
 }
 
 async function saveRecord(){
@@ -4161,13 +4161,14 @@ function curRemoveCover(k){
 // 사진을 끌어 잘려나갈 부분을 사용자가 정한다.
 var _prevSlot=null, _prevFocus=[50,50], _prevDrag=null, _prevAspect=1.35;
 
+// v2.7.0 — 실제 조판 좌표와 같아야 한다. 어긋나면 위치 조정 화면과 결과가 달라진다.
 var PREV_BOX={
-  cover:    {l:25,   t:11.5, w:66,    h:62,   fit:'contain'},
-  prologue: {l:9.33, t:52,   w:81.43, h:41.5, fit:'cover'},
-  spring:   {l:9.33, t:47,   w:81.43, h:44,   fit:'cover'},
-  summer:   {l:9.33, t:47,   w:81.43, h:44,   fit:'cover'},
-  fall:     {l:9.33, t:47,   w:81.43, h:44,   fit:'cover'},
-  winter:   {l:9.33, t:47,   w:81.43, h:44,   fit:'cover'}
+  cover:    {l:31.82, t:4.25,  w:57.83, h:67.30, fit:'contain'},
+  prologue: {l:10.34, t:60.40, w:79.31, h:35.27, fit:'cover'},
+  spring:   {l:10.34, t:46.00, w:79.31, h:44, fit:'cover'},
+  summer:   {l:10.34, t:46.76, w:79.31, h:44, fit:'cover'},
+  fall:     {l:10.34, t: 9.89, w:79.31, h:44, fit:'cover'},
+  winter:   {l:10.34, t: 8.76, w:79.31, h:44, fit:'cover'}
 };
 var SEASON_KO={spring:'봄',summer:'여름',fall:'가을',winter:'겨울'};
 var SEASON_EN={spring:'SPRING',summer:'SUMMER',fall:'FALL',winter:'WINTER'};
@@ -4206,28 +4207,28 @@ function prevRender(src){
   var inner='';
 
   if(k==='cover'){
-    inner='<div style="position:absolute;left:3.2%;top:10.1%;width:20%;height:62%;font-family:\'Noto Serif KR\',serif;'
+    inner='<div style="position:absolute;left:10.92%;top:4.24%;width:15.49%;height:67.30%;font-family:\'Noto Serif KR\',serif;'
       +'font-weight:600;font-size:13px;line-height:1.45;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.06em">'
       +'<span style="color:#3D3929">그해에</span> <span style="color:#C96342">그곳에</span> <span style="color:#3D3929">나</span></div>'
-      +'<div style="position:absolute;left:13.73%;top:75.48%;width:4.54%;height:2px;background:#C96342"></div>'
-      +'<div style="position:absolute;left:5.38%;top:78.88%;width:26.47%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
+      +'<div style="position:absolute;left:10.34%;top:75.48%;width:4.54%;height:2px;background:#C96342"></div>'
+      +'<div style="position:absolute;left:10.34%;top:77.90%;width:26.47%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
       +'font-size:4.5px;color:#6B6553;line-height:1.85;text-align:center">지도 위에 남긴<br/>우리의 시간.<br/>기억을 따라<br/>다시 꺼내어 보는<br/>순간의 기록</div>'
-      +'<div style="position:absolute;left:39.35%;top:82.35%;width:48.79%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
+      +'<div style="position:absolute;left:34.65%;top:82.35%;width:55%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
       +'font-size:4.5px;color:#6B6553;line-height:1.8;text-align:center">내가 지나온 장소가 한 편의 이야기가 되는<br/>너나들이 \u2018흔적\u2019 에세이</div>'
-      +'<div style="position:absolute;left:68.84%;top:92.24%;width:21.38%;font-family:\'Noto Serif KR\',serif;'
+      +'<div style="position:absolute;left:68.27%;top:92.24%;width:21.38%;font-family:\'Noto Serif KR\',serif;'
       +'font-size:4px;color:#A99A82;text-align:right">'+esc(owner?owner+'의 흔적':'흔적')+'</div>';
   }else if(k==='prologue'){
-    inner='<div style="position:absolute;left:9.33%;top:7.13%;width:81.43%;font-family:\'Noto Sans KR\',sans-serif;'
+    inner='<div style="position:absolute;left:10.34%;top:7.13%;width:79.31%;font-family:\'Noto Sans KR\',sans-serif;'
       +'font-size:4px;color:#A99A82;letter-spacing:.15em">PROLOGUE</div>'
-      +'<div style="position:absolute;left:9.33%;top:11.21%;width:81.43%;font-family:\'Noto Serif KR\',serif;'
+      +'<div style="position:absolute;left:10.34%;top:9.68%;width:79.31%;font-family:\'Noto Serif KR\',serif;'
       +'font-weight:600;font-size:13px;color:#3D3929;line-height:1.3">지도 위의 점들이<br/>한 권의 책이 되기까지</div>'
-      +'<div style="position:absolute;left:9.33%;top:24.96%;width:4.29%;height:2px;background:#C9A961"></div>'
-      +'<div style="position:absolute;left:9.33%;top:27%;width:81.43%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
+      +'<div style="position:absolute;left:10.91%;top:19.94%;width:4.29%;height:2px;background:#C9A961"></div>'
+      +'<div style="position:absolute;left:10.34%;top:27%;width:79.31%;font-family:\'Noto Serif KR\',serif;font-weight:300;'
       +'font-size:4.5px;color:#3D3929;line-height:1.9">우리는 다녀온 곳을 쉽게 잊습니다.<br/>그러나 그날의 온도, 함께한 표정, 우연히 만난 냄새와 풍경은 오래 남습니다.</div>';
   }else{
-    inner='<div style="position:absolute;left:24%;top:25.77%;width:52%;font-family:\'Noto Sans KR\',sans-serif;'
+    inner='<div style="position:absolute;left:10.34%;top:15.2%;width:79.31%;font-family:\'Noto Sans KR\',sans-serif;'
       +'font-size:4px;color:#A99A82;letter-spacing:.15em;text-align:center">CHAPTER \u00b7 '+(SEASON_EN[k]||'')+'</div>'
-      +'<div style="position:absolute;left:24.29%;top:31.57%;width:51.43%;font-family:\'Noto Serif KR\',serif;'
+      +'<div style="position:absolute;left:10.62%;top:21%;width:78.96%;font-family:\'Noto Serif KR\',serif;'
       +'font-weight:300;font-size:11px;color:#F5F1EB;line-height:2;text-align:center">'+(SEASON_KO[k]||'')+'</div>';
   }
 
@@ -4647,7 +4648,7 @@ function shelfCoverArt(b, src){
   var owner=(typeof profile!=='undefined'&&profile&&profile.name)?String(profile.name).trim():'';
   return '<div style="position:absolute;inset:0;background:#FFFFFF">'
     // 세로 문구
-    +'<div style="position:absolute;left:3.2%;top:10.1%;width:20%;height:62%;'
+    +'<div style="position:absolute;left:10.92%;top:4.24%;width:15.49%;height:67.30%;'
     +'font-family:\'Noto Serif KR\',serif;font-weight:600;font-size:8.5px;line-height:1.45;'
     +'writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.06em;overflow:hidden">'
     +'<span style="color:#3D3929">그해에</span> <span style="color:#C96342">그곳에</span> <span style="color:#3D3929">나</span>'
@@ -4658,17 +4659,17 @@ function shelfCoverArt(b, src){
     +(src?'<img src="'+src+'" style="max-width:100%;max-height:100%;width:auto;height:auto;display:block"/>':'')
     +'</div>'
     // 베르밀리언 선
-    +'<div style="position:absolute;left:13.73%;top:75.48%;width:4.54%;height:1.5px;background:#C96342"></div>'
+    +'<div style="position:absolute;left:10.34%;top:75.48%;width:4.54%;height:1.5px;background:#C96342"></div>'
     // 좌측 문구
-    +'<div style="position:absolute;left:5.38%;top:78.88%;width:26.47%;'
+    +'<div style="position:absolute;left:10.34%;top:77.90%;width:26.47%;'
     +'font-family:\'Noto Serif KR\',serif;font-weight:300;font-size:2.6px;color:#6B6553;'
     +'line-height:1.85;text-align:center">지도 위에 남긴<br/>우리의 시간.<br/>기억을 따라<br/>다시 꺼내어 보는<br/>순간의 기록</div>'
     // 우측 문구
-    +'<div style="position:absolute;left:39.35%;top:82.35%;width:48.79%;'
+    +'<div style="position:absolute;left:34.65%;top:82.35%;width:55%;'
     +'font-family:\'Noto Serif KR\',serif;font-weight:300;font-size:2.6px;color:#6B6553;'
     +'line-height:1.8;text-align:center">내가 지나온 장소가 한 편의 이야기가 되는<br/>너나들이 \u2018흔적\u2019 에세이</div>'
     // 소유자
-    +'<div style="position:absolute;left:68.84%;top:92.24%;width:21.38%;'
+    +'<div style="position:absolute;left:68.27%;top:92.24%;width:21.38%;'
     +'font-family:\'Noto Serif KR\',serif;font-size:2.6px;color:#A99A82;text-align:right">'
     +esc(owner?owner+'의 흔적':'흔적')+'</div>'
     +'</div>';
@@ -4874,6 +4875,8 @@ function openHeunjeok(){
   }
   var F_LABEL='font-family:'+SANS+';font-size:'+P(9)+';color:'+C.sub+';letter-spacing:.15em;line-height:1.4';
   var F_H1   ='font-family:'+SERIF+';font-weight:600;font-size:'+P(34.5)+';color:'+C.ink+';line-height:1.3;word-break:keep-all';
+  // v2.7.2 — 프롤로그 본문은 P(12). 다른 본문(P13)과 구분한다.
+  var F_BODY_PRO='font-family:'+SERIF+';font-weight:300;font-size:'+P(12)+';color:'+C.ink+';line-height:1.8;white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word';
   var F_BODY ='font-family:'+SERIF+';font-weight:300;font-size:'+P(13)+';color:'+C.ink+';line-height:1.8;white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word';
   var F_FOLIO='font-family:'+NUM+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center';
 
@@ -4987,7 +4990,7 @@ function openHeunjeok(){
     var meta=(r.name?esc(r.name):'')+(r.date?' \u00b7 '+esc(fd(r.date)):'');
     var h='';
     h+=A(LO_L,4.50,68,null,F_LABEL,'ESSAY '+no);
-    h+=A(LO_L-0.67,7.60,60.84,6.0,'overflow:hidden',clamp(titleOf(r),2,P(25.5),1.28));
+    h+=A(LO_L+0.10,7.60,60.84,6.0,'overflow:hidden',clamp(titleOf(r),2,P(25.5),1.28));
     h+=A(LO_L,14.30,60.84,null,'font-family:'+SANS+';font-size:'+P(9)+';color:'+C.deep,meta);
     h+=A(LO_L,17.60,4.29,0.18,'background:'+C.gold,'');
     h+=A(LO_L+LO_W-8.07,5.40,8.07,11.51,'font-family:'+NUM+';font-weight:bold;font-size:'+P(48)+';color:'+C.line+';line-height:1.05;text-align:center',no.split('').join('<br/>'));
@@ -5005,20 +5008,21 @@ function openHeunjeok(){
     // v2.7.0 — 판형 축소에 맞춘 재배치.
     // 상단 제목영역 20% / 사진 38% / 본문 34.5%(11줄=377자, 350자 여유 수용)
     var PH_T=20.00, PH_H=38.00, PH_ROW=(PH_H-LO_G)/2,   // 18.75
-        BD_T=60.00, BD_H=34.50;
+        BD_T=60.00, BD_H=34.50,
+        BD_T0=60.84, BD_T1=60.28, BD_H1=34.22;
 
     if(L===0){          // 사진 6장 — 3×2 격자
       for(var k=0;k<6;k++)
         h+=boxA(LO_L+(k%3)*(LO_THIRD+LO_G), PH_T+Math.floor(k/3)*(PH_ROW+LO_G),
                 LO_THIRD, PH_ROW, ps[k]);
-      h+=A(LO_L,BD_T,LO_W,BD_H,bodyStyle(t,'lg'),esc(t));
+      h+=A(LO_L,BD_T0,LO_W,BD_H,bodyStyle(t,'lg'),esc(t));
     } else if(L===1){   // 사진 5장 — 위 2장 + 가운데 3장
       h+=boxA(LO_L,               PH_T, LO_HALF,  PH_ROW, ps[0]);
       h+=boxA(LO_L+LO_HALF+LO_G,  PH_T, LO_HALF,  PH_ROW, ps[1]);
       h+=boxA(LO_L,               PH_T+PH_ROW+LO_G, LO_THIRD, PH_ROW, ps[2]);
       h+=boxA(LO_L+LO_THIRD+LO_G, PH_T+PH_ROW+LO_G, LO_THIRD, PH_ROW, ps[3]);
       h+=boxA(LO_L+(LO_THIRD+LO_G)*2,PH_T+PH_ROW+LO_G,LO_THIRD,PH_ROW, ps[4]);
-      h+=A(LO_L,BD_T,LO_W,BD_H,bodyStyle(t,'lg'),esc(t));
+      h+=A(LO_L,BD_T1,LO_W,BD_H1,bodyStyle(t,'lg'),esc(t));
     } else if(L===2){   // 사진 4장 — 위 2장 · 본문 · 아래 2장
       h+=boxA(LO_L,              PH_T, LO_HALF, PH_ROW, ps[0]);
       h+=boxA(LO_L+LO_HALF+LO_G, PH_T, LO_HALF, PH_ROW, ps[1]);
@@ -5057,12 +5061,12 @@ function openHeunjeok(){
   // ① 표지 (PPT s2): 세로제목 6.64/10.1, 금선 13.73/75.48, 사진 28/11.5,
   //    좌문구 5.38/78.88, 우문구 39.35/82.35, 사용자명 68.84/92.24
   pages.push('<div class="hj-page-abs hj-cover">'
-    +A(10.34,10.1,19.48,62,'font-family:'+SERIF+';font-weight:600;font-size:'+P(39)+';line-height:1.45;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.06em',
+    +A(10.92,4.24,15.49,67.30,'font-family:'+SERIF+';font-weight:600;font-size:'+P(39)+';line-height:1.40;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:.06em',
         '<span style="color:'+C.ink+'">그해에</span> <span style="color:'+C.terra+'">그곳에</span> <span style="color:'+C.ink+'">나</span>')
-    +coverBoxA(31.82,11.5,57.83,62,CV.cover||'','cover')
+    +coverBoxA(31.82,4.25,57.83,67.30,CV.cover||'','cover')
     +A(10.34,75.48,4.54,0.18,'background:'+C.terra,'')
-    +A(10.34,78.88,26.47,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(12.75)+';color:'+C.body+';line-height:1.85;text-align:center','지도 위에 남긴<br/>우리의 시간.<br/>기억을 따라<br/>다시 꺼내어 보는<br/>순간의 기록')
-    +A(40.00,82.35,49.65,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(12.75)+';color:'+C.body+';line-height:1.8;text-align:center','내가 지나온 장소가 한 편의 이야기가 되는<br/>너나들이 \u2018흔적\u2019 에세이')
+    +A(10.34,77.90,26.47,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(12.75)+';color:'+C.body+';line-height:1.85;text-align:center','지도 위에 남긴<br/>우리의 시간.<br/>기억을 따라<br/>다시 꺼내어 보는<br/>순간의 기록')
+    +A(34.65,82.35,55.00,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(12.75)+';color:'+C.body+';line-height:1.8;text-align:center','내가 지나온 장소가 한 편의 이야기가 되는<br/>너나들이 \u2018흔적\u2019 에세이')
     +A(68.27,92.24,21.38,null,'font-family:'+SERIF+';font-size:'+P(10.5)+';color:'+C.sub+';text-align:right',(owner?esc(owner)+'의 흔적':'흔적'))
     +'</div>');
 
@@ -5091,14 +5095,14 @@ function openHeunjeok(){
   // ② 프롤로그 (PPT s3): 라벨 9.33/7.13, 제목 9.33/11.21, 금선 9.33/24.96, 본문 9.33/26.56, 사진 9.33/55
   pages.push('<div class="hj-page-abs">'
     +A(10.34,7.13,79.31,null,F_LABEL,'PROLOGUE')
-    +A(10.34,11.21,79.31,null,F_H1,'지도 위의 점들이<br/>한 권의 책이 되기까지')
-    +A(10.34,24.96,4.29,0.18,'background:'+C.gold,'')
-    +A(10.34,26.56,79.31,null,F_BODY,'우리는 다녀온 곳을 쉽게 잊습니다.<br/>그러나 그날의 온도, 함께한 표정,<br/>우연히 만난 냄새와 풍경은 오래 남습니다.\n\n이 책은 \u2018간 곳\u2019의 기록을<br/>단순한 방문 목록으로 남기지 않습니다.<br/>사진과 메모, 날짜와 장소를 엮어<br/>한 시절의 결을 보여주는 작은<br/>나만의 에세이로 만듭니다.\n\n기억은 끝나지 않고, 다음 길을 기다립니다.<br/>오늘의 걸음이 내일의 나를 만들듯,<br/>다시 우리만의 흔적으로 자취를 남깁니다.')
-    +coverFillA(10.34,65,79.31,29,CV.prologue||'','prologue')
+    +A(10.34,9.68,79.31,null,F_H1,'지도 위의 점들이<br/>한 권의 책이 되기까지')
+    +A(10.91,19.94,4.29,0.18,'background:'+C.gold,'')
+    +A(10.72,21.40,78.55,36.67,F_BODY_PRO,'우리는 다녀온 곳을 쉽게 잊습니다.<br/>그러나 그날의 온도, 함께한 표정,<br/>우연히 만난 냄새와 풍경은 오래 남습니다.\n\n이 책은<br/> \u2018간 곳\u2019의 기록을 단순한 방문 목록으로 남기지 않습니다.<br/>사진과 메모, 날짜와 장소를 엮어<br/>한 시절의 결을 보여주는 작은 나만의 에세이로 만듭니다.\n\n기억은 끝나지 않고, 다음 길을 기다립니다.<br/>오늘의 걸음이 내일의 나를 만들듯,<br/>다시 우리만의 흔적으로 자취를 남깁니다.')
+    +coverFillA(10.34,60.40,79.31,35.27,CV.prologue||'','prologue')
     +folioA(folio())+'</div>');
 
   // ③ 목차 (v2.4.14) — 한 줄 높이를 첫 쪽 15개 기준으로 고정하고 모든 쪽에 같게 적용
-  var TOC_Y0=30, TOC_Y0N=19.5, TOC_END=93.5;
+  var TOC_Y0=27.63, TOC_Y0N=19.5, TOC_END=95.59;
   var TOC_STEP=(TOC_END-TOC_Y0)/15;                       // 첫 쪽 15개 기준
   var TOC_PER1=15, TOC_PERN=Math.floor((TOC_END-TOC_Y0N)/TOC_STEP);
   var tocPages=[], tocIdx=0;
@@ -5119,11 +5123,11 @@ function openHeunjeok(){
          '흔적이 머문 곳');
     var y0;
     if(pg===0){
-      var stats=[[st.n,'간 곳'],[st.photos,'사진'],[st.places,'도시']], xs=[7.65,35.29,62.94];
+      var stats=[[st.n,'간 곳'],[st.photos,'사진'],[st.places,'도시']], xs=[10.73,37.03,63.52];
       stats.forEach(function(v,k){
-        h+=A(xs[k],18.5,26.13,8.28,'background:#fff','');
-        h+=A(xs[k]+2.39,19.93,21.34,null,'font-family:'+SERIF+';font-weight:600;font-size:'+P(21)+';color:'+C.verm+';text-align:center',v[0]);
-        h+=A(xs[k]+2.39,23.67,21.34,null,'font-family:'+SANS+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center',v[1]);
+        h+=A(xs[k],16.69,26.13,8.28,'background:#fff','');
+        h+=A(xs[k]+2.39,18.12,21.34,null,'font-family:'+SERIF+';font-weight:600;font-size:'+P(21)+';color:'+C.verm+';text-align:center',v[0]);
+        h+=A(xs[k]+2.39,21.86,21.34,null,'font-family:'+SANS+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center',v[1]);
       });
       y0=TOC_Y0;
     } else { y0=TOC_Y0N; }
@@ -5140,7 +5144,7 @@ function openHeunjeok(){
            'font-family:'+SANS+';font-size:'+P(8.25)+';color:'+C.sub+';text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap',
            esc(r.date?fd(r.date):'')+(r.name?' <span style="font-family:'+SERIF+';font-weight:600;color:'+C.terra+'">'+esc(r.name)+'</span>':''));
     });
-    if(chunk.length) h+=A(9.33,Math.min(TOC_END,y0+chunk.length*TOC_STEP),81.7,0.17,'background:'+C.line,'');
+    if(chunk.length) h+=A(10.34,Math.min(TOC_END,y0+chunk.length*TOC_STEP),79.31,0.17,'background:'+C.line,'');
     else h+=A(10.34,y0,79.31,null,F_BODY,'기록이 쌓이면 목차가 만들어집니다.');
     h+=folioA(folio());
     pages.push('<div class="hj-page-abs">'+h+'</div>');
@@ -5156,14 +5160,14 @@ function openHeunjeok(){
       var seaKey={SPRING:'spring',SUMMER:'summer',FALL:'fall',WINTER:'winter'}[sea];
       // v2.7.0 — 계절마다 글과 사진의 위아래를 바꾼다. 사이는 11로 통일.
       // tl/tw는 문구 폭. 봄은 "마음이 오래 머무는 곳이 있다."가 길어 예외로 넓힌다.
-      var CH={ SPRING:{lb:15.20, tx:21.00, ph:46.00, tl:6.00, tw:88.00},
+      var CH={ SPRING:{lb:15.20, tx:21.00, ph:46.00, tl:10.62, tw:78.96},
                SUMMER:{lb:15.96, tx:21.76, ph:46.76, tl:10.34, tw:79.31},
                FALL:  {lb:64.89, tx:70.69, ph: 9.89, tl:10.34, tw:79.31},
                WINTER:{lb:63.76, tx:69.56, ph: 8.76, tl:10.34, tw:79.31} }[sea]
              ||{lb:15.20, tx:21.00, ph:46.00, tl:10.34, tw:79.31};
       pages.push('<div class="hj-page-abs hj-chapter">'
         +A(10.34,CH.lb,79.31,null,'font-family:'+SANS+';font-size:'+P(11)+';color:'+C.sub+';letter-spacing:.15em;text-align:center','CHAPTER '+('0'+chapNo).slice(-2)+' \u00b7 '+sea)
-        +A(CH.tl,CH.tx,CH.tw,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(25)+';color:'+C.bg+';line-height:2;text-align:center',SEASON[sea])
+        +A(CH.tl,CH.tx,CH.tw,17,'font-family:'+SERIF+';font-weight:300;font-size:'+P(20)+';color:'+C.bg+';line-height:2;text-align:center',SEASON[sea])
         +coverFillA(10.34,CH.ph,79.31,44,CV[seaKey]||'',seaKey)
         +A(0,96.11,100.08,1.25,'font-family:'+NUM+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center',folio())
         +'</div>');
@@ -5182,7 +5186,7 @@ function openHeunjeok(){
     +A(10.34,63,25.44,8.28,'background:#fff','')+A(12.73,64.4,20.66,null,'font-family:'+SERIF+';font-weight:600;font-size:'+P(21)+';color:'+C.verm+';text-align:center',st.places)+A(12.73,68.2,20.66,null,'font-family:'+SANS+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center','도시')
     +A(37.28,63,25.44,8.28,'background:#fff','')+A(39.67,64.4,20.66,null,'font-family:'+SERIF+';font-weight:600;font-size:'+P(21)+';color:'+C.verm+';text-align:center',st.n)+A(39.67,68.2,20.66,null,'font-family:'+SANS+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center','기억')
     +A(64.21,63,25.44,8.28,'background:#fff','')+A(66.60,64.4,20.66,null,'font-family:'+SERIF+';font-weight:600;font-size:'+P(21)+';color:'+C.verm+';text-align:center',st.photos)+A(66.60,68.2,20.66,null,'font-family:'+SANS+';font-size:'+P(7.5)+';color:'+C.sub+';text-align:center','사진')
-    +A(9.33,75,81.43,null,F_BODY+';text-align:center','지도는 기록을 증명하는 기능보다,\n내가 살아온 반경을 조용히 돌아보게 하는 장치로 사용합니다.')
+    +A(10.34,75,79.31,null,F_BODY+';text-align:center','지도는 기록을 증명하는 기능보다,\n내가 살아온 반경을 조용히 돌아보게 하는 장치로 사용합니다.')
     +folioA(folio())+'</div>');
 
   // ⑦ 타임라인 (v2.4.8) — 연대기 형식.
@@ -5199,7 +5203,7 @@ function openHeunjeok(){
 
     // v2.4.11 — 흐름을 보는 페이지다. 사진은 곁들이는 정도로 줄이고 한 쪽에 15개까지 담는다.
     var AX=21.5;          // 세로 축 x
-    var DATE_X=9.33, DATE_W=10.4;
+    var DATE_X=10.34, DATE_W=10.4;
     var TXT_X=24.4;
     var PH_X=83.4, PH_W=7.0, PH_H=3.3;
     var Y0=21.5, YEND=93.0;
@@ -5239,7 +5243,7 @@ function openHeunjeok(){
       th+=A(10.34,11.21,79.31,null,F_H1,'한 해를 지나온 순서'+(pi?' <span style="font-size:'+P(13)+';color:'+C.sub+';font-weight:300">이어서</span>':''));
 
       if(!list.length){
-        th+=A(9.33,Y0,81.43,null,F_BODY,'기록이 쌓이면 연대기가 만들어집니다.');
+        th+=A(10.34,Y0,79.31,null,F_BODY,'기록이 쌓이면 연대기가 만들어집니다.');
       }else{
         // 세로 축 — 첫 항목부터 마지막 항목까지
         var top=list[0]._y, bot=list[list.length-1]._y+list[list.length-1].h-2.4;
@@ -5283,8 +5287,8 @@ function openHeunjeok(){
   // ⑧ 에필로그
   pages.push('<div class="hj-page-abs">'
     +A(10.34,30,79.31,null,F_LABEL+';text-align:center','EPILOGUE')
-    +A(9.33,36,81.43,null,'font-family:'+SERIF+';font-weight:300;font-size:'+P(16)+';color:'+C.ink+';line-height:2.2;text-align:center','<span class="hj-mark">기억은 사라지지 않습니다.</span><br/><br/><span class="hj-mark">다만 꺼내어 볼 자리를 기다립니다.</span>')
-    +A(9.33,58,81.43,null,F_BODY+';text-align:center','다음 장소를 기록하면\n이 책의 다음 페이지가 시작됩니다.')
+    +A(10.34,34.61,79.31,15.39,'font-family:'+SERIF+';font-weight:300;font-size:'+P(16)+';color:'+C.ink+';line-height:2.2;text-align:center','<span class="hj-mark">기억은 사라지지 않습니다.</span><br/><br/><span class="hj-mark">다만 꺼내어 볼 자리를 기다립니다.</span>')
+    +A(10.34,58,79.31,null,F_BODY+';text-align:center','다음 장소를 기록하면\n이 책의 다음 페이지가 시작됩니다.')
     +'<div style="position:absolute;right:5%;bottom:5%"><button id="hjToCover" style="background:none;border:1px solid '+C.gold+';color:#9C7E3C;font-family:'+SERIF+';font-size:11px;padding:5px 11px;border-radius:999px;cursor:pointer">표지로</button></div>'
     +'</div>');
 
@@ -7086,7 +7090,7 @@ var POLICY_TEXTS={
 +'<div style="background:var(--cream);border:1px solid var(--beige);border-radius:8px;padding:16px;margin-bottom:14px"><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">운영자</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--brown);margin-bottom:12px">'+POLICY_OPERATOR+'</div><div style="font-size:11px;color:#8B7D6B;margin-bottom:6px">이메일</div><div style="font-family:Georgia,serif;font-size:14px;color:var(--vermillion)">'+POLICY_CONTACT_EMAIL+'</div></div>'
 +'<div style="font-size:11px;color:#8B7D6B;line-height:1.6">버그 제보·기능 제안·기타 문의 모두 환영합니다.<br/>가능한 한 빠르게 답변 드리겠습니다.</div>'
 +'</div>'
-+'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.7.0</div>'
++'<div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--beige);text-align:center;font-size:10px;color:#A99A82;font-family:Georgia,serif">너나들이 v2.7.2</div>'
   }
 };
 
