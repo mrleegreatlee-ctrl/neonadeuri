@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>너나들이 관리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+/* 너나들이 관리자 웹 admin v1.1 — 2026-10-29 (신고 처리 추가)
+   원칙 P-1: 기억의 제목·본문·장소·사진은 서버가 보내지 않는다. 이 화면도 그리지 않는다. */
+:root{
+  color-scheme:light;
+  --bg:#F5F1EB; --surface:#FFFFFF; --surface-2:#FBF7F1; --line:#E8DCC8; --line-soft:#F0E8DA;
+  --ink:#3D3929; --ink-2:#6B6452; --ink-3:#A99A82;
+  --accent:#C96342; --accent-track:#F3DCD2; --accent-wash:rgba(201,99,66,.10);
+  --ok:#4F7F52; --ok-bg:#EAF3EA; --warn:#B5472A; --warn-bg:#FBEDE8; --hold:#7B6CC4;
+  --shadow:0 1px 2px rgba(61,57,41,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme:dark;
+    --bg:#171512; --surface:#211F1B; --surface-2:#282520; --line:#3A352D; --line-soft:#2E2A24;
+    --ink:#EFE9DD; --ink-2:#C7BEAE; --ink-3:#8F8574;
+    --accent:#D4714D; --accent-track:#4A2F25; --accent-wash:rgba(212,113,77,.14);
+    --ok:#7DB580; --ok-bg:#24301F; --warn:#E07A5C; --warn-bg:#3A231B;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#171512; --surface:#211F1B; --surface-2:#282520; --line:#3A352D; --line-soft:#2E2A24;
+  --ink:#EFE9DD; --ink-2:#C7BEAE; --ink-3:#8F8574;
+  --accent:#D4714D; --accent-track:#4A2F25; --accent-wash:rgba(212,113,77,.14);
+  --ok:#7DB580; --ok-bg:#24301F; --warn:#E07A5C; --warn-bg:#3A231B;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.6 'Malgun Gothic','Apple SD Gothic Neo','Gowun Dodum',sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:'Gowun Batang',serif;font-weight:700;margin:0}
+.hidden{display:none!important}
+.muted{color:var(--ink-3)}
+.sub{color:var(--ink-2)}
+.num{font-variant-numeric:tabular-nums}
+
+/* 로그인 */
+#login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{width:360px;max-width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px;box-shadow:var(--shadow)}
+.login-card h1{font-size:22px;margin-bottom:4px}
+.field{display:block;margin:12px 0}
+.field span{display:block;font-size:12px;color:var(--ink-2);margin-bottom:4px}
+.inp{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--surface);outline:none}
+.inp:focus{border-color:var(--accent)}
+.btn{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.danger{color:var(--warn);border-color:var(--warn)}
+.btn.good{color:var(--ok);border-color:var(--ok)}
+.btn.sm{padding:4px 10px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:default}
+.msg{font-size:12.5px;margin-top:10px;min-height:1.2em}
+.msg.err{color:var(--warn)}
+
+/* 앱 틀 */
+#app{display:grid;grid-template-columns:200px 1fr;min-height:100%}
+nav.side{background:var(--surface);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh}
+nav.side .brand{font-family:'Gowun Batang',serif;font-weight:700;font-size:17px;padding:4px 10px 14px}
+nav.side .brand small{display:block;font-family:'Gowun Dodum',sans-serif;font-weight:400;font-size:11px;color:var(--ink-3)}
+.tab{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:9px 10px;border:0;border-radius:8px;background:transparent;cursor:pointer;color:var(--ink-2)}
+.tab:hover{background:var(--surface-2)}
+.tab.on{background:var(--accent-wash);color:var(--ink);font-weight:700}
+.tab .pill{font-size:11px;color:var(--ink-3)}
+nav.side .foot{margin-top:auto;font-size:11.5px;color:var(--ink-3);padding:10px;line-height:1.5;word-break:break-all}
+main{padding:22px 28px 60px;min-width:0}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.top h2{font-size:20px;margin-right:auto}
+.demo-flag{font-size:12px;color:var(--warn);border:1px solid var(--warn);border-radius:999px;padding:1px 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+.card h3{font-size:15px;margin-bottom:2px}
+.card .desc{font-size:12px;color:var(--ink-3);margin-bottom:12px}
+.grid{display:grid;gap:14px}
+.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mt{margin-top:14px}
+
+/* 숫자 타일 */
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.tile .l{font-size:12px;color:var(--ink-2)}
+.tile .v{font-size:26px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.tile .d{font-size:12px;color:var(--ink-3);margin-top:2px}
+.tile.alert .v{color:var(--warn)}
+
+/* 차트 */
+.chart-wrap{position:relative}
+.chart-title{font-size:12.5px;color:var(--ink-2);margin-bottom:2px}
+.chart-total{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+svg.chart{display:block;width:100%;height:auto;overflow:visible}
+svg.chart .grid-line{stroke:var(--line-soft);stroke-width:1}
+svg.chart .axis-t{fill:var(--ink-3);font-size:10px}
+svg.chart .bar{fill:var(--accent)}
+svg.chart .bar.hov{opacity:.75}
+svg.chart .hit{fill:transparent;cursor:default}
+.tip{position:fixed;pointer-events:none;z-index:50;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.tip strong{display:block;font-size:14px}
+.linkbtn{border:0;background:none;color:var(--ink-2);text-decoration:underline;cursor:pointer;font-size:12px;padding:0}
+
+/* 흐름 막대 */
+.funnel-row{display:grid;grid-template-columns:120px 1fr 110px;gap:10px;align-items:center;padding:5px 0}
+.funnel-track{height:14px;background:var(--surface-2);border-radius:4px;overflow:hidden}
+.funnel-fill{height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.funnel-row .val{text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px}
+.meter{height:12px;background:var(--accent-track);border-radius:6px;overflow:hidden;margin:8px 0 4px}
+.meter > div{height:100%;background:var(--accent);border-radius:6px 0 0 6px}
+
+/* 표 */
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.controls .inp{width:auto}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th,table.t td{padding:8px 10px;border-bottom:1px solid var(--line-soft);text-align:left;white-space:nowrap}
+table.t th{font-size:12px;color:var(--ink-2);font-weight:700;background:var(--surface-2);position:sticky;top:0}
+table.t td.n,table.t th.n{text-align:right;font-variant-numeric:tabular-nums}
+table.t tbody tr{cursor:pointer}
+table.t tbody tr:hover td{background:var(--surface-2)}
+table.t tbody tr.sel td{background:var(--accent-wash)}
+.status{display:inline-flex;align-items:center;gap:5px;font-size:12px}
+.status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.status.s-suspended{color:var(--warn)}
+.status.s-suspended::before{background:var(--warn)}
+.status.s-admin::before{background:var(--hold)}
+.pager{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:12.5px}
+.users-layout{display:grid;grid-template-columns:1fr 340px;gap:14px;align-items:start}
+.detail .row{display:grid;grid-template-columns:84px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+.detail .row .k{color:var(--ink-3)}
+.detail .counts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.detail .counts div{background:var(--surface-2);border-radius:8px;padding:8px;text-align:center}
+.detail .counts b{display:block;font-size:17px;font-variant-numeric:tabular-nums}
+.detail .counts span{font-size:11.5px;color:var(--ink-3)}
+.notice{font-size:12px;color:var(--ink-3);line-height:1.6}
+.empty{padding:30px;text-align:center;color:var(--ink-3)}
+.list-item{padding:10px 0;border-bottom:1px solid var(--line-soft)}
+.list-item:last-child{border-bottom:0}
+.kv{font-size:12px;color:var(--ink-3)}
+.loading{opacity:.5;transition:opacity .2s}
+.tab .pill.hot{color:#fff;background:var(--warn);border-radius:999px;padding:0 7px;font-weight:700}
+.rep{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.rep-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.rep-head .reason{font-weight:700}
+.badge{display:inline-block;font-size:11.5px;border-radius:999px;padding:1px 9px;border:1px solid var(--line);color:var(--ink-2)}
+.badge.open{border-color:var(--warn);color:var(--warn)}
+.badge.done{border-color:var(--ok);color:var(--ok)}
+.rep-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rep-box{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:13px}
+.rep-box .k{font-size:11.5px;color:var(--ink-3);margin-bottom:2px}
+.rep-ev{border:1px dashed var(--accent);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px}
+.rep-ev .k{font-size:11.5px;color:var(--accent);margin-bottom:4px}
+.rep-act{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.rep-act .inp{flex:1;min-width:220px}
+@media (max-width:760px){ .rep-grid{grid-template-columns:1fr} }
+
+@media (max-width:1100px){
+  .g6{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .users-layout{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  #app{grid-template-columns:1fr}
+  nav.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line)}
+  nav.side .foot{display:none}
+  main{padding:16px}
+  .g3,.g2{grid-template-columns:1fr}
+  .g6{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .table-scroll{overflow-x:auto}
+}
+</style>
+</head>
+<body>
+
+<section id="login" class="hidden">
+  <div class="login-card">
+    <h1>너나들이 관리</h1>
+    <div class="muted" style="font-size:12.5px">관리자 계정으로 로그인하십시오.</div>
+    <form id="loginForm" autocomplete="on">
+      <label class="field"><span>이메일</span><input class="inp" id="lgEmail" type="email" autocomplete="username" required></label>
+      <label class="field"><span>비밀번호</span><input class="inp" id="lgPw" type="password" autocomplete="current-password" required></label>
+      <button class="btn pri" type="submit" style="width:100%">로그인</button>
+    </form>
+    <div class="msg" id="lgMsg"></div>
+    <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:12px">
+      <button class="btn sm" id="btnDemo" type="button">예시 데이터로 미리보기</button>
+      <div class="notice" style="margin-top:6px">서버 연결 없이 화면 구성만 확인합니다. 실제 사용자 정보는 표시되지 않습니다.</div>
+    </div>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <nav class="side">
+    <div class="brand">너나들이 관리<small>admin v1.1</small></div>
+    <button class="tab" data-tab="dash" type="button">현황</button>
+    <button class="tab" data-tab="users" type="button">사용자</button>
+    <button class="tab" data-tab="reports" type="button">신고 <span class="pill" id="repPill"></span></button>
+    <button class="tab" data-tab="notices" type="button">공지</button>
+    <button class="tab" data-tab="audit" type="button">작업 기록</button>
+    <div class="foot"><div id="whoami"></div><button class="linkbtn" id="btnLogout" type="button">로그아웃</button></div>
+  </nav>
+  <main>
+    <div class="top">
+      <h2 id="pageTitle">현황</h2>
+      <span class="demo-flag hidden" id="demoFlag">예시 데이터</span>
+      <span class="muted" style="font-size:12px" id="updatedAt"></span>
+      <button class="btn sm" id="btnRefresh" type="button">새로고침</button>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<div class="tip hidden" id="tip"></div>
+
+<script>
+(function(){
+'use strict';
+var SUPABASE_URL='https://hivjguqfcobvwljstjzt.supabase.co';
+var SUPABASE_KEY='sb_publishable_C-OVfBVJcI5nFrRO0ps6EA_y0OMGWjQ';
+var FREE_STORAGE_BYTES=1024*1024*1024;   // 무료 요금제 저장 용량 가정값 (Supabase 요금 페이지에서 확인 필요)
+
+var sb=null, DEMO=false, me=null, tab='dash';
+try{ if(window.supabase&&window.supabase.createClient)sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY); }catch(e){ sb=null; }
+
+// ── DOM 도우미: 사용자 데이터는 textContent로만 넣는다 ──
+function el(tag,attrs,kids){
+  var n=document.createElement(tag);
+  if(attrs)Object.keys(attrs).forEach(function(k){
+    var v=attrs[k]; if(v==null||v===false)return;
+    if(k==='text')n.textContent=v;
+    else if(k==='class')n.className=v;
+    else if(k.slice(0,2)==='on')n.addEventListener(k.slice(2),v);
+    else n.setAttribute(k,v);
+  });
+  (kids||[]).forEach(function(c){ if(c==null)return; n.appendChild(typeof c==='string'?document.createTextNode(c):c); });
+  return n;
+}
+var SVGNS='http://www.w3.org/2000/svg';
+function sv(tag,attrs){ var n=document.createElementNS(SVGNS,tag); Object.keys(attrs||{}).forEach(function(k){n.setAttribute(k,attrs[k])}); return n; }
+function fmtN(v){ v=Number(v)||0; return v.toLocaleString('ko-KR'); }
+function fmtBytes(b){ b=Number(b)||0; if(b<1024)return b+' B'; if(b<1048576)return (b/1024).toFixed(1)+' KB'; if(b<1073741824)return (b/1048576).toFixed(1)+' MB'; return (b/1073741824).toFixed(2)+' GB'; }
+function p2(n){return String(n).padStart(2,'0')}
+function fmtDT(v){ if(!v)return '-'; var d=new Date(v); if(isNaN(d))return '-'; return d.getFullYear()+'.'+p2(d.getMonth()+1)+'.'+p2(d.getDate())+' '+p2(d.getHours())+':'+p2(d.getMinutes()); }
+function fmtD(v){ if(!v)return '-'; var d=new Date(v); if(isNaN(d))return '-'; return d.getFullYear()+'.'+p2(d.getMonth()+1)+'.'+p2(d.getDate()); }
+function pct(a,b){ return b>0?Math.round(a/b*100):0; }
+var FN_SQL={admin_get_dashboard:'DB-04',admin_list_users:'DB-04',admin_get_user:'DB-04',
+  admin_list_reports:'DB-05',admin_resolve_report:'DB-05',admin_count_open_reports:'DB-05',
+  admin_find_user:'DB-03a',admin_set_user_status:'DB-03a',admin_list_audit:'DB-03a',nnd_is_admin:'DB-03a',admin_broadcast_notice:'DB-03b'};
+function errText(e){
+  var m=String((e&&(e.message||e.error_description))||e||'');
+  var f=m.match(/Could not find the function public\.([a-z_]+)/i);
+  if(f)return '서버에 '+f[1]+' 함수가 없습니다. '+(FN_SQL[f[1]]?FN_SQL[f[1]]+' SQL을 먼저 실행하십시오.':'해당 SQL을 먼저 실행하십시오.');
+  if(/JWT expired|invalid jwt|not authenticated/i.test(m))return '로그인이 만료되었습니다. 다시 로그인하십시오.';
+  if(/Failed to fetch|NetworkError|Load failed/i.test(m))return '서버에 연결하지 못했습니다. 인터넷 연결을 확인하십시오.';
+  if(/permission denied/i.test(m))return '권한이 없습니다. 관리자 계정인지 확인하십시오.';
+  if(/Invalid login credentials/i.test(m))return '이메일 또는 비밀번호가 맞지 않습니다.';
+  if(/Email not confirmed/i.test(m))return '이메일 인증이 끝나지 않은 계정입니다.';
+  if(/schema cache/i.test(m))return '서버 설정이 아직 반영되지 않았습니다. 잠시 뒤 새로고침하십시오.';
+  return m;
+}
+var ACTION_LABEL={find_user:'사용자 조회 (이메일)',view_user:'사용자 상세 조회',list_users:'사용자 목록 조회',suspend:'계정 정지',unsuspend:'정지 해제',
+  view_signup_stats:'가입 현황 조회',view_etc_regions:'데이터 점검',broadcast_notice:'공지 발송',
+  list_reports:'신고 목록 조회',resolve_report:'신고 처리'};
+var REASON_LABEL={spam:'광고·스팸',offensive:'불쾌하거나 부적절한 내용',harassment:'괴롭힘·원치 않는 연락',other:'기타'};
+var REP_STATUS={open:'처리 전',dismissed:'기각',warned:'경고',suspended:'계정 정지'};
+var RESOLVE_LABEL={dismiss:'기각',warn:'경고',suspend:'계정 정지'};
+
+// ── 서버 호출 (예시 모드면 예시 데이터) ──
+async function rpc(fn,args){
+  if(DEMO)return demoRpc(fn,args||{});
+  var r=await sb.rpc(fn,args||{});
+  if(r.error)throw r.error;
+  return r.data;
+}
+
+// ── 로그인 ──
+var $=function(id){return document.getElementById(id)};
+function showLogin(msg,isErr){ $('app').classList.add('hidden'); $('login').classList.remove('hidden'); $('lgMsg').textContent=msg||''; $('lgMsg').className='msg'+(isErr?' err':''); }
+async function enterApp(){
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  $('demoFlag').classList.toggle('hidden',!DEMO);
+  $('whoami').textContent=DEMO?'예시 관리자':(me&&me.email||'');
+  go(tab);
+  refreshOpenCount();
+}
+async function checkAdminAndEnter(user){
+  me=user;
+  try{
+    var ok=await rpc('nnd_is_admin');
+    if(ok!==true){ await sb.auth.signOut(); showLogin('관리자 권한이 없는 계정입니다.',true); return; }
+    enterApp();
+  }catch(e){ showLogin('권한 확인 실패: '+errText(e),true); }
+}
+$('loginForm').addEventListener('submit',async function(ev){
+  ev.preventDefault();
+  if(!sb){ showLogin('서버 연결 도구를 불러오지 못했습니다. 인터넷 연결을 확인하십시오.',true); return; }
+  $('lgMsg').textContent='확인 중'; $('lgMsg').className='msg';
+  var r=await sb.auth.signInWithPassword({email:$('lgEmail').value.trim(),password:$('lgPw').value});
+  if(r.error){ showLogin('로그인 실패: '+errText(r.error),true); return; }
+  checkAdminAndEnter(r.data.user);
+});
+$('btnDemo').addEventListener('click',function(){ DEMO=true; enterApp(); });
+$('btnLogout').addEventListener('click',async function(){
+  if(!DEMO&&sb)await sb.auth.signOut();
+  DEMO=false; me=null; showLogin('로그아웃했습니다.');
+});
+$('btnRefresh').addEventListener('click',function(){ go(tab); refreshOpenCount(); });
+var OPEN_REPORTS=null;   // null: 아직 모름 또는 DB-05 미반영
+async function refreshOpenCount(){
+  try{ OPEN_REPORTS=Number(await rpc('admin_count_open_reports'))||0; }catch(e){ OPEN_REPORTS=null; }
+  var p=$('repPill'); if(!p)return;
+  p.textContent=OPEN_REPORTS?String(OPEN_REPORTS):''; p.classList.toggle('hot',!!OPEN_REPORTS);
+  return OPEN_REPORTS;
+}
+Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(b){ b.addEventListener('click',function(){ go(b.getAttribute('data-tab')); }); });
+
+// ── 탭 ──
+var TITLES={dash:'현황',users:'사용자',reports:'신고',notices:'공지',audit:'작업 기록'};
+function go(t){
+  tab=t;
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(b){ b.classList.toggle('on',b.getAttribute('data-tab')===t); });
+  $('pageTitle').textContent=TITLES[t]||'';
+  var v=$('view');
+  if(v.firstChild)v.classList.add('loading');   // 새로 불러오는 동안 이전 화면을 흐리게 유지
+  ({dash:renderDash,users:renderUsers,reports:renderReports,notices:renderNotices,audit:renderAudit}[t])(v)
+    .catch(function(e){ v.classList.remove('loading'); v.replaceChildren(el('div',{class:'card'},[el('div',{class:'msg err',text:'불러오기 실패: '+errText(e)})])); });
+}
+function stamp(){ $('updatedAt').textContent='갱신 '+fmtDT(new Date()); }
+
+// ── 현황 ──
+async function renderDash(v){
+  var d=await rpc('admin_get_dashboard');
+  var k=d.kpi||{}, f=d.funnel||{}, rt=d.retention||{}, sh=d.sharing||{}, st=d.storage||{};
+  var delta=(k.new_7d||0)-(k.new_prev_7d||0);
+  function tile(label,value,detail,alert){ return el('div',{class:'tile'+(alert?' alert':'')},[el('div',{class:'l',text:label}),el('div',{class:'v',text:value}),detail?el('div',{class:'d',text:detail}):null]); }
+  var tiles=el('div',{class:'grid g6'},[
+    tile('전체 가입자',fmtN(k.total_users)),
+    tile('최근 7일 신규',fmtN(k.new_7d),'이전 7일 대비 '+(delta>=0?'+':'')+delta),
+    tile('24시간 접속',fmtN(k.active_24h)),
+    tile('7일 접속',fmtN(k.active_7d),'전체의 '+pct(k.active_7d,k.total_users)+'%'),
+    tile('30일 접속',fmtN(k.active_30d),'전체의 '+pct(k.active_30d,k.total_users)+'%'),
+    tile('정지 계정',fmtN(k.suspended),k.suspended?'사용자 탭에서 확인':'없음',k.suspended>0)
+  ]);
+
+  // 14일 추세: 단위가 같아도 의미가 다르므로 세 개의 작은 차트로 나눈다 (한 축 원칙)
+  var trend=d.trend||[];
+  var showTable=false;
+  var trendCard=el('div',{class:'card mt'},[
+    el('div',{style:'display:flex;justify-content:space-between;align-items:baseline'},[
+      el('div',{},[el('h3',{text:'최근 14일 추세'}),el('div',{class:'desc',text:'일별 건수. 막대에 마우스를 올리면 값이 보입니다.'})]),
+      el('button',{class:'linkbtn',type:'button',text:'표로 보기',onclick:function(){ showTable=!showTable; this.textContent=showTable?'차트로 보기':'표로 보기'; body.replaceChildren(showTable?trendTable(trend):trendCharts(trend)); }})
+    ])
+  ]);
+  var body=el('div',{},[trendCharts(trend)]);
+  trendCard.appendChild(body);
+
+  var steps=[['가입',f.signed_up],['첫 간 곳 기록',f.first_record],['내 사람 1명 이상',f.first_friend],['첫 기억 건넴',f.first_gift],['첫 흔적',f.first_book]];
+  var top=Math.max(1,f.signed_up||0);
+  var funnel=el('div',{class:'card'},[el('h3',{text:'이용 흐름'}),el('div',{class:'desc',text:'해당 단계에 한 번이라도 도달한 사용자 수 · 가입자 대비 비율'})]
+    .concat(steps.map(function(s){
+      var w=Math.round((s[1]||0)/top*100);
+      return el('div',{class:'funnel-row'},[el('div',{text:s[0]}),el('div',{class:'funnel-track'},[el('div',{class:'funnel-fill',style:'width:'+w+'%'})]),el('div',{class:'val',text:fmtN(s[1])+'명 · '+pct(s[1],top)+'%'})]);
+    })));
+
+  var used=(st.photos_bytes||0)+(st.covers_bytes||0);
+  var storageCard=el('div',{class:'card'},[el('h3',{text:'사진 저장 용량'}),
+    st.error?el('div',{class:'msg err',text:st.error}):null,
+    el('div',{class:'chart-total',text:fmtBytes(used)}),
+    el('div',{class:'meter'},[el('div',{style:'width:'+Math.min(100,used/FREE_STORAGE_BYTES*100).toFixed(1)+'%'})]),
+    el('div',{class:'kv',text:'무료 요금제 1GB 가정 대비 '+(used/FREE_STORAGE_BYTES*100).toFixed(1)+'% · 사진 '+fmtBytes(st.photos_bytes)+' · 대표사진 '+fmtBytes(st.covers_bytes)+' · 파일 '+fmtN(st.objects)+'개'})]);
+
+  var ret=el('div',{class:'card'},[el('h3',{text:'재방문 (근사)'}),
+    el('div',{class:'chart-total',text:pct(rt.returned,rt.eligible)+'%'}),
+    el('div',{class:'kv',text:'가입 7일 이상 지난 '+fmtN(rt.eligible)+'명 중 가입 7일 뒤에도 접속한 '+fmtN(rt.returned)+'명'}),
+    el('div',{class:'notice mt',text:'마지막 접속 시각만으로 계산한 근사치입니다. 정확한 재방문율은 접속 기록을 쌓은 뒤 산출합니다.'})]);
+
+  var share=el('div',{class:'card'},[el('h3',{text:'기억 건네기'}),
+    el('div',{class:'chart-total',text:fmtN(sh.total)+'건'}),
+    el('div',{class:'kv',text:'받은 사람이 열어 봄 '+fmtN(sh.opened)+' ('+pct(sh.opened,sh.total)+'%) · 대기 '+fmtN(sh.waiting)+' · 비움 '+fmtN(sh.returned)})]);
+
+  var openN=await refreshOpenCount();
+  var repItem=openN==null
+    ? el('div',{class:'list-item'},[el('div',{text:'미처리 신고'}),el('div',{class:'kv',text:'건수를 불러오지 못했습니다. DB-05 반영 여부를 확인하십시오'})])
+    : el('div',{class:'list-item'},[el('div',{style:'display:flex;justify-content:space-between;align-items:center;gap:8px'},[
+        el('div',{style:openN?'color:var(--warn);font-weight:700':null,text:'미처리 신고 '+fmtN(openN)+'건'}),
+        openN?el('button',{class:'btn sm',type:'button',text:'신고 탭으로',onclick:function(){ RP.status='open'; RP.offset=0; go('reports'); }}):null]),
+        el('div',{class:'kv',text:openN?'접수 후 24시간 안에 검토하는 것을 원칙으로 합니다':'처리할 신고가 없습니다'})]);
+  var todo=el('div',{class:'card'},[el('h3',{text:'처리할 일'}),
+    repItem,
+    el('div',{class:'list-item'},[el('div',{text:'정지 계정 '+fmtN(k.suspended)+'개'}),el('div',{class:'kv',text:'정지 사유와 기간을 주기적으로 검토하십시오'})]),
+    el('div',{class:'list-item'},[el('div',{text:'최근 관리자 작업'})].concat((d.recent_audit||[]).map(function(a){
+      return el('div',{class:'kv',text:fmtDT(a.created_at)+' · '+(ACTION_LABEL[a.action]||a.action)+(a.target_email?' · '+a.target_email:'')});
+    })).concat((d.recent_audit||[]).length?[]:[el('div',{class:'kv',text:'없음'})]))]);
+
+  v.replaceChildren(tiles,trendCard,el('div',{class:'grid g2 mt'},[funnel,el('div',{class:'grid',style:'gap:14px'},[storageCard,el('div',{class:'grid g2'},[ret,share])])]),el('div',{class:'mt'},[todo]));
+  v.classList.remove('loading'); stamp();
+}
+function trendCharts(trend){
+  return el('div',{class:'grid g3'},[
+    colChart(trend,'signups','가입','명'),
+    colChart(trend,'records','새 기록 (간 곳·갈 곳)','건'),
+    colChart(trend,'gifts','건넨 기억','건')
+  ]);
+}
+function trendTable(trend){
+  var t=el('table',{class:'t'},[el('thead',{},[el('tr',{},[el('th',{text:'날짜'}),el('th',{class:'n',text:'가입'}),el('th',{class:'n',text:'새 기록'}),el('th',{class:'n',text:'건넨 기억'})])]),
+    el('tbody',{},trend.map(function(r){ return el('tr',{},[el('td',{text:r.date}),el('td',{class:'n',text:fmtN(r.signups)}),el('td',{class:'n',text:fmtN(r.records)}),el('td',{class:'n',text:fmtN(r.gifts)})]); }))]);
+  return el('div',{class:'table-scroll'},[t]);
+}
+function niceMax(m){ if(m<=4)return 4; var p=Math.pow(10,Math.floor(Math.log10(m))); var s=[1,2,2.5,5,10]; for(var i=0;i<s.length;i++){ if(s[i]*p>=m)return s[i]*p; } return 10*p; }
+function colChart(trend,key,title,unit){
+  var W=320,H=150,L=26,R=6,T=10,B=22, n=trend.length||1;
+  var vals=trend.map(function(r){return Number(r[key])||0});
+  var total=vals.reduce(function(a,b){return a+b},0);
+  var max=niceMax(Math.max.apply(null,vals.concat([0])));
+  var band=(W-L-R)/n, bw=Math.min(24,band*0.62);
+  var svg=sv('svg',{class:'chart',viewBox:'0 0 '+W+' '+H,role:'img','aria-label':title+' 최근 14일, 합계 '+total+unit});
+  [0,max/2,max].forEach(function(t){
+    var y=T+(H-T-B)*(1-t/max);
+    svg.appendChild(sv('line',{class:'grid-line',x1:L,x2:W-R,y1:y,y2:y}));
+    var lb=sv('text',{class:'axis-t',x:L-5,y:y+3,'text-anchor':'end'}); lb.textContent=fmtN(Math.round(t)); svg.appendChild(lb);
+  });
+  vals.forEach(function(v,i){
+    var x=L+band*i+(band-bw)/2, h=(H-T-B)*(v/max), y=H-B-h, r=Math.min(4,h,bw/2);
+    if(h>0){
+      var d='M'+x+','+(H-B)+'V'+(y+r)+'Q'+x+','+y+' '+(x+r)+','+y+'H'+(x+bw-r)+'Q'+(x+bw)+','+y+' '+(x+bw)+','+(y+r)+'V'+(H-B)+'Z';
+      var bar=sv('path',{class:'bar',d:d}); bar.dataset.i=i; svg.appendChild(bar);
+    }
+    var hit=sv('rect',{class:'hit',x:L+band*i,y:T,width:band,height:H-T-B,tabindex:0});
+    var label=trend[i]?trend[i].date.slice(5).replace('-','/'):'';
+    function show(ev){ var b=svg.querySelector('.bar[data-i="'+i+'"]'); if(b)b.classList.add('hov'); tipShow(ev,fmtN(v)+unit,title+' · '+label); }
+    function hide(){ var b=svg.querySelector('.bar[data-i="'+i+'"]'); if(b)b.classList.remove('hov'); tipHide(); }
+    hit.addEventListener('pointermove',show); hit.addEventListener('pointerleave',hide);
+    hit.addEventListener('focus',function(){ var bb=hit.getBoundingClientRect(); show({clientX:bb.left+bb.width/2,clientY:bb.top}); }); hit.addEventListener('blur',hide);
+    svg.appendChild(hit);
+  });
+  [0,Math.floor((n-1)/2),n-1].forEach(function(i){
+    if(!trend[i])return;
+    var t=sv('text',{class:'axis-t',x:L+band*i+band/2,y:H-6,'text-anchor':'middle'}); t.textContent=trend[i].date.slice(5).replace('-','/'); svg.appendChild(t);
+  });
+  return el('div',{class:'chart-wrap'},[el('div',{class:'chart-title',text:title}),el('div',{class:'chart-total',text:fmtN(total)+unit}),svg]);
+}
+function tipShow(ev,val,lab){
+  var t=$('tip'); t.replaceChildren(el('strong',{text:val}),el('span',{class:'muted',text:lab}));
+  t.classList.remove('hidden');
+  var x=Math.min(ev.clientX+12,window.innerWidth-t.offsetWidth-8), y=Math.max(8,ev.clientY-t.offsetHeight-10);
+  t.style.left=x+'px'; t.style.top=y+'px';
+}
+function tipHide(){ $('tip').classList.add('hidden'); }
+
+// ── 사용자 ──
+var US={q:'',status:'all',sort:'created_desc',offset:0,limit:50,sel:null};
+async function renderUsers(v){
+  var data=await rpc('admin_list_users',{p_query:US.q,p_status:US.status,p_sort:US.sort,p_limit:US.limit,p_offset:US.offset});
+  var q=el('input',{class:'inp',type:'search',placeholder:'이름 또는 이메일 일부',value:US.q,style:'width:220px'});
+  var tmr=null;
+  q.addEventListener('input',function(){ clearTimeout(tmr); tmr=setTimeout(function(){ US.q=q.value.trim(); US.offset=0; go('users'); },400); });
+  var stSel=el('select',{class:'inp'},[['all','전체 상태'],['active','정상'],['suspended','정지']].map(function(o){ return el('option',{value:o[0],text:o[1],selected:US.status===o[0]?'selected':null}); }));
+  stSel.addEventListener('change',function(){ US.status=stSel.value; US.offset=0; go('users'); });
+  var soSel=el('select',{class:'inp'},[['created_desc','최근 가입순'],['created_asc','오래된 가입순'],['login_desc','최근 접속순'],['visit_desc','간 곳 많은 순'],['sent_desc','건넨 기억 많은 순']].map(function(o){ return el('option',{value:o[0],text:o[1],selected:US.sort===o[0]?'selected':null}); }));
+  soSel.addEventListener('change',function(){ US.sort=soSel.value; US.offset=0; go('users'); });
+  var controls=el('div',{class:'controls'},[q,stSel,soSel,el('span',{class:'muted',style:'font-size:12px',text:'총 '+fmtN(data.total)+'명 · 이름·이메일은 가려서 표시합니다'})]);
+
+  var rows=(data.rows||[]).map(function(u){
+    var stc=u.is_admin?'status s-admin':(u.status==='suspended'?'status s-suspended':'status');
+    var tr=el('tr',{class:US.sel===u.id?'sel':null},[
+      el('td',{text:u.name||'-'}),el('td',{text:u.email||'-'}),
+      el('td',{text:fmtD(u.created_at)}),el('td',{text:fmtDT(u.last_login_at)}),
+      el('td',{},[el('span',{class:stc,text:u.is_admin?'관리자':(u.status==='suspended'?'정지':'정상')})]),
+      el('td',{class:'n',text:fmtN(u.visit)}),el('td',{class:'n',text:fmtN(u.will)}),el('td',{class:'n',text:fmtN(u.friends)}),el('td',{class:'n',text:fmtN(u.sent)}),el('td',{class:'n',text:fmtN(u.books)})
+    ]);
+    tr.addEventListener('click',function(){ US.sel=u.id; Array.prototype.forEach.call(tr.parentNode.children,function(x){x.classList.remove('sel')}); tr.classList.add('sel'); openDetail(u.id); });
+    return tr;
+  });
+  var table=el('div',{class:'table-scroll'},[el('table',{class:'t'},[
+    el('thead',{},[el('tr',{},['이름','이메일','가입일','최근 접속','상태'].map(function(h){return el('th',{text:h})}).concat(['간 곳','갈 곳','내 사람','건넨 기억','흔적'].map(function(h){return el('th',{class:'n',text:h})})))]),
+    el('tbody',{},rows)])]);
+  var from=data.total?data.offset+1:0, to=Math.min(data.offset+data.limit,data.total);
+  var pager=el('div',{class:'pager'},[
+    el('span',{class:'muted',text:from+'–'+to+' / '+fmtN(data.total)}),
+    el('button',{class:'btn sm',type:'button',text:'이전',disabled:data.offset<=0?'disabled':null,onclick:function(){ US.offset=Math.max(0,US.offset-US.limit); go('users'); }}),
+    el('button',{class:'btn sm',type:'button',text:'다음',disabled:to>=data.total?'disabled':null,onclick:function(){ US.offset+=US.limit; go('users'); }})
+  ]);
+  var listCard=el('div',{class:'card'},[controls,rows.length?table:el('div',{class:'empty',text:'조건에 맞는 사용자가 없습니다.'}),pager]);
+  var detail=el('div',{class:'card detail',id:'detail'},[el('div',{class:'empty',text:'목록에서 사용자를 고르면 상세가 열립니다. 상세 조회는 작업 기록에 남습니다.'})]);
+  v.replaceChildren(el('div',{class:'users-layout'},[listCard,detail]));
+  v.classList.remove('loading'); stamp();
+  if(US.sel)openDetail(US.sel);
+  setTimeout(function(){ if(US.q&&document.activeElement!==q){ q.focus(); q.setSelectionRange(q.value.length,q.value.length); } },0);
+}
+async function openDetail(id){
+  var box=$('detail'); if(!box)return;
+  box.replaceChildren(el('div',{class:'empty',text:'불러오는 중'}));
+  try{
+    var d=await rpc('admin_get_user',{p_user:id});
+    if(!d||!d.found){ box.replaceChildren(el('div',{class:'empty',text:'계정을 찾을 수 없습니다.'})); return; }
+    var sus=d.status==='suspended';
+    function row(k,v){ return el('div',{class:'row'},[el('div',{class:'k',text:k}),el('div',{text:v})]); }
+    function cnt(n,l){ return el('div',{},[el('b',{text:fmtN(n)}),el('span',{text:l})]); }
+    var kids=[
+      el('div',{style:'display:flex;justify-content:space-between;align-items:center;margin-bottom:8px'},[el('h3',{text:d.name||'(이름 없음)'}),el('span',{class:d.is_admin?'status s-admin':(sus?'status s-suspended':'status'),text:d.is_admin?'관리자':(sus?'정지':'정상')})]),
+      row('이메일',d.email||'-'),row('가입일',fmtDT(d.created_at)),row('최근 접속',fmtDT(d.last_login_at)),
+      row('약관 동의',(d.terms_version||'-')+' · '+fmtDT(d.terms_agreed_at)),
+      sus?row('정지',fmtDT(d.suspended_at)):null, sus?row('정지 사유',d.suspended_reason||'-'):null,
+      el('div',{class:'counts'},[cnt(d.count_visit,'간 곳'),cnt(d.count_will,'갈 곳'),cnt(d.count_received,'들인 기억'),cnt(d.count_friends,'내 사람'),cnt(d.count_sent,'건넨 기억'),cnt(d.count_books,'흔적')]),
+      el('div',{class:'notice',text:'기록의 제목·본문·장소·사진은 관리 도구에서 볼 수 없습니다.'})
+    ];
+    var act=el('div',{class:'mt'});
+    if(d.is_admin)act.appendChild(el('div',{class:'notice',text:'관리자 계정은 조치할 수 없습니다.'}));
+    else if(!DEMO&&me&&d.id===me.id)act.appendChild(el('div',{class:'notice',text:'자기 계정은 조치할 수 없습니다.'}));
+    else if(sus){
+      act.appendChild(el('button',{class:'btn good',type:'button',text:'정지 해제',style:'width:100%',onclick:function(){ setStatus(d,'active',''); }}));
+    }else{
+      var reason=el('input',{class:'inp',type:'text',maxlength:'200',placeholder:'정지 사유 (필수, 대상자에게 표시됩니다)'});
+      act.appendChild(reason);
+      act.appendChild(el('button',{class:'btn danger mt',type:'button',text:'계정 정지',style:'width:100%',onclick:function(){
+        var r=reason.value.trim(); if(!r){ reason.focus(); reason.style.borderColor='var(--warn)'; return; }
+        setStatus(d,'suspended',r);
+      }}));
+    }
+    kids.push(act);
+    box.replaceChildren.apply(box,kids.filter(Boolean));
+  }catch(e){ box.replaceChildren(el('div',{class:'msg err',text:'상세 조회 실패: '+errText(e)})); }
+}
+async function setStatus(d,st,reason){
+  var msg=st==='suspended'?'이 계정을 정지하시겠습니까?\n정지되면 기록 보기와 삭제만 가능합니다.\n\n사유: '+reason:'이 계정의 정지를 해제하시겠습니까?';
+  if(!window.confirm(msg))return;
+  try{
+    await rpc('admin_set_user_status',{p_user:d.id,p_status:st,p_reason:reason});
+    go('users');
+  }catch(e){ window.alert('처리 실패: '+errText(e)); }
+}
+
+// ── 신고 (G1, DB-05) ──
+// 관리자가 보는 기억 내용은 신고자가 동의해 첨부한 제목·본문뿐이다 (P-1). 처리하면 서버가 첨부를 지운다.
+var RP={status:'open',offset:0,limit:30};
+async function renderReports(v){
+  var data=await rpc('admin_list_reports',{p_status:RP.status,p_limit:RP.limit,p_offset:RP.offset});
+  var stSel=el('select',{class:'inp'},[['open','처리 전'],['all','전체'],['dismissed','기각'],['warned','경고'],['suspended','계정 정지']].map(function(o){ return el('option',{value:o[0],text:o[1],selected:RP.status===o[0]?'selected':null}); }));
+  stSel.addEventListener('change',function(){ RP.status=stSel.value; RP.offset=0; go('reports'); });
+  var controls=el('div',{class:'controls'},[stSel,el('span',{class:'muted',style:'font-size:12px',text:'총 '+fmtN(data.total)+'건 · 대상자 이름·이메일은 가려서 표시합니다 · 목록 조회와 처리는 작업 기록에 남습니다'})]);
+  var cards=(data.rows||[]).map(reportCard);
+  var from=data.total?data.offset+1:0, to=Math.min(data.offset+data.limit,data.total);
+  var pager=el('div',{class:'pager'},[
+    el('span',{class:'muted',text:from+'–'+to+' / '+fmtN(data.total)}),
+    el('button',{class:'btn sm',type:'button',text:'이전',disabled:data.offset<=0?'disabled':null,onclick:function(){ RP.offset=Math.max(0,RP.offset-RP.limit); go('reports'); }}),
+    el('button',{class:'btn sm',type:'button',text:'다음',disabled:to>=data.total?'disabled':null,onclick:function(){ RP.offset+=RP.limit; go('reports'); }})
+  ]);
+  var guide=el('div',{class:'notice',style:'margin-bottom:12px',text:'판단 기준: 같은 대상에 대한 누적 신고와 신고한 사람 수, 신고자 메모, 첨부(있을 때만)를 함께 봅니다. 경고·정지 사유는 대상자 화면에 그대로 표시됩니다.'});
+  v.replaceChildren(el('div',{},[el('div',{class:'card',style:'margin-bottom:12px'},[controls,guide]),
+    cards.length?el('div',{},cards):el('div',{class:'card'},[el('div',{class:'empty',text:RP.status==='open'?'처리할 신고가 없습니다.':'해당하는 신고가 없습니다.'})]),
+    pager]));
+  v.classList.remove('loading'); stamp();
+}
+function reportCard(r){
+  var isOpen=r.status==='open';
+  var head=el('div',{class:'rep-head'},[
+    el('span',{class:'reason',text:REASON_LABEL[r.reason]||r.reason}),
+    el('span',{class:'badge '+(isOpen?'open':'done'),text:REP_STATUS[r.status]||r.status}),
+    el('span',{class:'muted',style:'font-size:12px;margin-left:auto',text:'접수 '+fmtDT(r.created_at)+(r.resolved_at?' · 처리 '+fmtDT(r.resolved_at):'')})
+  ]);
+  var tStat=r.target_is_admin?'관리자':(r.target_status==='suspended'?'정지':'정상');
+  var target=el('div',{class:'rep-box'},[
+    el('div',{class:'k',text:'신고 대상'}),
+    el('div',{text:(r.target_name||'-')+' · '+(r.target_email||'-')}),
+    el('div',{class:'kv',style:'margin-top:4px',text:'상태 '+tStat+' · 누적 신고 '+fmtN(r.target_total)+'건 (처리 전 '+fmtN(r.target_open)+') · 신고한 사람 '+fmtN(r.target_reporters)+'명'})
+  ]);
+  var reporter=el('div',{class:'rep-box'},[
+    el('div',{class:'k',text:'신고자'}),
+    el('div',{text:r.reporter_email||'-'}),
+    el('div',{class:'k',style:'margin-top:6px',text:'신고자 메모'}),
+    el('div',{style:'white-space:pre-wrap',text:r.memo||'(없음)'})
+  ]);
+  var ev;
+  if(r.evidence){
+    ev=el('div',{class:'rep-ev'},[el('div',{class:'k',text:'신고자가 동의해 첨부한 기억 1건 · 처리하면 삭제됩니다'}),
+      el('div',{style:'font-weight:700',text:r.evidence.title||'(제목 없음)'}),
+      el('div',{style:'white-space:pre-wrap;margin-top:4px',text:r.evidence.memo||'(본문 없음)'})]);
+  }else{
+    ev=el('div',{class:'notice',style:'margin-top:10px',text:r.evidence_consent?'첨부는 처리 후 삭제되었습니다.':'첨부 없음 · 기억 내용은 관리 도구에서 볼 수 없습니다.'});
+  }
+  var kids=[head,el('div',{class:'rep-grid'},[target,reporter]),ev];
+  if(isOpen){
+    var note=el('input',{class:'inp',type:'text',maxlength:'200',placeholder:'대상자에게 보일 사유 (경고·정지 시 필수)'});
+    var canAct=!r.target_is_admin;
+    var act=el('div',{class:'rep-act'},[note,
+      el('button',{class:'btn sm',type:'button',text:'기각',onclick:function(){ resolveReport(r,'dismiss',note); }}),
+      el('button',{class:'btn sm',type:'button',text:'경고',disabled:canAct?null:'disabled',onclick:function(){ resolveReport(r,'warn',note); }}),
+      el('button',{class:'btn sm danger',type:'button',text:'계정 정지',disabled:(canAct&&r.target_status!=='suspended')?null:'disabled',onclick:function(){ resolveReport(r,'suspend',note); }})
+    ]);
+    kids.push(act);
+    if(r.target_is_admin)kids.push(el('div',{class:'notice',style:'margin-top:6px',text:'관리자 계정은 경고·정지할 수 없습니다. 기각만 가능합니다.'}));
+    else if(r.target_status==='suspended')kids.push(el('div',{class:'notice',style:'margin-top:6px',text:'이미 정지된 계정입니다. 기각 또는 경고로 정리하십시오.'}));
+  }else if(r.resolution_note){
+    kids.push(el('div',{class:'kv',style:'margin-top:10px',text:'처리 사유: '+r.resolution_note}));
+  }
+  return el('div',{class:'rep'},kids);
+}
+async function resolveReport(r,action,noteEl){
+  var note=noteEl.value.trim();
+  if(action!=='dismiss'&&!note){ noteEl.focus(); noteEl.style.borderColor='var(--warn)'; return; }
+  var msg={dismiss:'이 신고를 기각하시겠습니까?',
+    warn:'대상자에게 경고를 보내시겠습니까?\n대상자가 다음에 앱을 열 때 사유가 표시됩니다.',
+    suspend:'대상 계정을 정지하시겠습니까?\n정지되면 기록 보기와 삭제만 가능합니다.'}[action];
+  if(note)msg+='\n\n사유: '+note;
+  msg+='\n\n처리하면 이 신고의 첨부는 삭제되고 되돌릴 수 없습니다.';
+  if(!window.confirm(msg))return;
+  try{
+    await rpc('admin_resolve_report',{p_report:r.id,p_action:action,p_note:note});
+    go('reports'); refreshOpenCount();
+  }catch(e){ window.alert('처리 실패: '+errText(e)); }
+}
+
+// ── 공지 ──
+async function renderNotices(v){
+  var list=[];
+  if(DEMO)list=demoNotices();
+  else{
+    var r=await sb.from('system_notices').select('id,title,body,category,created_at').order('created_at',{ascending:false}).limit(30);
+    if(r.error)throw r.error; list=r.data||[];
+  }
+  var title=el('input',{class:'inp',type:'text',maxlength:'80',placeholder:'공지 제목 (필수)'});
+  var body=el('textarea',{class:'inp',rows:'4',maxlength:'500',placeholder:'공지 본문'});
+  var send=el('button',{class:'btn pri mt',type:'button',text:'전체 사용자에게 발송',onclick:async function(){
+    if(!title.value.trim()){ title.focus(); return; }
+    if(!window.confirm('전체 사용자에게 공지를 발송합니다. 발송 후에는 아직 내릴 수 없습니다.\n\n제목: '+title.value.trim()))return;
+    try{ await rpc('admin_broadcast_notice',{notice_title:title.value.trim(),notice_body:body.value.trim()}); go('notices'); }
+    catch(e){ window.alert('발송 실패: '+errText(e)); }
+  }});
+  var compose=el('div',{class:'card'},[el('h3',{text:'새 공지'}),el('div',{class:'desc',text:'사용자가 다음에 앱을 열 때 알림 센터에 추가됩니다.'}),title,el('div',{style:'height:8px'}),body,send]);
+  var items=list.map(function(n){ return el('div',{class:'list-item'},[el('div',{style:'font-weight:700',text:n.title||'(제목 없음)'}),el('div',{class:'kv',text:fmtDT(n.created_at)+' · '+(n.category||'notice')}),n.body?el('div',{class:'sub',style:'font-size:12.5px;white-space:pre-wrap;margin-top:4px',text:n.body}):null]); });
+  var hist=el('div',{class:'card'},[el('h3',{text:'발송 이력'}),el('div',{class:'desc',text:'최근 30건. 내리기·수정·예약 발송은 공지 관리(G3, DB-06) 반영 후 가능합니다.'})].concat(items.length?items:[el('div',{class:'empty',text:'발송한 공지가 없습니다.'})]));
+  v.replaceChildren(el('div',{class:'grid g2'},[compose,hist]));
+  v.classList.remove('loading'); stamp();
+}
+
+// ── 작업 기록 ──
+var AU={action:'all'};
+async function renderAudit(v){
+  var list=await rpc('admin_list_audit',{p_limit:200});
+  var sel=el('select',{class:'inp'},[el('option',{value:'all',text:'전체 작업'})].concat(Object.keys(ACTION_LABEL).map(function(k){ return el('option',{value:k,text:ACTION_LABEL[k],selected:AU.action===k?'selected':null}); })));
+  sel.addEventListener('change',function(){ AU.action=sel.value; go('audit'); });
+  var rows=(list||[]).filter(function(a){ return AU.action==='all'||a.action===AU.action; }).map(function(a){
+    var det=a.detail||{}, extra='';
+    if(a.action==='resolve_report')extra=(RESOLVE_LABEL[det.action]||det.action||'')+(det.reason?' · 사유: '+det.reason:'');
+    else if(det.reason)extra='사유: '+det.reason;
+    else if(det.query!=null&&det.query!=='')extra='검색: '+det.query;
+    else if(det.title)extra='제목: '+det.title;
+    else if(det.days)extra=det.days+'일';
+    return el('tr',{},[el('td',{text:fmtDT(a.created_at)}),el('td',{text:ACTION_LABEL[a.action]||a.action}),el('td',{text:a.admin_email||'-'}),el('td',{text:a.target_email||'-'}),el('td',{text:extra||'-'})]);
+  });
+  v.replaceChildren(el('div',{class:'card'},[
+    el('div',{class:'controls'},[sel,el('span',{class:'muted',style:'font-size:12px',text:'최근 200건 · 관리자가 개인정보를 본 모든 조회와 조치가 기록됩니다'})]),
+    rows.length?el('div',{class:'table-scroll'},[el('table',{class:'t'},[el('thead',{},[el('tr',{},['시각','작업','관리자','대상','내용'].map(function(h){return el('th',{text:h})}))]),el('tbody',{},rows)])]):el('div',{class:'empty',text:'기록이 없습니다.'})
+  ]));
+  v.classList.remove('loading'); stamp();
+}
+
+// ── 예시 데이터 (서버 연결 없이 화면만 확인) ──
+var _seed=7; function rnd(){ _seed=(_seed*9301+49297)%233280; return _seed/233280; }
+var DEMO_USERS=null;
+function demoUsers(){
+  if(DEMO_USERS)return DEMO_USERS;
+  var fam=['김','이','박','최','정','강','조','윤','장','임'], out=[];
+  for(var i=0;i<64;i++){
+    var c=new Date(Date.now()-rnd()*60*864e5), l=rnd()<.85?new Date(c.getTime()+rnd()*(Date.now()-c.getTime())):null;
+    out.push({id:'demo-'+i,name:fam[i%10]+'**',email:'us'+'****@example.com',created_at:c.toISOString(),last_login_at:l&&l.toISOString(),
+      status:i===5||i===17?'suspended':'active',is_admin:i===0,visit:Math.floor(rnd()*40),will:Math.floor(rnd()*12),friends:Math.floor(rnd()*8),sent:Math.floor(rnd()*10),books:rnd()<.3?1:0});
+  }
+  return DEMO_USERS=out;
+}
+function demoNotices(){ return [{title:'너나들이 2.9 업데이트 안내',body:'기록 저장이 더 안전해졌습니다.',category:'notice',created_at:new Date(Date.now()-3*864e5).toISOString()},{title:'사용법 가이드',body:'',category:'guide',created_at:new Date(Date.now()-20*864e5).toISOString()}]; }
+var DEMO_AUDIT=[{created_at:new Date(Date.now()-36e5).toISOString(),action:'suspend',admin_email:'ha****@gmail.com',target_email:'us****@example.com',detail:{reason:'반복된 스팸 건네기'}},
+  {created_at:new Date(Date.now()-40e5).toISOString(),action:'view_user',admin_email:'ha****@gmail.com',target_email:'us****@example.com',detail:{}},
+  {created_at:new Date(Date.now()-50e5).toISOString(),action:'list_users',admin_email:'ha****@gmail.com',target_email:null,detail:{query:'us…'}}];
+var DEMO_REPORTS=[
+  {id:'r1',created_at:new Date(Date.now()-5*36e5).toISOString(),reason:'spam',memo:'같은 가게 홍보 글을 계속 건넵니다.',status:'open',evidence_consent:true,
+   evidence:{title:'오늘의 특가',memo:'예시 본문입니다. 신고자가 첨부에 동의한 경우에만 이렇게 보입니다.'},
+   target_id:'demo-5',target_name:'박**',target_email:'us****@example.com',target_status:'active',target_is_admin:false,reporter_email:'ha****@example.com',target_total:3,target_open:2,target_reporters:2},
+  {id:'r2',created_at:new Date(Date.now()-26*36e5).toISOString(),reason:'harassment',memo:'',status:'open',evidence_consent:false,evidence:null,
+   target_id:'demo-5',target_name:'박**',target_email:'us****@example.com',target_status:'active',target_is_admin:false,reporter_email:'mi****@example.com',target_total:3,target_open:2,target_reporters:2},
+  {id:'r3',created_at:new Date(Date.now()-6*864e5).toISOString(),reason:'other',memo:'오해였습니다.',status:'dismissed',evidence_consent:true,evidence:null,resolved_at:new Date(Date.now()-5*864e5).toISOString(),resolution_note:null,
+   target_id:'demo-9',target_name:'정**',target_email:'us****@example.com',target_status:'active',target_is_admin:false,reporter_email:'so****@example.com',target_total:1,target_open:0,target_reporters:1}];
+function demoRpc(fn,a){
+  var U=demoUsers();
+  if(fn==='nnd_is_admin')return true;
+  if(fn==='admin_get_dashboard'){
+    var tr=[]; for(var i=13;i>=0;i--){ var d=new Date(Date.now()-i*864e5); tr.push({date:d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()),signups:Math.floor(rnd()*6),records:Math.floor(rnd()*22),gifts:Math.floor(rnd()*7)}); }
+    return {kpi:{total_users:U.length,new_7d:9,new_prev_7d:6,active_24h:11,active_7d:31,active_30d:47,suspended:2},trend:tr,
+      funnel:{signed_up:64,first_record:48,first_friend:29,first_gift:18,first_book:9},retention:{eligible:51,returned:27},
+      sharing:{total:132,opened:101,waiting:22,returned:9},storage:{photos_bytes:318*1048576,covers_bytes:12*1048576,objects:1840},recent_audit:DEMO_AUDIT};
+  }
+  if(fn==='admin_list_users'){
+    var q=(a.p_query||'').toLowerCase(), rows=U.filter(function(u){ return (!q||u.name.indexOf(q)>=0||u.email.indexOf(q)>=0)&&(a.p_status==='all'||u.status===a.p_status); });
+    var key={created_desc:function(x,y){return y.created_at<x.created_at?-1:1},created_asc:function(x,y){return x.created_at<y.created_at?-1:1},
+      login_desc:function(x,y){return (y.last_login_at||'')<(x.last_login_at||'')?-1:1},visit_desc:function(x,y){return y.visit-x.visit},sent_desc:function(x,y){return y.sent-x.sent}}[a.p_sort];
+    rows=rows.slice().sort(key);
+    return {total:rows.length,limit:a.p_limit,offset:a.p_offset,rows:rows.slice(a.p_offset,a.p_offset+a.p_limit)};
+  }
+  if(fn==='admin_get_user'){
+    var u=U.filter(function(x){return x.id===a.p_user})[0]; if(!u)return {found:false};
+    return {found:true,id:u.id,name:'예시 사용자',email:'example@example.com',created_at:u.created_at,last_login_at:u.last_login_at,terms_version:'2026.08.06',terms_agreed_at:u.created_at,
+      status:u.status,suspended_at:u.status==='suspended'?new Date().toISOString():null,suspended_reason:u.status==='suspended'?'반복된 스팸 건네기':null,is_admin:u.is_admin,
+      count_visit:u.visit,count_will:u.will,count_received:3,count_friends:u.friends,count_sent:u.sent,count_books:u.books};
+  }
+  if(fn==='admin_set_user_status'){ U.forEach(function(x){ if(x.id===a.p_user)x.status=a.p_status; }); return {ok:true}; }
+  if(fn==='admin_list_audit')return DEMO_AUDIT;
+  if(fn==='admin_count_open_reports')return DEMO_REPORTS.filter(function(x){return x.status==='open'}).length;
+  if(fn==='admin_list_reports'){
+    var rr=DEMO_REPORTS.filter(function(x){ return a.p_status==='all'||x.status===a.p_status; });
+    return {total:rr.length,limit:a.p_limit,offset:a.p_offset,rows:rr.slice(a.p_offset,a.p_offset+a.p_limit)};
+  }
+  if(fn==='admin_resolve_report'){
+    DEMO_REPORTS.forEach(function(x){ if(x.id===a.p_report){ x.status={dismiss:'dismissed',warn:'warned',suspend:'suspended'}[a.p_action]; x.resolved_at=new Date().toISOString(); x.resolution_note=a.p_note||null; x.evidence=null; }});
+    return {ok:true};
+  }
+  if(fn==='admin_broadcast_notice')return {notice_id:'demo'};
+  return null;
+}
+
+// ── 시작: 같은 주소의 앱에서 이미 로그인했다면 그 세션을 이어 쓴다 ──
+(async function boot(){
+  if(!sb){ showLogin('서버 연결 도구를 불러오지 못했습니다. 예시 데이터로 화면을 확인할 수 있습니다.',true); return; }
+  try{
+    var s=await sb.auth.getSession();
+    if(s.data&&s.data.session&&s.data.session.user){ checkAdminAndEnter(s.data.session.user); return; }
+  }catch(e){}
+  showLogin('');
+})();
+})();
+</script>
+</body>
+</html>
